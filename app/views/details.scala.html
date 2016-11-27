@@ -1,0 +1,47 @@
+@(studentForm: Form[Student])
+@import helper._
+
+@main("Student form") {
+<h1>Student form</h1>
+@helper.form(action=routes.Students.save(), 'enctype -> "multipart/form-data") {
+<fieldset>
+    <legend>Student (@studentForm("name").valueOr("New student")</legend>
+    <input type="hidden" value="@studentForm("id").valueOr("")" name="id" />
+    @helper.inputText(studentForm("studId"), '_label -> "Student ID")
+    @helper.inputText(studentForm("name"),'_label -> "Name")
+    <div class="control-group">
+        <div class="controls">
+            <input name="tags[0].id" value="1" type="checkbox"
+            @for(i <- 0 to 2) {
+                @if(studentForm("tags["+i+"].id").value=="1") {checked}
+            }
+            > english
+            <input name="tags[1].id" value="2" type="checkbox"
+            @for(i <- 0 to 2) {
+                @if(studentForm("tags["+i+"].id").value=="2") {checked}
+            }
+            > german
+            <input name="tags[2].id" value="3" type="checkbox"
+            @for(i <- 0 to 2) {
+                @if(studentForm("tags["+i+"].id").value=="3") {checked}
+            }
+            > spanish
+        </div>
+    </div>
+    @helper.inputText(studentForm("birthDate"), '_label -> "Date of birth")
+    @helper.inputFile(studentForm("picture"))
+    @if(!studentForm("picture").valueOr("").isEmpty()) {
+        <div class="control-group">
+            <div class="controls">
+                <img
+                 style="position:relative; left:50px; height:80px;"
+                 src="/picture/@studentForm("studId").value">
+            </div>
+        </div> }
+</fieldset>
+<button type="submit" class="btn btn-primary">
+  <i class="glyphicon glyphicon-ok"></i> Save
+</button>
+<a class="btn btn-primary" href="@routes.Students.list()"><i class="glyphicon glyphicon-remove"></i> Cancel</a>
+}
+}

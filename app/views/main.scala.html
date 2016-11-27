@@ -1,0 +1,34 @@
+@(title: String)(content: Html)
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>@title</title>
+        <script src="@routes.Assets.at("javascripts/jquery-2.1.4.min.js")" type="text/javascript"></script>
+        <link href="@routes.WebJarAssets.at(WebJarAssets.locate("css/bootstrap.min.css"))" rel="stylesheet" media="screen">
+        <link href="@routes.Assets.at("stylesheets/footer.css")" rel="stylesheet" media="screen">
+        <script src="@routes.WebJarAssets.at(WebJarAssets.locate("js/bootstrap.min.js"))" type="text/javascript"></script>
+        <script src="@routes.Assets.at("javascripts/hello.js")" type="text/javascript"></script>
+        <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
+<style>
+
+</style>
+        
+    </head>
+    <body>
+        
+        @navigation()
+
+        @if(flash.containsKey("success")) {
+        <div class="alert alert-success">@flash.get("success")</div>
+        }
+        @if(flash.containsKey("error")) {
+        <div class="alert alert-danger">@flash.get("error")</div>
+        }
+        <div class="container-fluid">
+        @content
+        </div>
+
+        @footer()
+    </body>
+</html>

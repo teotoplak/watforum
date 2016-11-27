@@ -1,0 +1,26 @@
+This project containst simple application that demonstrates using
+of persistence framework in Play.
+
+Objects of class Student are created and stored in database.
+Every Student can be modified on separate page.
+There is also relationship between Student and Tag (that describes languages
+students speak)
+Information from tag relationship is taken into account when displaying
+Student edit form.
+
+Two new classes have been added: 
+- Course (to keep information about university courses)
+- Enrollment (to keep information about enrollments of students in courses)
+Courses are displayed in two manners:
+- All courses on one page (the same way as students are),
+- Splitted into multiple pages (each page displays two courses) with navigation
+  objects (previous/next page).
+
+
+Review the following things:
+1. Enable Ebeans persistency libraries in files: project/plugins.sbt, build.sbt
+2. app\models\Student.java - model class
+3. app\controllers\Students.java - controller class 
+4. conf/routes - routes requests to the proper controller's method
+5. app\views\list.scala.html - template to display list of students
+6. app\views\details.scala.html - template to edit properties of a student

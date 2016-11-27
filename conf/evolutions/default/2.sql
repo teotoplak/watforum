@@ -43,4 +43,11 @@ INSERT INTO enrollment (id,student_id, course_id) VALUES (5,2,1);
 INSERT INTO enrollment (id,student_id, course_id) VALUES (6,3,4);
 INSERT INTO enrollment (id,student_id, course_id) VALUES (7,3,1);
 
+-- watforum2 start here
+
+INSERT INTO user (id,username, password, country) VALUES (0,'admin','admin','Croatia');
+INSERT INTO user (id,username, password, country) VALUES (1,'Albert','Albert','Spain');
+INSERT INTO user (id,username, password, country) VALUES (2,'Gabriel','Gabriel','Italy');
+
+
 SET REFERENTIAL_INTEGRITY TRUE;

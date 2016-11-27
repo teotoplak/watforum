@@ -42,6 +42,15 @@ create table tag (
 );
 create sequence tag_seq;
 
+create table user (
+  id                            bigint not null,
+  username                      varchar(255),
+  password                      varchar(255),
+  country                       varchar(255),
+  constraint pk_user primary key (id)
+);
+create sequence user_seq;
+
 alter table enrollment add constraint fk_enrollment_course_id foreign key (course_id) references course (id) on delete restrict on update restrict;
 create index ix_enrollment_course_id on enrollment (course_id);
 
@@ -82,4 +91,7 @@ drop table if exists student_tag;
 
 drop table if exists tag;
 drop sequence if exists tag_seq;
+
+drop table if exists user;
+drop sequence if exists user_seq;
 

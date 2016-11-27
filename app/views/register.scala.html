@@ -1,0 +1,18 @@
+@(userForm: Form[User])
+@import helper._
+
+@main("Student form") {
+  <h1>Register</h1>
+  @helper.form(action=routes.Users.save()) {
+    <fieldset>
+      <input type="hidden" value="@userForm("id").valueOr("")" name="id" />
+      @helper.inputText(userForm("username"),'_label -> "Username")
+      @helper.inputText(userForm("password"),'_label -> "Password")
+      @helper.inputText(userForm("country"),'_label -> "Country")
+    </fieldset>
+    <button type="submit" class="btn btn-primary">
+      <i class="glyphicon glyphicon-ok"></i> Save
+    </button>
+    <a class="btn btn-primary" href="@routes.Users.listAllUsers()"><i class="glyphicon glyphicon-remove"></i> Cancel</a>
+  }
+}

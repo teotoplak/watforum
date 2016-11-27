@@ -23,3 +23,7 @@ GET     /hello/:name       controllers.ReverseRouting.hello(name)
 
 # Testing reverse routing
 GET     /reverse             controllers.ReverseRouting.reverseHello()
+
+GET     /watforum/listing            controllers.Users.listAllUsers()
+GET     /watforum/register            controllers.Users.register()
+POST    /watforum/register/save               controllers.Users.save()

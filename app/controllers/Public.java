@@ -61,7 +61,7 @@ public class Public extends Controller {
 
         session().clear();
         session("username", user.username);
-        return redirect(routes.Users.listAllUsers());
+        return redirect(routes.Users.profile());
     }
 
     private Result loginError(Form<User> boundForm) {

@@ -1,6 +1,8 @@
 package controllers;
 
+import models.Student;
 import models.User;
+import play.data.Form;
 import play.data.FormFactory;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -8,6 +10,7 @@ import play.mvc.Security;
 import views.html.*;
 
 import javax.inject.Inject;
+import javax.jws.soap.SOAPBinding;
 import java.util.List;
 
 
@@ -30,8 +33,15 @@ public class Users extends Controller {
         return redirect(routes.Public.loginForm());
     }
 
+    public Result profile() {
+        User user = User.findUserByUsername(currentUser());
+        return ok(profile.render(user));
+    }
+
+//    user for helping views to get username
     public static String currentUser() {
         return ctx().session().get("username");
     }
+
 
 }

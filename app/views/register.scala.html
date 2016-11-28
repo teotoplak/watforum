@@ -3,12 +3,12 @@
 
 @main("Student form") {
   <h1>Register</h1>
-  @helper.form(action=routes.Public.register()) {
+  @helper.form(action = routes.Public.register()) {
     <fieldset>
       <input type="hidden" value="@userForm("id").valueOr("")" name="id" />
-      @helper.inputText(userForm("username"),'_label -> "Username", '_showConstraints -> false, '_showErrors -> false)
-      @helper.inputPassword(userForm("password"),'_label -> "Password", '_showConstraints -> false, '_showErrors -> false)
-      @helper.inputText(userForm("country"),'_label -> "Country", '_showConstraints -> false, '_showErrors -> false)
+      @helper.inputText(userForm("username"), '_label -> "Username", '_showConstraints -> false, '_showErrors -> false)
+      @helper.inputPassword(userForm("password"), '_label -> "Password", '_showConstraints -> false, '_showErrors -> false)
+      @helper.inputText(userForm("country"), '_label -> "Country", '_showConstraints -> false, '_showErrors -> false)
     </fieldset>
     <button type="submit" class="btn btn-primary">
       <i class="glyphicon glyphicon-ok"></i> Save

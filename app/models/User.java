@@ -45,6 +45,9 @@ public class User extends Model {
         return find.where().eq("username", username).findUnique();
     }
 
+    public static User findUserById(Long id) {
+        return find.where().eq("id", id).findUnique();
+    }
 
     @Override
     public String toString() {

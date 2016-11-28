@@ -7,13 +7,14 @@
             <ul class="nav navbar-nav navbar-left">
                 <li><a href="@routes.Public.loginForm()">Login</a></li>
                 <li><a href="@routes.Public.registerForm()">Register</a></li>
+                <li><a href="@routes.Users.listAllUsers()">Registered users</a></li>
                 @if(controllers.Users.currentUser() != null) {
-                    <li><a href="@routes.Users.listAllUsers()">Profile</a></li>
+                    <li><a href="@routes.Users.profile()">Profile</a></li>
                 }
             </ul>
             <ul class="nav navbar-nav navbar-right">
             @if(controllers.Users.currentUser() != null) {
-                <li><p class="navbar-text">@controllers.Users.currentUser()</p></li>
+                <li><p class="navbar-text"><i>Logged in as: @controllers.Users.currentUser()</i></p></li>
                 <li><a href="@routes.Users.logout()">Logout</a></li>
             }
             </ul>

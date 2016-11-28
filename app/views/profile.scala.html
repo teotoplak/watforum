@@ -1,0 +1,11 @@
+@(user: User)
+@import helper._
+
+@main("User profile") {
+  <h1>Profile</h1>
+  <h4>
+    Username: @user.username <br>
+    Password: @user.password <br>
+    Country:  @user.country  <br>
+  </h4>
+}

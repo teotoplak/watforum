@@ -37,10 +37,18 @@ public class User extends Model {
         return find.all();
     }
 
+    public static User checkUser(String username, String password) {
+        return find.where().eq("username", username).and().eq("password", password).findUnique();
+    }
+
+    public static User findUserByUsername(String username) {
+        return find.where().eq("username", username).findUnique();
+    }
+
 
     @Override
     public String toString() {
-        return "User[username:" + username + "/password:" + password + "]";
+        return username;
     }
 
     public static class UsernameValidator extends Constraints.Validator<String> {

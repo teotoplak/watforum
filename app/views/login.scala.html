@@ -1,3 +1,16 @@
+@(userForm: Form[User])
+@import helper._
+
 @main("Login") {
 
+
+  <h1>Login</h1>
+  @helper.form(action=routes.Public.login()) {
+    <fieldset>
+      @helper.inputText(userForm("username"), '_showConstraints -> false, '_showErrors -> false)
+      @helper.inputPassword(userForm("password"), '_showConstraints -> false, '_showErrors -> false)
+    </fieldset>
+    <button type="submit" class="btn btn-primary"> Login </button>
+    <a class="btn btn-primary" href="@routes.Public.registerForm()"> Register </a>
+  }
 }

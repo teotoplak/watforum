@@ -5,9 +5,7 @@ import play.data.validation.Constraints;
 import play.libs.F;
 
 import javax.annotation.Generated;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.List;
 
 /**
@@ -18,10 +16,11 @@ public class User extends Model {
 
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     public Long id;
 
     @Constraints.Required
+    @Column(unique=true)
     @Constraints.ValidateWith(value=UsernameValidator.class,message = "Username must contain " +
             "at least 3 characters. All letters, numbers, points, dashes and underscores allowed.")
     public String username;

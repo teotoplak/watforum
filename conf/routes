@@ -3,32 +3,16 @@
 # ~~~~
 
 # Home page
-GET     /               controllers.Students.list()
-GET     /students/      controllers.Students.list()
-GET     /students/new   controllers.Students.newStudent()
-GET     /students/:studId   controllers.Students.details(studId: models.Student)
-POST    /students/      controllers.Students.save()
-DELETE  /students/:studId   controllers.Students.delete(studId:Long)
-
-GET     /courses/       controllers.Courses.list()
-GET     /courses/:page  controllers.Courses.pagedList(page:Int)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file      controllers.Assets.at(path="/public", file)
 GET     /webjars/*file     controllers.WebJarAssets.at(file)
 
-GET     /picture/:studId   controllers.Students.picture(studId:Long)
-
-GET     /hello/:name       controllers.ReverseRouting.hello(name)
-
-# Testing reverse routing
-GET     /reverse             controllers.ReverseRouting.reverseHello()
-
-GET     /watforum/listing            controllers.Users.listAllUsers()
-GET     /watforum/register           controllers.Public.registerForm()
-POST    /watforum/register           controllers.Public.register()
-GET     /watforum                    controllers.Public.loginForm()
-GET     /watforum                    controllers.Public.notAuthLoginForm()
-POST    /watforum/login              controllers.Public.login()
-GET     /watforum/logout             controllers.Users.logout()
-GET     /watforum/profile            controllers.Users.profile()
+GET     /listing            controllers.Users.listAllUsers()
+GET     /register           controllers.Public.registerForm()
+POST    /register           controllers.Public.register()
+GET     /                    controllers.Public.loginForm()
+GET     /                    controllers.Public.notAuthLoginForm()
+POST    /login              controllers.Public.login()
+GET     /logout             controllers.Users.logout()
+GET     /profile            controllers.Users.profile()

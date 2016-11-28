@@ -1,6 +1,5 @@
 package controllers;
 
-import models.Student;
 import models.User;
 import play.data.Form;
 import play.data.FormFactory;

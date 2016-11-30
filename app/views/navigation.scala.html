@@ -9,6 +9,7 @@
                 <li><a href="@routes.Public.registerForm()">Register</a></li>
                 <li><a href="@routes.Users.listAllUsers()">Registered users</a></li>
                 @if(controllers.Users.currentUser() != null) {
+                    <li><a href="@routes.Search.searchBox()">Search</a></li>
                     <li><a href="@routes.Users.profile()">Profile</a></li>
                 }
             </ul>

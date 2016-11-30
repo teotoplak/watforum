@@ -62,13 +62,14 @@ public class Public extends Controller {
 
         session().clear();
         session("username", user.username);
-        return redirect(routes.Users.profile());
+        return redirect(routes.Search.searchBox());
     }
 
     private Result loginError(Form<User> boundForm) {
         flash("error", "Incorrect login!");
         return badRequest(views.html.login.render(boundForm));
     }
+
 
     public Result registerForm() {
         return ok(register.render(formFactory.form(User.class).bindFromRequest()));

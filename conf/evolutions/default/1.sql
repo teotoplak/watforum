@@ -13,9 +13,19 @@ create table user (
 );
 create sequence user_seq;
 
+create table wat_place (
+  google_id                     varchar(255) not null,
+  name                          varchar(255),
+  phone_number                  varchar(255),
+  address                       varchar(255),
+  constraint pk_wat_place primary key (google_id)
+);
+
 
 # --- !Downs
 
 drop table if exists user;
 drop sequence if exists user_seq;
+
+drop table if exists wat_place;
 

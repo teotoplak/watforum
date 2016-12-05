@@ -2,10 +2,10 @@
 @import helper._
 
 @main("User profile") {
-  <h1>Profile</h1>
-  <h4>
-    Username: @user.username <br>
-    Password: @user.password <br>
-    Country:  @user.country  <br>
-  </h4>
+  <dl class="dl-horizontal">
+    <h2><dd>Profile</dd></h2>
+    <dt>Username</dt> <dd>@user.username</dd>
+    <dt>Password</dt> <dd>@user.password</dd>
+    <dt>Country</dt> <dd>@user.country</dd>
+  </dl>
 }

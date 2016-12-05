@@ -1,0 +1,10 @@
+@(watplace: WatPlace )
+@import helper._
+
+@main("watplace") {
+  <dl class="dl-horizontal">
+    <dd><h2>@watplace.name</h2></dd>
+    <dt>Address</dt> <dd>@watplace.address</dd>
+    <dt>Phone</dt> <dd>@watplace.phoneNumber</dd>
+  </dl>
+}

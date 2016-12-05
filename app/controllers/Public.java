@@ -62,7 +62,7 @@ public class Public extends Controller {
 
         session().clear();
         session("username", user.username);
-        return redirect(routes.Search.searchBox());
+        return redirect(routes.Watplaces.searchBox());
     }
 
     private Result loginError(Form<User> boundForm) {

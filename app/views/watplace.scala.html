@@ -10,16 +10,30 @@
     <dd><h2>@watplace.name</h2></dd>
     <dt>Address</dt> <dd>@watplace.address</dd>
     <dt>Phone</dt> <dd>@watplace.phoneNumber</dd>
+    <dt>GoogleID</dt> <dd>@watplace.googleID</dd>
+    <dt>Your rating</dt>
+    <dd>   <div id="rating">
+      <span>★</span>
+      <span>★</span>
+      <span>★</span>
+      <span>★</span>
+      <span>★</span>
+    </div></dd>
   </dl>
 
-  <div id="rating">
-    <span>★</span>
-    <span>★</span>
-    <span>★</span>
-    <span>★</span>
-    <span>★</span>
-  </div>
-
   <script> StarRating.init( -1 )</script>
+
+
+  <form action="/rate" method="POST" >
+    <fieldset>
+      <input type="hidden" value=@controllers.Users.currentUserId() name="user_id" />
+      <input type="hidden" value=@watplace.id name="watPlace_id" />
+      <input type="hidden" name="rating" id="rating"/>
+    </fieldset>
+    <button type="submit" class="btn btn-primary">
+      <i class="glyphicon glyphicon-ok"></i> Rate
+    </button>
+
+  </form>
 
 }

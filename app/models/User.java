@@ -6,14 +6,16 @@ import play.libs.F;
 
 import javax.annotation.Generated;
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by teo on 11/27/16.
  */
 @Entity
 public class User extends Model {
-
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -29,6 +31,10 @@ public class User extends Model {
     public String password;
 
     public String country;
+
+    @OneToMany(mappedBy = "user")
+    public Set<Rating> ratings = new HashSet<>();
+
 
     public static Finder<Long, User> find = new Finder<>(User.class);
 

@@ -32,6 +32,7 @@ var StarRating = {
         document.querySelector('#rating').addEventListener('mouseleave', this.leaveStarListener.bind(this));
         }
     }
+    document.forms[0].elements["rating"].value = rated;
 },
 
 /**

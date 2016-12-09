@@ -2,9 +2,15 @@ package models;
 
 import com.avaje.ebean.Model;
 import com.fasterxml.jackson.databind.JsonNode;
+import org.omg.CORBA.INTERNAL;
+import play.data.FormFactory;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.inject.Inject;
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Created by teo on 12/5/16.
@@ -20,6 +26,7 @@ public class WatPlace extends Model{
     }
 
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     public Long id;
 
     public String googleID;
@@ -29,5 +36,14 @@ public class WatPlace extends Model{
     public String phoneNumber;
 
     public String address;
+
+    @OneToMany(mappedBy = "watPlace")
+    public Set<Rating> ratings = new HashSet<>();
+
+    public static Finder<Long, WatPlace> find = new Finder<>(WatPlace.class);
+
+    public static WatPlace findWatPlaceById(Long id) {
+        return find.where().eq("id", id).findUnique();
+    }
 
 }

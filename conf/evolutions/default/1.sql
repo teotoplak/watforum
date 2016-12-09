@@ -3,6 +3,12 @@
 
 # --- !Ups
 
+create table rating (
+  user_id                       bigint,
+  watplace_id                   bigint,
+  rating                        integer
+);
+
 create table user (
   id                            bigint not null,
   username                      varchar(255),
@@ -23,8 +29,22 @@ create table wat_place (
 );
 create sequence wat_place_seq;
 
+alter table rating add constraint fk_rating_user_id foreign key (user_id) references user (id) on delete restrict on update restrict;
+create index ix_rating_user_id on rating (user_id);
+
+alter table rating add constraint fk_rating_watplace_id foreign key (watplace_id) references wat_place (id) on delete restrict on update restrict;
+create index ix_rating_watplace_id on rating (watplace_id);
+
 
 # --- !Downs
+
+alter table rating drop constraint if exists fk_rating_user_id;
+drop index if exists ix_rating_user_id;
+
+alter table rating drop constraint if exists fk_rating_watplace_id;
+drop index if exists ix_rating_watplace_id;
+
+drop table if exists rating;
 
 drop table if exists user;
 drop sequence if exists user_seq;

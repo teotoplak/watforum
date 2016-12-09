@@ -1,0 +1,26 @@
+@(ratings: List[Rating])
+@main("All ratings") {
+
+  <h1>All ratings:</h1>
+
+  <table class="table table-bordered">
+    <thead>
+      <tr><th>User</th><th>Place</th><th>rating</th></tr>
+    </thead>
+    <tbody>
+    @for(rating <- ratings) {
+      <tr>
+        <td>
+        @rating.user.username
+        </td>
+        <td>
+        @rating.watPlace.name
+        </td>
+        <td>
+        @rating.rating
+        </td>
+      </tr>
+    }
+    </tbody>
+  </table>
+}

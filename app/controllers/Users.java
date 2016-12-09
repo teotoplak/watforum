@@ -42,5 +42,10 @@ public class Users extends Controller {
         return ctx().session().get("username");
     }
 
+    //    user for helping views to get username
+    public static Long currentUserId() {
+        return User.findUserByUsername(ctx().session().get("username")).id;
+    }
+
 
 }

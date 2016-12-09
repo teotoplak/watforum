@@ -1,7 +1,11 @@
 package controllers;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import models.Rating;
+import models.User;
 import models.WatPlace;
+import play.data.Form;
+import play.data.FormFactory;
 import play.libs.ws.*;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -21,6 +25,9 @@ public class Watplaces extends Controller {
 
     @Inject
     WSClient ws;
+
+    @Inject
+    private FormFactory formFactory;
 
     private static final String googleAPIkey = "AIzaSyBOVsLLDx5MQmY4CUaD9-kt5Dqw5tPjJV4";
 
@@ -49,6 +56,9 @@ public class Watplaces extends Controller {
         JsonNode json = ws.url(url).get().thenApply(WSResponse::asJson).toCompletableFuture().get();
 
         WatPlace place = new WatPlace(json);
+        if (WatPlace.findWatPlaceById(place.id) == null) {
+            place.save();
+        }
         return ok(watplace.render(place));
 
     }
@@ -56,6 +66,23 @@ public class Watplaces extends Controller {
     private String getUrl(String id) {
         return "https://maps.googleapis.com/maps/api/place/details/json?placeid=" + id  + "&key=" + googleAPIkey;
     }
+
+    public Result rate() {
+
+        Form<RatingForm> ratingFormForm = formFactory.form(RatingForm.class);
+        RatingForm ratingForm = ratingFormForm.bindFromRequest().get();
+        User user = User.findUserById(ratingForm.user_id);
+        WatPlace watPlace = WatPlace.findWatPlaceById(ratingForm.watPlace_id);
+
+        Rating rating = new Rating(user, watPlace, ratingForm.rating);
+        user.ratings.add(rating);
+        watPlace.ratings.add(rating);
+        user.save();
+        watPlace.save();
+        rating.save();
+        return redirect(routes.Ratings.listAll());
+    }
+
 
 
 

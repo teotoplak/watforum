@@ -20,6 +20,8 @@ public class WatPlace extends Model{
     }
 
     @Id
+    public Long id;
+
     public String googleID;
 
     public String name;

@@ -22,6 +22,8 @@ public class Watplaces extends Controller {
     @Inject
     WSClient ws;
 
+    private static final String googleAPIkey = "AIzaSyBOVsLLDx5MQmY4CUaD9-kt5Dqw5tPjJV4";
+
     public Result searchBox() {
         return ok(search.render());
     }
@@ -52,8 +54,7 @@ public class Watplaces extends Controller {
     }
 
     private String getUrl(String id) {
-        return "https://maps.googleapis.com/maps/api/place/details/json?placeid=" + id
-                + "&key=AIzaSyBOVsLLDx5MQmY4CUaD9-kt5Dqw5tPjJV4";
+        return "https://maps.googleapis.com/maps/api/place/details/json?placeid=" + id  + "&key=" + googleAPIkey;
     }
 
 

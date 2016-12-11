@@ -6,7 +6,8 @@
 create table rating (
   user_id                       bigint,
   watplace_id                   bigint,
-  rating                        integer
+  rating                        integer,
+  rated_at                      timestamp
 );
 
 create table user (

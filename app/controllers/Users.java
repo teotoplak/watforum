@@ -1,5 +1,6 @@
 package controllers;
 
+import models.Rating;
 import models.User;
 import play.data.Form;
 import play.data.FormFactory;
@@ -34,7 +35,8 @@ public class Users extends Controller {
 
     public Result profile() {
         User user = currentUser();
-        return ok(profile.render(user));
+        List<Rating> userRatings = Rating.userRatings(user.id);
+        return ok(profile.render(user,userRatings));
     }
 
 //    user for helping views to get username

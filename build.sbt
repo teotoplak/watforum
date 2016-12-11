@@ -11,7 +11,8 @@ libraryDependencies ++= Seq(
   cache,
   javaWs,
   "org.webjars" %% "webjars-play" % "2.4.0-1",
-  "org.webjars" % "bootstrap" % "3.3.7-1"
+  "org.webjars" % "bootstrap" % "3.3.7-1",
+  "org.ocpsoft.prettytime" % "prettytime" % "3.2.7.Final"
 )
 
 /*changed to false because of hanging application reloading*/

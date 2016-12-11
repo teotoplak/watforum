@@ -1,11 +1,11 @@
 @(ratings: List[Rating])
 @main("All ratings") {
 
-  <h1>All ratings:</h1>
+  <h1>Latest ratings:</h1>
 
   <table class="table table-bordered">
     <thead>
-      <tr><th>User</th><th>Place</th><th>rating</th></tr>
+      <tr><th>User</th><th>Place</th><th>rating</th><th>created</th></tr>
     </thead>
     <tbody>
     @for(rating <- ratings) {
@@ -18,6 +18,9 @@
         </td>
         <td>
         @rating.rating
+        </td>
+        <td>
+        @rating.getRatedAt
         </td>
       </tr>
     }

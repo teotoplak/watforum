@@ -33,6 +33,8 @@ public class Public extends Controller {
         }
         User user = boundForm.get();
 
+        System.out.println(user.birth.toString());
+
         if(user.id == null) {
             user.save();
         } else {

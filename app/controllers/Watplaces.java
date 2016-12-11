@@ -88,8 +88,13 @@ public class Watplaces extends Controller {
 
         user.save();
         watPlace.save();
-        rating.save();
+        if (Rating.findRating(user, watPlace) != -1) {
+            rating.update();
+        } else {
+            rating.save();
+        }
         return redirect(routes.Ratings.listAll());
+
     }
 
 

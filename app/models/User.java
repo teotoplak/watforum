@@ -6,10 +6,7 @@ import play.libs.F;
 
 import javax.annotation.Generated;
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by teo on 11/27/16.
@@ -31,6 +28,12 @@ public class User extends Model {
     public String password;
 
     public String country;
+
+    public String firstName;
+
+    public String lastName;
+
+    public Date birth;
 
     @OneToMany(mappedBy = "user")
     public Set<Rating> ratings = new HashSet<>();

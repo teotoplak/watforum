@@ -15,6 +15,9 @@ create table user (
   username                      varchar(255),
   password                      varchar(255),
   country                       varchar(255),
+  first_name                    varchar(255),
+  last_name                     varchar(255),
+  birth                         timestamp,
   constraint uq_user_username unique (username),
   constraint pk_user primary key (id)
 );

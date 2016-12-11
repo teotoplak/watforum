@@ -85,4 +85,5 @@ public class Rating extends Model {
     public static List<Rating> userRatings(Long user_id) {
         return find.where().eq("user_id", user_id).findList();
     }
+
 }

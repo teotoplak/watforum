@@ -3,6 +3,7 @@
  */
 
 var rated;
+var ratedAvg;
 
 var StarRating = {
 
@@ -52,7 +53,7 @@ var StarRating = {
 
     clickedStar : function(e) {
        var el = e.target;
-       this.init(el.getAttribute('data-count'))
+       this.init(el.getAttribute('data-count')+1)
     },
 
 
@@ -71,4 +72,21 @@ var StarRating = {
     }
     }
 
+};
+
+
+var StarRatingAvg = {
+    /**
+     * Initialize
+     */
+    init : function( x ) {
+        ratedAvg = x;
+        this.stars = document.querySelectorAll('#ratingAvg span');
+        for (var i = 0; i < this.stars.length; i++) {
+                if(ratedAvg > i) {
+                    this.stars[i].style.color = '#ff813a' ;
+                    this.stars[i].style.opacity = '1' ;
+                }
+        }
+    }
 };

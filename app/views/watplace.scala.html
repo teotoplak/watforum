@@ -1,4 +1,4 @@
-@(watplace: WatPlace )
+@(watplace: WatPlace)(rating: Integer)
 @import helper._
 
 @main("watplace") {
@@ -11,6 +11,14 @@
     <dt>Address</dt> <dd>@watplace.address</dd>
     <dt>Phone</dt> <dd>@watplace.phoneNumber</dd>
     <dt>GoogleID</dt> <dd>@watplace.googleID</dd>
+    <dt>Place rating</dt>
+    <dd>   <div id="ratingAvg">
+      <span>★</span>
+      <span>★</span>
+      <span>★</span>
+      <span>★</span>
+      <span>★</span>
+    </div></dd>
     <dt>Your rating</dt>
     <dd>   <div id="rating">
       <span>★</span>
@@ -21,19 +29,22 @@
     </div></dd>
   </dl>
 
-  <script> StarRating.init( -1 )</script>
+
+  <script> StarRatingAvg.init( 3 )</script>
+  <script> StarRating.init( @rating )</script>
 
 
   <form action="/rate" method="POST" >
     <fieldset>
-      <input type="hidden" value=@controllers.Users.currentUserId() name="user_id" />
+      <input type="hidden" value=@controllers.Users.currentUser().id name="user_id" />
       <input type="hidden" value=@watplace.id name="watPlace_id" />
       <input type="hidden" name="rating" id="rating"/>
     </fieldset>
-    <button type="submit" class="btn btn-primary">
-      <i class="glyphicon glyphicon-ok"></i> Rate
-    </button>
-
+    @if(rating == -1) {
+      <button type="submit" class="btn btn-primary">
+        <i class="glyphicon glyphicon-ok"></i> Rate
+      </button>
+    }
   </form>
 
 }

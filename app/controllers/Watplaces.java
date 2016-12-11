@@ -56,10 +56,15 @@ public class Watplaces extends Controller {
         JsonNode json = ws.url(url).get().thenApply(WSResponse::asJson).toCompletableFuture().get();
 
         WatPlace place = new WatPlace(json);
-        if (WatPlace.findWatPlaceById(place.id) == null) {
+        if (WatPlace.findWatPlaceByGoogleId(place.googleID) == null) {
             place.save();
         }
-        return ok(watplace.render(place));
+        //refreshing to get id
+        place = WatPlace.findWatPlaceByGoogleId(place.googleID);
+        User user = Users.currentUser();
+        Integer rating = Rating.findRating(user, place);
+
+        return ok(watplace.render(place,rating));
 
     }
 

@@ -34,4 +34,14 @@ public class Rating extends Model {
     public static List<Rating> findAll() {
         return find.all();
     }
+
+    public static Integer findRating(User user, WatPlace watPlace) {
+        Rating rating = find.where().eq("user_id",user.id).and().eq("watPlace_id",watPlace.id).findUnique();
+        System.out.println(watPlace.id);
+        if (rating == null) {
+            return -1;
+        } else {
+            return rating.rating;
+        }
+    }
 }

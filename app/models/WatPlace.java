@@ -29,6 +29,7 @@ public class WatPlace extends Model{
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     public Long id;
 
+    @Column(unique=true)
     public String googleID;
 
     public String name;
@@ -41,6 +42,10 @@ public class WatPlace extends Model{
     public Set<Rating> ratings = new HashSet<>();
 
     public static Finder<Long, WatPlace> find = new Finder<>(WatPlace.class);
+
+    public static WatPlace findWatPlaceByGoogleId(String id) {
+        return find.where().eq("googleID", id).findUnique();
+    }
 
     public static WatPlace findWatPlaceById(Long id) {
         return find.where().eq("id", id).findUnique();

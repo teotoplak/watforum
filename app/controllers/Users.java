@@ -33,18 +33,13 @@ public class Users extends Controller {
     }
 
     public Result profile() {
-        User user = User.findUserByUsername(currentUser());
+        User user = currentUser();
         return ok(profile.render(user));
     }
 
 //    user for helping views to get username
-    public static String currentUser() {
-        return ctx().session().get("username");
-    }
-
-    //    user for helping views to get username
-    public static Long currentUserId() {
-        return User.findUserByUsername(ctx().session().get("username")).id;
+    public static User currentUser() {
+        return User.findUserByUsername(ctx().session().get("username"));
     }
 
 

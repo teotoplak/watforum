@@ -11,7 +11,7 @@ var StarRating = {
  * Initialize
  */
  init : function( x ) {
-     rated = x;
+    rated = x;
     this.stars = document.querySelectorAll('#rating span');
 
     for (var i = 0; i < this.stars.length; i++) {
@@ -20,12 +20,6 @@ var StarRating = {
             if(rated > i) {
                 this.stars[i].style.color = '#ff813a' ;
                 this.stars[i].style.opacity = '1' ;
-                this.stars[i].style.transform = 'rotateX(0deg)';
-            } else {
-                /*removing listeners*/
-                var old_element =  this.stars[i];
-                var new_element = old_element.cloneNode(true);
-                old_element.parentNode.replaceChild(new_element, old_element);
             }
         } else {
         this.stars[i].addEventListener('mouseenter', this.enterStarListener.bind(this));
@@ -33,7 +27,7 @@ var StarRating = {
         document.querySelector('#rating').addEventListener('mouseleave', this.leaveStarListener.bind(this));
         }
     }
-    document.forms[0].elements["rating"].value = rated;
+    document.forms[0].elements["ratingInput"].value = rated;
 },
 
 /**
@@ -53,7 +47,16 @@ var StarRating = {
 
     clickedStar : function(e) {
        var el = e.target;
-       this.init(el.getAttribute('data-count')+1)
+       var clickRated = el.getAttribute('data-count')
+        clickRated++
+        //removing listeners
+        for (var i = 0; i < this.stars.length; i++) {
+            var old_element =  this.stars[i];
+            var new_element = old_element.cloneNode(true);
+            old_element.parentNode.replaceChild(new_element, old_element);
+        }
+
+       this.init(clickRated)
     },
 
 

@@ -1,4 +1,4 @@
-@(watplace: WatPlace)(rating: Integer)
+@(watplace: WatPlace)(rating: Integer)(overAllRating: Integer)
 @import helper._
 
 @main("watplace") {
@@ -18,7 +18,11 @@
       <span>★</span>
       <span>★</span>
       <span>★</span>
-    </div></dd>
+    </div>
+      @if(overAllRating == -1) {
+        <br><br>(not rated)
+      }
+    </dd>
     <dt>Your rating</dt>
     <dd>   <div id="rating">
       <span>★</span>
@@ -29,16 +33,11 @@
     </div></dd>
   </dl>
 
-
-  <script> StarRatingAvg.init( 3 )</script>
-  <script> StarRating.init( @rating )</script>
-
-
   <form action="/rate" method="POST" >
     <fieldset>
       <input type="hidden" value=@controllers.Users.currentUser().id name="user_id" />
       <input type="hidden" value=@watplace.id name="watPlace_id" />
-      <input type="hidden" name="rating" id="rating"/>
+      <input type="hidden" name="ratingInput" id="ratingInput"/>
     </fieldset>
     @if(rating == -1) {
       <button type="submit" class="btn btn-primary">
@@ -46,5 +45,12 @@
       </button>
     }
   </form>
+
+  <script> StarRatingAvg.init( @overAllRating )</script>
+  <script> StarRating.init( @rating )</script>
+
+
+
+
 
 }

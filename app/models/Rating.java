@@ -4,6 +4,7 @@ import com.avaje.ebean.Model;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by teo on 12/9/16.
@@ -37,11 +38,24 @@ public class Rating extends Model {
 
     public static Integer findRating(User user, WatPlace watPlace) {
         Rating rating = find.where().eq("user_id",user.id).and().eq("watPlace_id",watPlace.id).findUnique();
-        System.out.println(watPlace.id);
         if (rating == null) {
             return -1;
         } else {
             return rating.rating;
         }
+    }
+
+    public static Integer findAverageRatingForPlace(Long placeId) {
+        List<Rating> ratings = find.where().eq("watPlace_id", placeId).findList();
+        if(ratings.isEmpty()) {
+            return -1;
+        }
+        Double sum = 0.0;
+        Double num = 0.0;
+        for (Rating rating : ratings) {
+            sum+=rating.rating;
+            num++;
+        }
+        return (int)Math.round(sum/num);
     }
 }

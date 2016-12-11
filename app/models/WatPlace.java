@@ -7,6 +7,7 @@ import play.data.FormFactory;
 
 import javax.inject.Inject;
 import javax.persistence.*;
+import java.awt.image.RescaleOp;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -50,5 +51,6 @@ public class WatPlace extends Model{
     public static WatPlace findWatPlaceById(Long id) {
         return find.where().eq("id", id).findUnique();
     }
+
 
 }

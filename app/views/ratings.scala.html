@@ -14,7 +14,7 @@
         @rating.user.username
         </td>
         <td>
-        @rating.watPlace.name
+          <a href="@routes.Watplaces.watPlace(rating.watPlace.googleID+"")"> @rating.watPlace.name</a>
         </td>
         <td>
         @rating.rating

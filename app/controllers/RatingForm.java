@@ -8,7 +8,7 @@ import com.avaje.ebean.Model;
 public class RatingForm extends Model{
     protected Long user_id;
     protected Long watPlace_id;
-    protected Integer rating;
+    protected Integer ratingInput;
 
     public Long getUser_id() {
         return user_id;
@@ -26,11 +26,11 @@ public class RatingForm extends Model{
         this.watPlace_id = watPlace_id;
     }
 
-    public Integer getRating() {
-        return rating;
+    public Integer getRatingInput() {
+        return ratingInput;
     }
 
-    public void setRating(Integer rating) {
-        this.rating = rating;
+    public void setRatingInput(Integer ratingInput) {
+        this.ratingInput = ratingInput;
     }
 }

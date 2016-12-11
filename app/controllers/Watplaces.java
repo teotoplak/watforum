@@ -13,8 +13,6 @@ import play.mvc.Security;
 import views.html.*;
 
 import javax.inject.Inject;
-import java.util.concurrent.CompletionStage;
-import java.util.concurrent.ExecutionException;
 
 /**
  * Created by teo on 11/30/16.
@@ -52,10 +50,15 @@ public class Watplaces extends Controller {
 
     public Result watPlace(String id) throws Exception {
 
+
         String url = getUrl(id);
         JsonNode json = ws.url(url).get().thenApply(WSResponse::asJson).toCompletableFuture().get();
 
         WatPlace place = new WatPlace(json);
+        if (place.name == null || place.name.isEmpty()) {
+            flash("error", "Bad request was made - place doesn't exist! ");
+            return redirect(routes.Watplaces.searchBox());
+        }
         if (WatPlace.findWatPlaceByGoogleId(place.googleID) == null) {
             place.save();
         }
@@ -63,8 +66,8 @@ public class Watplaces extends Controller {
         place = WatPlace.findWatPlaceByGoogleId(place.googleID);
         User user = Users.currentUser();
         Integer rating = Rating.findRating(user, place);
-
-        return ok(watplace.render(place,rating));
+        Integer overAllRating = Rating.findAverageRatingForPlace(place.id);
+        return ok(watplace.render(place,rating,overAllRating));
 
     }
 
@@ -79,9 +82,10 @@ public class Watplaces extends Controller {
         User user = User.findUserById(ratingForm.user_id);
         WatPlace watPlace = WatPlace.findWatPlaceById(ratingForm.watPlace_id);
 
-        Rating rating = new Rating(user, watPlace, ratingForm.rating);
+        Rating rating = new Rating(user, watPlace, ratingForm.ratingInput);
         user.ratings.add(rating);
         watPlace.ratings.add(rating);
+
         user.save();
         watPlace.save();
         rating.save();

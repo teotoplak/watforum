@@ -7,7 +7,7 @@
             <ul class="nav navbar-nav navbar-left">
                 @if(controllers.Users.currentUser() != null) {
                     <li><a href="@routes.Watplaces.searchBox()">Search</a></li>
-                    <li><a href="@routes.Users.profile()">Profile</a></li>
+                    <li><a href="@routes.Users.profile()">My profile</a></li>
                     <li><a href="@routes.Users.listAllUsers()">Registered users</a></li>
                     <li><a href="@routes.Ratings.listAll()">Ratings</a></li>
                 } else {

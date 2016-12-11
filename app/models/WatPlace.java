@@ -24,6 +24,10 @@ public class WatPlace extends Model{
         this.name = json.findPath("name").textValue();
         this.phoneNumber = json.findPath("international_phone_number").textValue();
         this.address = json.findPath("formatted_address").textValue();
+        this.icon = json.findPath("icon").textValue();
+        this.weekdayText = json.findPath("weekday_text").textValue();
+        this.website = json.findPath("website").textValue();
+        this.googleMaps = json.findPath("url").textValue();
     }
 
     @Id
@@ -38,6 +42,20 @@ public class WatPlace extends Model{
     public String phoneNumber;
 
     public String address;
+
+    public String icon;
+
+    /*
+    text about working hours
+     */
+    public String weekdayText;
+
+    public String website;
+
+    /*
+    link to google maps place
+     */
+    public String googleMaps;
 
     @OneToMany(mappedBy = "watPlace")
     public Set<Rating> ratings = new HashSet<>();

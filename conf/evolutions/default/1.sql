@@ -29,6 +29,10 @@ create table wat_place (
   name                          varchar(255),
   phone_number                  varchar(255),
   address                       varchar(255),
+  icon                          varchar(255),
+  weekday_text                  varchar(255),
+  website                       varchar(255),
+  google_maps                   varchar(255),
   constraint uq_wat_place_google_id unique (google_id),
   constraint pk_wat_place primary key (id)
 );

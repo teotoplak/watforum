@@ -7,24 +7,37 @@
   <link href="@routes.Assets.at("stylesheets/watplace.css")" rel="stylesheet" media="screen">
 
   <dl class="dl-horizontal">
-    <dd><h2>@watplace.name</h2></dd>
-    <dt>Address</dt> <dd>@watplace.address</dd>
-    <dt>Phone</dt> <dd>@watplace.phoneNumber</dd>
-    <dt>GoogleID</dt> <dd>@watplace.googleID</dd>
+    <dd><h2>@watplace.name <img src="@watplace.icon" alt="" height="28" width="28"></h2></dd>
+    @if(watplace.address != null) { <dt>Address</dt> <dd>@watplace.address</dd> }
+    @if(watplace.phoneNumber != null) { <dt>Phone</dt> <dd>@watplace.phoneNumber</dd> }
+    @if(watplace.website != null) { <dt>Website</dt> <dd><a href="@watplace.website">@watplace.website</a> </dd> }
+    @if(watplace.googleMaps != null) { <dt>Google maps</dt> <dd><a href="@watplace.googleMaps">@watplace.googleMaps</a></dd> }
     <dt>Place rating</dt>
-    <dd>   <div id="ratingAvg">
-      <span>★</span>
-      <span>★</span>
-      <span>★</span>
-      <span>★</span>
-      <span>★</span>
-    </div>
+    <dd>
       @if(overAllRating == -1) {
-        <br><br>(not rated)
+        (not rated)
+      } else {
+        <div id="ratingAvg">
+          <span>★</span>
+          <span>★</span>
+          <span>★</span>
+          <span>★</span>
+          <span>★</span>
+          <span>★</span>
+          <span>★</span>
+          <span>★</span>
+          <span>★</span>
+          <span>★</span>
+        </div>
       }
     </dd>
     <dt>Your rating</dt>
     <dd>   <div id="rating">
+      <span>★</span>
+      <span>★</span>
+      <span>★</span>
+      <span>★</span>
+      <span>★</span>
       <span>★</span>
       <span>★</span>
       <span>★</span>

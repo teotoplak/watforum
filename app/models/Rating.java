@@ -1,6 +1,7 @@
 package models;
 
 import com.avaje.ebean.Model;
+import controllers.Users;
 import play.mvc.Result;
 
 import javax.persistence.*;

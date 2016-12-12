@@ -3,7 +3,7 @@
 
 @main("User profile") {
   <dl class="dl-horizontal">
-    <h2><dd>Profile</dd></h2>
+    <h3><dd>Profile</dd></h3>
     @if(user.username != null) { <dt>Username</dt> <dd>@(user.username)</dd> }
     @if(user.firstName != null) { <dt>Name</dt> <dd>@(user.firstName)</dd> }
     @if(user.lastName != null) { <dt>Surname</dt> <dd>@(user.lastName)</dd> }

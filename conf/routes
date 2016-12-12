@@ -20,3 +20,4 @@ GET     /search             controllers.Watplaces.searchBox()
 GET    /watplace/:id           controllers.Watplaces.watPlace(id: String)
 POST    /rate               controllers.Watplaces.rate
 GET     /ratings            controllers.Ratings.listAll
+GET     /test/:id                controllers.Watplaces.test(id: String)

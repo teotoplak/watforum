@@ -5,7 +5,7 @@
 
   <table class="table table-bordered">
     <thead>
-      <tr><th>User</th><th>Place</th><th>rating</th><th>created</th></tr>
+      <tr><th>User</th><th>Place</th><th>rated</th><th>created</th></tr>
     </thead>
     <tbody>
     @for(rating <- ratings) {
@@ -17,7 +17,7 @@
           <a href="@routes.Watplaces.watPlace(rating.watPlace.googleID+"")"> @rating.watPlace.name</a>
         </td>
         <td>
-        @rating.rating
+        @starRating(rating.rating)
         </td>
         <td>
         @rating.getRatedAt

@@ -1,13 +1,43 @@
-@(watplace: WatPlace)(rating: Integer)(overAllRating: Integer)
+@(watplace: WatPlace)(rating: Integer)(overAllRating: Integer)(lat: Double)(lng: Double)
 @import helper._
 
 @main("watplace") {
 
-  <script src="@routes.Assets.at("javascripts/stars.js")" type="text/javascript"></script>
-  <link href="@routes.Assets.at("stylesheets/watplace.css")" rel="stylesheet" media="screen">
+  <link rel="stylesheet" type="text/css" href="@routes.Assets.at("stylesheets/watplace.css")">
+
+    @*google maps*@
+    <script>
+            function initMap() {
+              var map = new google.maps.Map(document.getElementById('mapak'), {
+                center: {lat: @lat, lng: @lng},
+                zoom: 15
+              });
+
+              var infowindow = new google.maps.InfoWindow();
+              var service = new google.maps.places.PlacesService(map);
+
+              service.getDetails({
+                placeId: '@watplace.googleID'
+              }, function(place, status) {
+                if (status === google.maps.places.PlacesServiceStatus.OK) {
+                  var marker = new google.maps.Marker({
+                    map: map,
+                    position: place.geometry.location
+                  });
+                  google.maps.event.addListener(marker, 'click', function() {
+                    infowindow.setContent('<div><strong>' + place.name + '</strong><br>' +
+                            'Place ID: ' + place.place_id + '<br>' +
+                            place.formatted_address + '</div>');
+                    infowindow.open(map, this);
+                  });
+                }
+              });
+            }
+    </script>
+    <script src="@routes.Assets.at("javascripts/stars.js")" type="text/javascript"></script>
 
   <dl class="dl-horizontal">
-    <dd><h2>@watplace.name <img src="@watplace.icon" alt="" height="28" width="28"></h2></dd>
+    <dd><h3>@watplace.name <img src="@watplace.icon" alt="" height="28" width="28"></h3></dd>
     @if(watplace.address != null) { <dt>Address</dt> <dd>@watplace.address</dd> }
     @if(watplace.phoneNumber != null) { <dt>Phone</dt> <dd>@watplace.phoneNumber</dd> }
     @if(watplace.website != null) { <dt>Website</dt> <dd><a href="@watplace.website">@watplace.website</a> </dd> }
@@ -62,8 +92,9 @@
   <script> StarRatingAvg.init( @overAllRating )</script>
   <script> StarRating.init( @rating )</script>
 
-
-
-
+  <div id="mapak"></div>
+  <script async defer
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBOVsLLDx5MQmY4CUaD9-kt5Dqw5tPjJV4&libraries=places&callback=initMap">
+  </script>
 
 }

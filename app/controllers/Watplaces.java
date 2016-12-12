@@ -13,6 +13,7 @@ import play.mvc.Security;
 import views.html.*;
 
 import javax.inject.Inject;
+import java.util.DoubleSummaryStatistics;
 
 /**
  * Created by teo on 11/30/16.
@@ -62,12 +63,23 @@ public class Watplaces extends Controller {
         if (WatPlace.findWatPlaceByGoogleId(place.googleID) == null) {
             place.save();
         }
+
+        //finding location
+        JsonNode innerNode = json.findPath("geometry"); // Get the only element in the root node
+        // get an element in that node
+        JsonNode aField = innerNode.findPath("location");
+        JsonNode bField = aField.findPath("lat");
+        JsonNode cField = aField.findPath("lng");
+        Double lat = Double.parseDouble(bField.toString());
+        Double lng = Double.parseDouble(cField.toString());
+
+
         //refreshing to get id
         place = WatPlace.findWatPlaceByGoogleId(place.googleID);
         User user = Users.currentUser();
         Integer rating = Rating.findRating(user, place);
         Integer overAllRating = Rating.findAverageRatingForPlace(place.id);
-        return ok(watplace.render(place,rating,overAllRating));
+        return ok(watplace.render(place,rating,overAllRating,lat,lng));
 
     }
 
@@ -95,6 +107,20 @@ public class Watplaces extends Controller {
         }
         return redirect(routes.Ratings.listAll());
 
+    }
+
+    public Result test(String id) throws Exception{
+        String url = getUrl(id);
+        JsonNode json = ws.url(url).get().thenApply(WSResponse::asJson).toCompletableFuture().get();
+        JsonNode innerNode = json.findPath("geometry"); // Get the only element in the root node
+        // get an element in that node
+        JsonNode aField = innerNode.findPath("location");
+        JsonNode bField = aField.findPath("lat");
+        JsonNode cField = aField.findPath("lng");
+        Double lat = Double.parseDouble(bField.toString());
+        Double lng = Double.parseDouble(cField.toString());
+
+        return ok(test.render(lat,lng,"ChIJMz21fEA--4kR8UwqnQMPtHY"));
     }
 
 

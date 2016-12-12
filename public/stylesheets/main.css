@@ -1,0 +1,30 @@
+#titleBig {
+    position: static;
+    text-align: center;
+    font-size: 80px;
+    font-family: 'Oswald', serif;
+    font-weight: 600;
+    color: #ff813a;
+    font-style: italic;
+    text-align: center;
+    vertical-align: middle;
+    padding-top: 40px;
+
+}
+.text-left {
+    text-align: left;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.text-center {
+    text-align: center;
+}
+
+h2 {
+    padding-top: 40px;
+    text-align: center;
+    vertical-align: middle;
+}

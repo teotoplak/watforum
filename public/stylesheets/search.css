@@ -7,13 +7,13 @@
 html, body {
     height: 100%;
     margin: 0;
-    padding: 0;
 }
 
 #pac-input {
     position: fixed;
-    top: 25%;
+    top: 32%;
     left: 50%;
+
     /* bring your own prefixes */
     transform: translate(-50%, -50%);
 

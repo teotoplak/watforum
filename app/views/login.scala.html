@@ -4,7 +4,7 @@
 @main("Login") {
 
 
-  <h1>Login</h1>
+  <h2>Login</h2>
   @helper.form(action=routes.Public.login()) {
     <fieldset>
       @helper.inputText(userForm("username"), '_showConstraints -> false, '_showErrors -> false)

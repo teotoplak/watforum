@@ -3,33 +3,39 @@
 
 @main("User profile") {
   <dl class="dl-horizontal">
-    <h3><dd>Profile</dd></h3>
+    <h2><dd>Profile</dd></h2>
+    <h3>
     @if(user.username != null) { <dt>Username</dt> <dd>@(user.username)</dd> }
     @if(user.firstName != null) { <dt>Name</dt> <dd>@(user.firstName)</dd> }
     @if(user.lastName != null) { <dt>Surname</dt> <dd>@(user.lastName)</dd> }
     @if(user.country != null) { <dt>Country</dt> <dd>@(user.country)</dd> }
     @if(user.birth != null) { <dt>Birth date</dt> <dd>@(user.birth.format("dd/MM/yyyy"))</dd> }
+    </h3>
   </dl>
 
-  <h3>Previous reviews</h3>
-  <table class="table table-bordered">
-    <thead>
-      <tr><th>Place</th><th>Rating</th><th>Created at</th></tr>
-    </thead>
-    <tbody>
-    @for(rating <- userRating) {
-      <tr>
-        <td>
-          <a href="@routes.Watplaces.watPlace(rating.watPlace.googleID+"")"> @rating.watPlace.name</a>
-        </td>
-        <td>
-        @rating.rating
-        </td>
-        <td>
-        @rating.getRatedAt
-        </td>
-      </tr>
-    }
-    </tbody>
-  </table>
+
+  @if(!userRating.isEmpty) {
+    <h3>Previous reviews</h3>
+    <table class="table table-bordered">
+      <thead>
+        <tr><th>Place</th><th>Rating</th><th>Created at</th></tr>
+      </thead>
+      <tbody>
+      @for(rating <- userRating) {
+        <tr>
+          <td>
+            <a href="@routes.Watplaces.watPlace(rating.watPlace.googleID+"")"> @rating.watPlace.name</a>
+          </td>
+          <td>
+          @rating.rating
+          </td>
+          <td>
+          @rating.getRatedAt
+          </td>
+        </tr>
+      }
+      </tbody>
+    </table>
+  }
+
 }

@@ -2,7 +2,7 @@
 @import helper._
 
 @main("Student form") {
-  <h1>Register</h1>
+  <h2>Register</h2>
   @helper.form(action = routes.Public.register()) {
     <fieldset>
       <input type="hidden" value="@userForm("id").valueOr("")" name="id" />

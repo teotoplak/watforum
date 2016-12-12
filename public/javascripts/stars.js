@@ -12,6 +12,14 @@ var StarRating = {
  */
  init : function( x ) {
     rated = x;
+    if(document.getElementById("sabmit")!=null) {
+        if(rated==-1){
+            document.getElementById("sabmit").style.display = 'none';
+        } else {
+            document.getElementById("sabmit").style.display = 'block';
+        }
+    }
+
     this.stars = document.querySelectorAll('#rating span');
 
     for (var i = 0; i < this.stars.length; i++) {

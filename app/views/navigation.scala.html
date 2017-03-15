@@ -1,19 +1,30 @@
 @()
 
-        <nav class="navbar navbar-default">
-        <div class="container-fluid">
-
-            <a class="navbar-brand" href="@routes.Watplaces.searchBox()">Watforum</a>
+<div class="navbar navbar-default navbar-fixed-top" id="mynavbar">
+    <div class="containter">
+        @*defines button which appears when device is small*@
+        <div class="navbar-header">
+            <a class="navbar-brand" href="@routes.Public.landing()"> SWT forum </a>
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <!--defines these button which appears on xs devices, icon bar is line on the button-->
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav navbar-left">
-                @if(controllers.Users.currentUser() != null) {
-                    <li><a href="@routes.Watplaces.searchBox()">Search</a></li>
-                    <li><a href="@routes.Users.profile()">My profile</a></li>
-                    @*<li><a href="@routes.Users.listAllUsers()">Registered users</a></li>*@
-                    <li><a href="@routes.Ratings.listAll()">Ratings</a></li>
-                } else {
-                    <li><a href="@routes.Public.loginForm()">Login</a></li>
-                    <li><a href="@routes.Public.registerForm()">Register</a></li>
-                }
+            @if(controllers.Users.currentUser() != null) {
+                <li><a href="@routes.Watplaces.searchBox()">Search</a></li>
+                <li><a href="@routes.Users.profile()">My profile</a></li>
+                @*<li><a href="@routes.Users.listAllUsers()">Registered users</a></li>*@
+                <li><a href="@routes.Ratings.listAll()">Ratings</a></li>
+                <li><a href="@routes.Public.landing()">Langing page</a></li>
+            } else {
+                <li><a href="@routes.Public.loginForm()">Login</a></li>
+                <li><a href="@routes.Public.registerForm()">Register</a></li>
+            }
             </ul>
             <ul class="nav navbar-nav navbar-right">
             @if(controllers.Users.currentUser() != null) {
@@ -22,7 +33,10 @@
             }
             </ul>
         </div>
-        </nav>
+    </div>
+
+
+</div>
 
 
 

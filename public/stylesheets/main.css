@@ -11,29 +11,41 @@
     padding-top: 40px;
 
 }
-.text-left {
-    text-align: left;
+
+
+#searchTitle {
+    margin-top: 150px;
+    font-size: 400%;
+    font-style: italic;
 }
 
-.text-right {
-    text-align: right;
+#firstWindow {
+    background-image: url("../images/wallpaper.jpeg");
+    width: 100%;
+    background-size: cover;
+    background-position: center;
 }
 
-.text-center {
+#mynavbar {
+    margin-bottom: 0;
+}
+
+#news {
+    font-size: 150%;
+    margin-top: 100px;
+    text-decoration: none;
+}
+
+
+.title {
     text-align: center;
+    font-size: 400%;
 }
 
-h1 {
-    padding-top: 40px;
-    text-align: center;
-    vertical-align: middle;
+.separate {
+    margin-top: 50px;
 }
-h2 {
-    font-size: 30px;
-}
-h3 {
-    font-size: 18px;
-}
-h4 {
 
+#myLead {
+    font-size: 150%;
 }

@@ -10,16 +10,14 @@ html, body {
 }
 
 #pac-input {
-    position: fixed;
-    top: 32%;
-    left: 50%;
+
+    margin-top: 50px;
 
     /* bring your own prefixes */
-    transform: translate(-50%, -50%);
+    /*transform: translate(-50%, -50%);*/
 
     border: 1px solid transparent;
     border-radius: 2px 0 0 2px;
-    box-sizing: border-box;
     -moz-box-sizing: border-box;
     height: 60px;
     outline: none;
@@ -29,7 +27,6 @@ html, body {
     font-family: Roboto;
     font-size: 30px;
     font-weight: 300;
-    margin-left: 12px;
     padding: 0 11px 0 13px;
     text-overflow: ellipsis;
     width: 600px;

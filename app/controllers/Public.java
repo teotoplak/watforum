@@ -22,6 +22,10 @@ public class Public extends Controller {
         return ok(login.render(formFactory.form(User.class)));
     }
 
+    public Result landing() {
+        return ok(landing.render());
+    }
+
     public Result register() {
         Form<User> boundForm = formFactory.form(User.class).bindFromRequest();
         if (boundForm == null) {
@@ -62,7 +66,7 @@ public class Public extends Controller {
 
         session().clear();
         session("username", user.username);
-        return redirect(routes.Watplaces.searchBox());
+        return redirect(routes.Public.landing());
     }
 
     private Result loginError(Form<User> boundForm) {

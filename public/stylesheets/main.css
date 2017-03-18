@@ -1,41 +1,7 @@
-#titleBig {
-    position: static;
-    text-align: center;
-    font-size: 80px;
-    font-family: 'Oswald', serif;
-    font-weight: 600;
-    color: #ff813a;
-    font-style: italic;
-    text-align: center;
-    vertical-align: middle;
-    padding-top: 40px;
-
-}
-
-
-#searchTitle {
-    margin-top: 150px;
-    font-size: 400%;
-    font-style: italic;
-}
-
-#firstWindow {
-    background-image: url("../images/wallpaper.jpeg");
-    width: 100%;
-    background-size: cover;
-    background-position: center;
-}
-
 #mynavbar {
     margin-bottom: 0;
+    /*padding: 0 50px 0px 50px;*/
 }
-
-#news {
-    font-size: 150%;
-    margin-top: 100px;
-    text-decoration: none;
-}
-
 
 .title {
     text-align: center;
@@ -46,6 +12,10 @@
     margin-top: 50px;
 }
 
-#myLead {
-    font-size: 150%;
+.window {
+    padding: 2em;
+}
+
+.container-fluid {
+    padding: 0;
 }

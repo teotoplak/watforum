@@ -9,6 +9,13 @@ html, body {
     margin: 0;
 }
 
+
+#searchTitle {
+    margin-top: 150px;
+    font-size: 400%;
+    font-style: italic;
+}
+
 #pac-input {
 
     margin-top: 50px;

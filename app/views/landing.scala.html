@@ -1,16 +1,19 @@
 @main("Watplaces") {
 
-  <div class="container separate" id="firstWindow">
+  <link rel="stylesheet" type="text/css" href="@routes.Assets.at("stylesheets/landing.css")">
 
-    <div class="row separate">
-      <div class="col-md-6 col-md-offset-3">
-        <h1 class="h1 title">SWT forum</h1>
-        <p class="lead text-center" id="myLead"> First international USA summer work travel community </p>
-      </div>
-    </div>
-
-    <div class="container" id="news">
+  <div class="window" id="headingWindow">
       <div class="row">
+        <div class="col-md-10">
+          <h2 class="descHeading">
+            <span class="first-h words">First</span>,
+            <span class="international-h words">international</span>,
+            <span class="online-h words">online</span>,
+            <br> USA summer work travel community </h2>
+        </div>
+      </div>
+
+      <div class="row" id="news">
         <div class="col-md-6">
           <p><strong> Currently launching! </strong><br>
             We are in phase of gathering the data. If you participated in swt program you can rate your
@@ -18,17 +21,14 @@
           <p><a class="text-primary" href="@routes.Watplaces.searchBox()">Let's do it <span class="glyphicon glyphicon-circle-arrow-right"></span></a></p>
         </div>
       </div>
-    </div>
-
-
 
   </div>
 
-  <div class="container separate">
+  <img src="@routes.Assets.at("images/skyline.jpg")" class="img-responsive" alt="skyline">
+
+  <div class="window" id="aboutWindow">
     <div class="row">
-
       <h2 class="title">Who we are</h2>
-
       <div class="col-md-4 separate">
         <h2><span class="glyphicon glyphicon-globe text-primary"></span> Non-profit </h2>
         <p>We are non-profit organization which means that we use profit for achieving our purpose
@@ -43,13 +43,10 @@
         <p>Our goal is to enable exchange of past participants experiences with new ones as well as connecting
           them to enhance quality of the program</p>
       </div>
-
     </div>
   </div>
 
-  <hr />
-
-  <div class="container separate">
+  <div class="window" id="missionWindow">
     <div class="row">
 
       <h2 class="title">Our mission</h2>
@@ -71,10 +68,9 @@
   </div>
 
 
-
   <script>
 
-          $("#firstWindow").css("height", $(window).height() ); /*- $(".navbar").height()*/
+//          $("#firstWindow").css("height", $(window).height() ); /*- $(".navbar").height()*/
 
   </script>
 

@@ -1,7 +1,5 @@
 .descHeading {
-    font-size: 300%;
     margin: 30px 0 30px 0;
-
 }
 
 .first-h {
@@ -16,6 +14,7 @@
 
 .words {
     /*text-decoration: underline;*/
+    /*font-style: italic;*/
 }
 
 
@@ -24,23 +23,18 @@
 }
 
 #news {
-    font-size: 150%;
+    font-size: 120%;
     text-decoration: none;
 }
 
 #skylineWindow {
-    background-image: url("../images/skyline.jpg");
+    background: url("../images/skyline.jpg") bottom no-repeat;
     background-size:100% auto;
-
     /*width: 100%;*/
     /*background-size: cover;*/
-    background-position: bottom;
-    background-repeat: no-repeat;
 }
 
 #aboutWindow {
-    color: white;
-    background-color: #14191E;
 }
 
 #aboutWindow p {
@@ -48,21 +42,18 @@
 }
 
 #missionWindow {
-
+    font-size: 1.2em;
 }
 
-@media all and (max-width: 1200px) { /* screen size until 1200px */
-    body {
-        font-size: 1.5em; /* 1.5x default size */
-    }
+.horizontalLine {
+    width: 100%;
+    text-align: center;
+    border-bottom: 1px solid #000;
+    line-height: 0.1em;
 }
-@media all and (max-width: 1000px) { /* screen size until 1000px */
-    body {
-        font-size: 1.2em; /* 1.2x default size */
-    }
+
+.horizontalLine span {
+    background:#fff;
+    padding:0 15px;
 }
-@media all and (max-width: 500px) { /* screen size until 500px */
-    body {
-        font-size: 0.8em; /* 0.8x default size */
-    }
-}
+

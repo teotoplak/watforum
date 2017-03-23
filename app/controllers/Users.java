@@ -40,9 +40,11 @@ public class Users extends Controller {
     }
 
     public Result profile() {
-        User user = currentUser();
-        List<Rating> userRatings = Rating.userRatings(user.id);
-        return ok(profile.render(user,userRatings));
+        CommonProfile profile = CurrentUserUtility.getUserProfile();
+        if(profile == null) {
+            ok("no user logged in!");
+        }
+        return ok(views.html.profile.render(profile));
     }
 
 //    user for helping views to get username

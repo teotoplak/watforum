@@ -10,7 +10,7 @@ import static play.mvc.Results.*;
 
 public class CustomHttpActionAdapter extends DefaultHttpActionAdapter {
 
-        private Logger logger = org.slf4j.LoggerFactory.getLogger(getClass());
+    private Logger logger = org.slf4j.LoggerFactory.getLogger(getClass());
 
 
     @Override

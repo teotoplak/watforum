@@ -2,19 +2,11 @@ package modules;
 
 import com.google.inject.AbstractModule;
 import controllers.CurrentUserUtility;
-import controllers.Users;
 import org.pac4j.core.client.Clients;
 import org.pac4j.core.config.Config;
-import org.pac4j.http.client.direct.DirectBasicAuthClient;
-import org.pac4j.http.client.direct.ParameterClient;
-import org.pac4j.http.client.indirect.FormClient;
-import org.pac4j.http.client.indirect.IndirectBasicAuthClient;
-import org.pac4j.http.credentials.authenticator.test.SimpleTestUsernamePasswordAuthenticator;
 import org.pac4j.oauth.client.FacebookClient;
-import org.pac4j.oauth.client.TwitterClient;
 import org.pac4j.play.CallbackController;
 import org.pac4j.play.LogoutController;
-import org.pac4j.play.deadbolt2.Pac4jHandlerCache;
 import org.pac4j.play.deadbolt2.Pac4jRoleHandler;
 import org.pac4j.play.store.PlayCacheSessionStore;
 import org.pac4j.play.store.PlaySessionStore;
@@ -22,9 +14,8 @@ import play.Configuration;
 import play.Environment;
 import play.cache.CacheApi;
 import security.CustomHttpActionAdapter;
+import controllers.CustomLogoutController;
 import security.MyCustomAuth;
-
-import java.io.File;
 
 /*For now only supporting facebook client*/
 public class SecurityModule extends AbstractModule {
@@ -39,7 +30,6 @@ public class SecurityModule extends AbstractModule {
 
     private final String fbId = "132736803558924";
     private final String fbSecret = "e461422527aeedb32ee6c10834d3e19e";
-    private final String baseUrl = "http://localhost:9000"; //need it for form
 
 
     @Override
@@ -53,8 +43,8 @@ public class SecurityModule extends AbstractModule {
         // OAuth
         final FacebookClient facebookClient = new FacebookClient(fbId, fbSecret);
 
-        final Clients clients = new Clients(baseUrl + "/callback",
-                facebookClient
+        final Clients clients = new Clients(configuration.getString("baseUrl")
+                + "/callback", facebookClient
                 );
 
         final Config config = new Config(clients);
@@ -69,11 +59,6 @@ public class SecurityModule extends AbstractModule {
         bind(CallbackController.class).toInstance(callbackController);
 
         // logout
-        final LogoutController logoutController = new LogoutController();
-        logoutController.setDefaultUrl("/");
-        logoutController.setLocalLogout(true);
-        logoutController.setCentralLogout(true);
-        logoutController.setDestroySession(true);
-        bind(LogoutController.class).toInstance(logoutController);
+        bind(LogoutController.class).toInstance(new CustomLogoutController());
     }
 }

@@ -4,7 +4,7 @@
     <div class="containter">
         @*defines button which appears when device is small*@
         <div class="navbar-header">
-            <a class="navbar-brand" href="@routes.Public.landing()"> J1Community </a>
+            <a class="navbar-brand" href="@routes.Public.landing()"> J1Online </a>
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
                     <!--defines these button which appears on xs devices, icon bar is line on the button-->
                 <span class="sr-only">Toggle navigation</span>
@@ -15,7 +15,7 @@
         </div>
         <div id="navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav navbar-left">
-            @if(controllers.Users.currentUser() != null) {
+            @if(controllers.CurrentUserUtility.getUserProfile() != null) {
                 <li><a href="@routes.Watplaces.searchBox()">Search</a></li>
                 <li><a href="@routes.Users.profile()">My profile</a></li>
                 @*<li><a href="@routes.Users.listAllUsers()">Registered users</a></li>*@
@@ -27,9 +27,13 @@
             }
             </ul>
             <ul class="nav navbar-nav navbar-right">
-            @if(controllers.Users.currentUser() != null) {
-                <li><p class="navbar-text"><i>Logged in as: @controllers.Users.currentUser().username</i></p></li>
-                <li><a href="@routes.Users.logout()">Logout</a></li>
+            @if(controllers.CurrentUserUtility.getUserProfile() != null) {
+                <li><a href="/logout">Logout</a> </li>
+                <li> <img class="img-responsive userPic text-center" src="@controllers.CurrentUserUtility.getUserPictureUrl()"/></li>
+                <li><a>@controllers.CurrentUserUtility.getUserProfile().getFirstName()</a> </li>
+            } else {
+                <li><a href="@routes.Public.login()">Login</a></li>
+
             }
             </ul>
         </div>

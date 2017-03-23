@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * Created by teo on 12/9/16.
  */
-@Security.Authenticated(Secured.class)
+//@Security.Authenticated(Secured.class)
 public class Ratings extends Controller {
 
     public Result listAll() {

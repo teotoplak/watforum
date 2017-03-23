@@ -15,6 +15,13 @@
     padding: 0;
 }
 
+.userPic {
+    width: 80%;
+    height: 80%;
+    border-radius: 70%;
+    margin: auto;
+}
+
 /*this is used for responsive text
 important: classes used here should not have font-size defined cause it will
 be overwritten */

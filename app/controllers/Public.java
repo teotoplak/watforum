@@ -1,6 +1,7 @@
 package controllers;
 
 import models.User;
+import org.pac4j.play.java.Secure;
 import play.data.Form;
 import play.data.FormFactory;
 import play.mvc.Controller;
@@ -51,21 +52,9 @@ public class Public extends Controller {
         return redirect(routes.Public.loginForm());
     }
 
+    @Secure(clients = "FacebookClient", authorizers = "custom")
     public Result login() {
-        Form<User> boundForm = formFactory.form(User.class).bindFromRequest();
-        User enteredUser;
-        try {
-            enteredUser = boundForm.get();
-        } catch (IllegalStateException ex) {
-            return loginError(boundForm);
-        }
-        User user = User.checkUser(enteredUser.username, enteredUser.password);
-        if (user == null) {
-            return loginError(boundForm);
-        }
-
-        session().clear();
-        session("username", user.username);
+        flash("logged in!!");
         return redirect(routes.Public.landing());
     }
 

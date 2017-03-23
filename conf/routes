@@ -5,20 +5,24 @@
 # Home page
 
 # Map static resources from the /public folder to the /assets URL path
-GET     /assets/*file      controllers.Assets.at(path="/public", file)
-GET     /webjars/*file     controllers.WebJarAssets.at(file)
-
-GET     /listing            controllers.Users.listAllUsers()
 GET     /register           controllers.Public.registerForm()
 POST    /register           controllers.Public.register()
+
+GET     /assets/*file      controllers.Assets.at(path="/public", file)
+GET     /webjars/*file     controllers.WebJarAssets.at(file)
+GET     /listing            controllers.Users.listAllUsers()
+GET     /                    controllers.Public.landing()
 GET     /                    controllers.Public.loginForm()
 GET     /                    controllers.Public.notAuthLoginForm()
-POST    /login              controllers.Public.login()
-GET     /logout             controllers.Users.logout()
+GET     /login              controllers.Public.login()
+GET     /logouta            controllers.Users.logout()
 GET     /profile            controllers.Users.profile()
 GET     /search             controllers.Watplaces.searchBox()
 GET    /watplace/:id           controllers.Watplaces.watPlace(id: String)
 POST    /rate               controllers.Watplaces.rate
-GET     /ratings            controllers.Ratings.listAll
-GET     /test/:id                controllers.Watplaces.test(id: String)
-GET     /landing            controllers.Public.landing()
+GET     /ratings                  controllers.Ratings.listAll
+GET     /test/:id                 controllers.Watplaces.test(id: String)
+GET     /landing                  controllers.Public.landing()
+GET     /callback             @org.pac4j.play.CallbackController.callback()
+POST    /callback             @org.pac4j.play.CallbackController.callback()
+GET     /logout               @org.pac4j.play.LogoutController.logout()

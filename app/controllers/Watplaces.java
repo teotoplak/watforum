@@ -19,7 +19,6 @@ import java.util.DoubleSummaryStatistics;
  * Created by teo on 11/30/16.
  */
 
-@Security.Authenticated(Secured.class)
 public class Watplaces extends Controller {
 
     @Inject

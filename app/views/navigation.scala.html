@@ -18,15 +18,24 @@
                 <li><a href="@routes.Watplaces.searchBox()">Search</a></li>
                 <li><a href="@routes.Ratings.listAll()">Ratings</a></li>
             @if(controllers.CurrentUserUtility.getUserProfile() != null) {
-                <li><a href="@routes.Users.profile()">My profile</a></li>
+                <li><a href=>My profile</a></li>
             }
             </ul>
-            <ul class="nav navbar-nav navbar-right">
+            <ul class="nav navbar-nav navbar-right ">
             @if(controllers.CurrentUserUtility.getUserProfile() != null) {
-                <li><a><img class="userPicNav img-responsive"
-                src="@controllers.CurrentUserUtility.getUserPictureUrl()"/></a></li>
-                <li><a href="/logout">Logout</a> </li>
-                <li><a>@controllers.CurrentUserUtility.getUserProfile().getFirstName()</a> </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <img src="@controllers.CurrentUserUtility.getUserPictureUrl()" class="profile-image">
+                        @controllers.CurrentUserUtility.getUserProfile().getFirstName()
+                        @controllers.CurrentUserUtility.getUserProfile().getFamilyName()
+                        <b class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="@routes.Users.profile()"> Profile</a></li>
+                        <li class="divider"></li>
+                        <li><a href="@routes.Users.logout()"> Logout</a></li>
+                    </ul>
+                </li>
             } else {
                 <li><a href="@routes.Public.login()">Login</a></li>
 

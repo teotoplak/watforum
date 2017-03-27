@@ -36,7 +36,7 @@ public class Users extends Controller {
 
     public Result logout() {
         session().clear();
-        return redirect(routes.Public.loginForm());
+        return redirect(routes.Public.landing());
     }
 
     @Secure(clients = "FacebookClient", authorizers = "custom")

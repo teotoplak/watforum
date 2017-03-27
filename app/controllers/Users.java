@@ -39,6 +39,7 @@ public class Users extends Controller {
         return redirect(routes.Public.loginForm());
     }
 
+    @Secure(clients = "FacebookClient", authorizers = "custom")
     public Result profile() {
         CommonProfile profile = CurrentUserUtility.getUserProfile();
         if(profile == null) {

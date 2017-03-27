@@ -15,11 +15,14 @@
     padding: 0;
 }
 
-.userPic {
-    width: 80%;
-    height: 80%;
-    border-radius: 70%;
-    margin: auto;
+.userPicNav {
+    height: 30px;
+    width: 30px;
+}
+
+.table {
+    table-layout: fixed;
+    word-wrap: break-word;
 }
 
 /*this is used for responsive text

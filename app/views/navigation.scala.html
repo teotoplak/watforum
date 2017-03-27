@@ -23,8 +23,9 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
             @if(controllers.CurrentUserUtility.getUserProfile() != null) {
+                <li><a><img class="userPicNav img-responsive"
+                src="@controllers.CurrentUserUtility.getUserPictureUrl()"/></a></li>
                 <li><a href="/logout">Logout</a> </li>
-                <li> <img class="img-responsive userPic text-center" src="@controllers.CurrentUserUtility.getUserPictureUrl()"/></li>
                 <li><a>@controllers.CurrentUserUtility.getUserProfile().getFirstName()</a> </li>
             } else {
                 <li><a href="@routes.Public.login()">Login</a></li>

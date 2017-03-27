@@ -1,4 +1,4 @@
-name := """watforum2"""
+name := """watforum"""
 
 version := "1.0-SNAPSHOT"
 

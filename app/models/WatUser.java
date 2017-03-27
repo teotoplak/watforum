@@ -4,7 +4,6 @@ import com.avaje.ebean.Model;
 import play.data.validation.Constraints;
 import play.libs.F;
 
-import javax.annotation.Generated;
 import javax.persistence.*;
 import java.util.*;
 
@@ -12,7 +11,7 @@ import java.util.*;
  * Created by teo on 11/27/16.
  */
 @Entity
-public class User extends Model {
+public class WatUser extends Model {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -39,21 +38,21 @@ public class User extends Model {
     public Set<Rating> ratings = new HashSet<>();
 
 
-    public static Finder<Long, User> find = new Finder<>(User.class);
+    public static Finder<Long, WatUser> find = new Finder<>(WatUser.class);
 
-    public static List<User> findAll() {
+    public static List<WatUser> findAll() {
         return find.all();
     }
 
-    public static User checkUser(String username, String password) {
+    public static WatUser checkUser(String username, String password) {
         return find.where().eq("username", username).and().eq("password", password).findUnique();
     }
 
-    public static User findUserByUsername(String username) {
+    public static WatUser findUserByUsername(String username) {
         return find.where().eq("username", username).findUnique();
     }
 
-    public static User findUserById(Long id) {
+    public static WatUser findUserById(Long id) {
         return find.where().eq("id", id).findUnique();
     }
 

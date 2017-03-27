@@ -10,19 +10,6 @@ create table rating (
   rated_at                      timestamp
 );
 
-create table user (
-  id                            bigint not null,
-  username                      varchar(255),
-  password                      varchar(255),
-  country                       varchar(255),
-  first_name                    varchar(255),
-  last_name                     varchar(255),
-  birth                         timestamp,
-  constraint uq_user_username unique (username),
-  constraint pk_user primary key (id)
-);
-create sequence user_seq;
-
 create table wat_place (
   id                            bigint not null,
   google_id                     varchar(255),
@@ -38,7 +25,20 @@ create table wat_place (
 );
 create sequence wat_place_seq;
 
-alter table rating add constraint fk_rating_user_id foreign key (user_id) references user (id) on delete restrict on update restrict;
+create table wat_user (
+  id                            bigint not null,
+  username                      varchar(255),
+  password                      varchar(255),
+  country                       varchar(255),
+  first_name                    varchar(255),
+  last_name                     varchar(255),
+  birth                         timestamp,
+  constraint uq_wat_user_username unique (username),
+  constraint pk_wat_user primary key (id)
+);
+create sequence wat_user_seq;
+
+alter table rating add constraint fk_rating_user_id foreign key (user_id) references wat_user (id) on delete restrict on update restrict;
 create index ix_rating_user_id on rating (user_id);
 
 alter table rating add constraint fk_rating_watplace_id foreign key (watplace_id) references wat_place (id) on delete restrict on update restrict;
@@ -47,17 +47,17 @@ create index ix_rating_watplace_id on rating (watplace_id);
 
 # --- !Downs
 
-alter table rating drop constraint if exists fk_rating_user_id;
+alter table if exists rating drop constraint if exists fk_rating_user_id;
 drop index if exists ix_rating_user_id;
 
-alter table rating drop constraint if exists fk_rating_watplace_id;
+alter table if exists rating drop constraint if exists fk_rating_watplace_id;
 drop index if exists ix_rating_watplace_id;
 
-drop table if exists rating;
+drop table if exists rating cascade;
 
-drop table if exists user;
-drop sequence if exists user_seq;
-
-drop table if exists wat_place;
+drop table if exists wat_place cascade;
 drop sequence if exists wat_place_seq;
+
+drop table if exists wat_user cascade;
+drop sequence if exists wat_user_seq;
 

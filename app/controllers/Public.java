@@ -1,6 +1,6 @@
 package controllers;
 
-import models.User;
+import models.WatUser;
 import play.data.Form;
 import play.data.FormFactory;
 import play.mvc.Controller;
@@ -19,7 +19,7 @@ public class Public extends Controller {
     private FormFactory formFactory;
 
     public Result loginForm() {
-        return ok(login.render(formFactory.form(User.class)));
+        return ok(login.render(formFactory.form(WatUser.class)));
     }
 
     public Result landing() {
@@ -27,7 +27,7 @@ public class Public extends Controller {
     }
 
     public Result register() {
-        Form<User> boundForm = formFactory.form(User.class).bindFromRequest();
+        Form<WatUser> boundForm = formFactory.form(WatUser.class).bindFromRequest();
         if (boundForm == null) {
             return null;
         }
@@ -35,7 +35,7 @@ public class Public extends Controller {
             flash("error", "Incorrect register!");
             return badRequest(register.render(boundForm));
         }
-        User user = boundForm.get();
+        WatUser user = boundForm.get();
 
         if(user.id == null) {
             user.save();
@@ -52,14 +52,14 @@ public class Public extends Controller {
     }
 
     public Result login() {
-        Form<User> boundForm = formFactory.form(User.class).bindFromRequest();
-        User enteredUser;
+        Form<WatUser> boundForm = formFactory.form(WatUser.class).bindFromRequest();
+        WatUser enteredUser;
         try {
             enteredUser = boundForm.get();
         } catch (IllegalStateException ex) {
             return loginError(boundForm);
         }
-        User user = User.checkUser(enteredUser.username, enteredUser.password);
+        WatUser user = WatUser.checkUser(enteredUser.username, enteredUser.password);
         if (user == null) {
             return loginError(boundForm);
         }
@@ -69,14 +69,14 @@ public class Public extends Controller {
         return redirect(routes.Public.landing());
     }
 
-    private Result loginError(Form<User> boundForm) {
+    private Result loginError(Form<WatUser> boundForm) {
         flash("error", "Incorrect login!");
         return badRequest(views.html.login.render(boundForm));
     }
 
 
     public Result registerForm() {
-        return ok(register.render(formFactory.form(User.class).bindFromRequest()));
+        return ok(register.render(formFactory.form(WatUser.class).bindFromRequest()));
     }
 
 

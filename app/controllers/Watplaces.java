@@ -2,7 +2,7 @@ package controllers;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import models.Rating;
-import models.User;
+import models.WatUser;
 import models.WatPlace;
 import play.data.Form;
 import play.data.FormFactory;
@@ -13,7 +13,6 @@ import play.mvc.Security;
 import views.html.*;
 
 import javax.inject.Inject;
-import java.util.DoubleSummaryStatistics;
 
 /**
  * Created by teo on 11/30/16.
@@ -76,7 +75,7 @@ public class Watplaces extends Controller {
 
         //refreshing to get id
         place = WatPlace.findWatPlaceByGoogleId(place.googleID);
-        User user = Users.currentUser();
+        WatUser user = Users.currentUser();
         Integer rating = Rating.findRating(user, place);
         Integer overAllRating = Rating.findAverageRatingForPlace(place.id);
         return ok(watplace.render(place,rating,overAllRating,lat,lng));
@@ -91,7 +90,7 @@ public class Watplaces extends Controller {
 
         Form<RatingForm> ratingFormForm = formFactory.form(RatingForm.class);
         RatingForm ratingForm = ratingFormForm.bindFromRequest().get();
-        User user = User.findUserById(ratingForm.user_id);
+        WatUser user = WatUser.findUserById(ratingForm.user_id);
         WatPlace watPlace = WatPlace.findWatPlaceById(ratingForm.watPlace_id);
 
         Rating rating = new Rating(user, watPlace, ratingForm.ratingInput);

@@ -1,8 +1,7 @@
 package controllers;
 
 import models.Rating;
-import models.User;
-import play.data.Form;
+import models.WatUser;
 import play.data.FormFactory;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -10,7 +9,6 @@ import play.mvc.Security;
 import views.html.*;
 
 import javax.inject.Inject;
-import javax.jws.soap.SOAPBinding;
 import java.util.List;
 
 
@@ -24,7 +22,7 @@ public class Users extends Controller {
     private FormFactory formFactory;
 
     public Result listAllUsers() {
-        List<User> list = User.findAll();
+        List<WatUser> list = WatUser.findAll();
         return ok(listing.render(list));
     }
 
@@ -34,14 +32,14 @@ public class Users extends Controller {
     }
 
     public Result profile() {
-        User user = currentUser();
+        WatUser user = currentUser();
         List<Rating> userRatings = Rating.userRatings(user.id);
         return ok(profile.render(user,userRatings));
     }
 
 //    user for helping views to get username
-    public static User currentUser() {
-        return User.findUserByUsername(ctx().session().get("username"));
+    public static WatUser currentUser() {
+        return WatUser.findUserByUsername(ctx().session().get("username"));
     }
 
 

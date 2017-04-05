@@ -1,14 +1,11 @@
 package models;
 
 import com.avaje.ebean.Model;
-import controllers.Users;
-import play.mvc.Result;
 
 import javax.persistence.*;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
+
 import org.ocpsoft.prettytime.PrettyTime;
 
 /**
@@ -19,7 +16,7 @@ public class Rating extends Model {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    public User user;
+    public WatUser user;
 
     @ManyToOne
     @JoinColumn(name = "watPlace_id")
@@ -31,7 +28,7 @@ public class Rating extends Model {
     @Column(name = "rated_at")
     public Date ratedAt;
 
-    public Rating(User user, WatPlace watPlace, Integer rating) {
+    public Rating(WatUser user, WatPlace watPlace, Integer rating) {
         this.user = user;
         this.watPlace = watPlace;
         this.rating = rating;
@@ -60,7 +57,7 @@ public class Rating extends Model {
         return find.order("rated_at desc").findList();
     }
 
-    public static Integer findRating(User user, WatPlace watPlace) {
+    public static Integer findRating(WatUser user, WatPlace watPlace) {
         Rating rating = find.where().eq("user_id",user.id).and().eq("watPlace_id",watPlace.id).findUnique();
         if (rating == null) {
             return -1;

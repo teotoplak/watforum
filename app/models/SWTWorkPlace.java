@@ -1,5 +1,6 @@
 package models;
 
+import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import java.util.HashSet;
 import java.util.Set;
@@ -7,19 +8,11 @@ import java.util.Set;
 /**
  * Created by TeoLenovo on 4/6/2017.
  */
-public class SWTWork extends SWTPlace {
+@Entity
+public class SWTWorkPlace extends SWTPlace {
 
-    public Long id;
 
     public String googleId;
-
-    public String name;
-
-    public String phoneNumber;
-
-    public String address;
-
-    public String icon;
 
     /*
     text about working hours
@@ -33,6 +26,7 @@ public class SWTWork extends SWTPlace {
      */
     public String googleMaps;
 
+    @OneToMany(mappedBy = "swtWorkPlace")
     public Set<SWTWorkRating> ratings;
 
 }

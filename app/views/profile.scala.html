@@ -7,7 +7,8 @@
     <h3>
     @if(user.username != null) { <dt>Username</dt> <dd>@(user.username)</dd> }
     @if(user.firstName != null) { <dt>Name</dt> <dd>@(user.firstName)</dd> }
-    @if(user.lastName != null) { <dt>Surname</dt> <dd>@(user.lastName)</dd> }
+      @if(user.password != null) { <dt>Password</dt> <dd>@(user.password)</dd> }
+      @if(user.lastName != null) { <dt>Surname</dt> <dd>@(user.lastName)</dd> }
     @if(user.birth != null) { <dt>Birth date</dt> <dd>@(user.birth.format("dd/MM/yyyy"))</dd> }
     </h3>
   </dl>

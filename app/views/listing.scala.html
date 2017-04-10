@@ -1,11 +1,11 @@
-@(users: List[WatUser])
+@(users: List[SWTUser])
 @main("Registered users") {
 
   <h2>Registered users:</h2>
 
   <table class="table table-bordered">
     <thead>
-      <tr><th>Id</th><th>Username</th><th>Password</th><th>Country</th></tr>
+      <tr><th>Id</th><th>Username</th><th>Password</th></tr>
     </thead>
     <tbody>
     @for(user <- users) {
@@ -18,9 +18,6 @@
         </td>
         <td>
           @user.password
-        </td>
-        <td>
-          @user.country
         </td>
       </tr>
     }

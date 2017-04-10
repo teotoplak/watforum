@@ -15,7 +15,7 @@ public class Secured extends Security.Authenticator {
 
     @Override
     public Result onUnauthorized(Context context) {
-        return redirect(routes.Public.notAuthLoginForm());
+        return redirect(routes.SWTUserController.notAuthLoginForm());
     }
 
 }

@@ -1,4 +1,4 @@
-@(user: WatUser)(userRating: List[Rating])
+@(user: SWTUser)(userRating: List[Rating])
 @import helper._
 
 @main("WatUser profile") {
@@ -8,7 +8,6 @@
     @if(user.username != null) { <dt>Username</dt> <dd>@(user.username)</dd> }
     @if(user.firstName != null) { <dt>Name</dt> <dd>@(user.firstName)</dd> }
     @if(user.lastName != null) { <dt>Surname</dt> <dd>@(user.lastName)</dd> }
-    @if(user.country != null) { <dt>Country</dt> <dd>@(user.country)</dd> }
     @if(user.birth != null) { <dt>Birth date</dt> <dd>@(user.birth.format("dd/MM/yyyy"))</dd> }
     </h3>
   </dl>

@@ -1,22 +1,21 @@
-@(userForm: Form[WatUser])
+@(SWTuserForm: Form[SWTUser])
 @import helper._
 
 @main("Student form") {
   <h2>Register</h2>
-  @helper.form(action = routes.Public.register()) {
+  @helper.form(action = routes.SWTUserController.register()) {
     <fieldset>
-      <input type="hidden" value="@userForm("id").valueOr("")" name="id" />
-      @helper.inputText(userForm("username"), '_label -> "Username", '_showConstraints -> false, '_showErrors -> false)
-      @helper.inputPassword(userForm("password"), '_label -> "Password", '_showConstraints -> false, '_showErrors -> false)
-      @helper.inputText(userForm("firstName"), '_label -> "Name", '_showConstraints -> false, '_showErrors -> false)
-      @helper.inputText(userForm("lastName"), '_label -> "Surname", '_showConstraints -> false, '_showErrors -> false)
-      @helper.inputText(userForm("country"), '_label -> "Country", '_showConstraints -> false, '_showErrors -> false)
-      @helper.inputDate(userForm("birth"), '_label -> "Birtdate", '_showConstraints -> false, '_showErrors -> false)
+      <input type="hidden" value="@SWTuserForm("id").valueOr("")" name="id" />
+      @helper.inputText(SWTuserForm("username"), '_label -> "Username", '_showConstraints -> false, '_showErrors -> false)
+      @helper.inputPassword(SWTuserForm("password"), '_label -> "Password", '_showConstraints -> false, '_showErrors -> false)
+      @helper.inputText(SWTuserForm("firstName"), '_label -> "Name", '_showConstraints -> false, '_showErrors -> false)
+      @helper.inputText(SWTuserForm("lastName"), '_label -> "Surname", '_showConstraints -> false, '_showErrors -> false)
+      @helper.inputDate(SWTuserForm("birth"), '_label -> "Birtdate", '_showConstraints -> false, '_showErrors -> false)
 
     </fieldset>
     <button type="submit" class="btn btn-primary">
       <i class="glyphicon glyphicon-ok"></i> Save
     </button>
-    <a class="btn btn-primary" href="@routes.Users.listAllUsers()"><i class="glyphicon glyphicon-remove"></i> Cancel</a>
+    <a class="btn btn-primary" href="@routes.SWTUserController.listAllUsers()"><i class="glyphicon glyphicon-remove"></i> Cancel</a>
   }
 }

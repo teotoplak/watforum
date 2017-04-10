@@ -79,7 +79,7 @@
   </dl>
   <form action="/rate" method="POST" >
     <fieldset>
-      <input type="hidden" value=@controllers.Users.currentUser().id name="user_id" />
+      <input type="hidden" value=@controllers.SWTUserController.currentUser().id name="user_id" />
       <input type="hidden" value=@watplace.id name="watPlace_id" />
       <input type="hidden" name="ratingInput" id="ratingInput"/>
     @if(rating == -1) {

@@ -15,21 +15,21 @@
         </div>
         <div id="navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav navbar-left">
-            @if(controllers.Users.currentUser() != null) {
+            @if(controllers.SWTUserController.currentUser() != null) {
                 <li><a href="@routes.Watplaces.searchBox()">Search</a></li>
-                <li><a href="@routes.Users.profile()">My profile</a></li>
-                @*<li><a href="@routes.Users.listAllUsers()">Registered users</a></li>*@
+                <li><a href="@routes.SWTUserController.profile()">My profile</a></li>
+                <li><a href="@routes.SWTUserController.listAllUsers()">Registered users</a></li>
                 <li><a href="@routes.Ratings.listAll()">Ratings</a></li>
                 <li><a href="@routes.Public.landing()">Langing page</a></li>
             } else {
-                <li><a href="@routes.Public.loginForm()">Login</a></li>
-                <li><a href="@routes.Public.registerForm()">Register</a></li>
+                <li><a href="@routes.SWTUserController.loginForm()">Login</a></li>
+                <li><a href="@routes.SWTUserController.registerForm()">Register</a></li>
             }
             </ul>
             <ul class="nav navbar-nav navbar-right">
-            @if(controllers.Users.currentUser() != null) {
-                <li><p class="navbar-text"><i>Logged in as: @controllers.Users.currentUser().username</i></p></li>
-                <li><a href="@routes.Users.logout()">Logout</a></li>
+            @if(controllers.SWTUserController.currentUser() != null) {
+                <li><p class="navbar-text"><i>Logged in as: @controllers.SWTUserController.currentUser().username</i></p></li>
+                <li><a href="@routes.SWTUserController.logout()">Logout</a></li>
             }
             </ul>
         </div>

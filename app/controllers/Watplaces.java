@@ -75,10 +75,11 @@ public class Watplaces extends Controller {
 
         //refreshing to get id
         place = WatPlace.findWatPlaceByGoogleId(place.googleID);
-        WatUser user = Users.currentUser();
-        Integer rating = Rating.findRating(user, place);
-        Integer overAllRating = Rating.findAverageRatingForPlace(place.id);
-        return ok(watplace.render(place,rating,overAllRating,lat,lng));
+//        WatUser user = Users.currentUser();
+//        Integer rating = Rating.findRating(user, place);
+//        Integer overAllRating = Rating.findAverageRatingForPlace(place.id);
+//        return ok(watplace.render(place,rating,overAllRating,lat,lng));
+        return ok();
 
     }
 

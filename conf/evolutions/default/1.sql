@@ -17,6 +17,7 @@ create table swtuser (
   first_name                    varchar(255),
   last_name                     varchar(255),
   contact                       varchar(255),
+  birth                         timestamp,
   email                         varchar(255),
   living_location               varchar(255),
   constraint uq_swtuser_username unique (username),

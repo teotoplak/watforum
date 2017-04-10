@@ -2,6 +2,9 @@
 @import helper._
 
 @main("Student form") {
+
+  <div class="row">
+    <div class="col-md-5">
   <h2>Register</h2>
   @helper.form(action = routes.SWTUserController.register()) {
     <fieldset>
@@ -17,5 +20,43 @@
       <i class="glyphicon glyphicon-ok"></i> Save
     </button>
     <a class="btn btn-primary" href="@routes.SWTUserController.listAllUsers()"><i class="glyphicon glyphicon-remove"></i> Cancel</a>
+    </div>
+    <div class="col-md-5">
+      <h4>Add past or present swt year:</h4>
+        <table id="SWTYearTable" class="table grid" id="grid">
+          <thead>
+            <tr>
+              <th>Year</th>
+              <th>Agency</th>
+              <th>Country</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+              <!-- essentially a foreach loop -->
+            <tr ng-repeat="todo in todoList.Items">
+              <td>
+                <select id="addYear" class="form-control"></select>
+              </td>
+              <td>
+                <input ng-model="todo.Task" type="text" id="addAgency" class="form-control" />
+              </td>
+              <td>
+                <input ng-model="todo.Task" type="text" id="addCountry" class="form-control" />
+              </td>
+              <td>
+                <button class="btn btn-primary">
+                  <span id="addButton" class="glyphicon glyphicon-plus"></span>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+    </div>
+      <script src="@routes.Assets.at("javascripts/SWTYearSetup.js")" type="text/javascript"></script>
+
+  </div>
+
   }
+
 }

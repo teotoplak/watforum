@@ -17,7 +17,7 @@ import java.util.List;
 public class SWTUser extends Model {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.TABLE)
     public Long id;
 
     @Constraints.Required

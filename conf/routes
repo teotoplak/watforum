@@ -8,6 +8,7 @@
 GET     /assets/*file      controllers.Assets.at(path="/public", file)
 GET     /webjars/*file     controllers.WebJarAssets.at(file)
 
+#user
 GET     /listing            controllers.SWTUserController.listAllUsers()
 GET     /register           controllers.SWTUserController.registerForm()
 POST    /register           controllers.SWTUserController.register()
@@ -21,3 +22,8 @@ POST    /rate               controllers.Watplaces.rate
 GET     /ratings            controllers.Ratings.listAll
 GET     /test/:id                controllers.Watplaces.test(id: String)
 GET     /               controllers.Public.landing()
+GET     /addYears           controllers.SWTUserController.addSWTYearsForm(id: Long)
+
+#year
+POST    /saveYear          controllers.SWTYearController.saveSWTYear()
+POST    /deleteYear          controllers.SWTYearController.deleteSWTYear()

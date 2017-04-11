@@ -11,7 +11,7 @@ create table rating (
 );
 
 create table swtuser (
-  id                            bigint not null,
+  id                            bigserial not null,
   username                      varchar(255),
   password                      varchar(255),
   first_name                    varchar(255),
@@ -24,7 +24,6 @@ create table swtuser (
   constraint uq_swtuser_email unique (email),
   constraint pk_swtuser primary key (id)
 );
-create sequence swtuser_seq;
 
 create table swtwork_place (
   id                            bigserial not null,
@@ -59,7 +58,6 @@ create table swtwork_rating (
 create table swtyear (
   id                            bigserial not null,
   year                          integer,
-  country                       varchar(255),
   agency                        varchar(255),
   user_id                       bigint,
   constraint pk_swtyear primary key (id)
@@ -129,7 +127,6 @@ drop index if exists ix_swtyear_user_id;
 drop table if exists rating cascade;
 
 drop table if exists swtuser cascade;
-drop sequence if exists swtuser_seq;
 
 drop table if exists swtwork_place cascade;
 

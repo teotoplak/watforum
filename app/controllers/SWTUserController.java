@@ -1,10 +1,14 @@
 package controllers;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import models.Rating;
 import models.SWTUser;
+import models.SWTYear;
 import models.WatUser;
+import play.data.DynamicForm;
 import play.data.Form;
 import play.data.FormFactory;
+import play.mvc.BodyParser;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security;
@@ -17,6 +21,7 @@ import javax.inject.Inject;
 import javax.sound.sampled.Control;
 
 import java.util.List;
+import java.util.Map;
 
 import static play.mvc.Controller.flash;
 import static play.mvc.Results.badRequest;
@@ -46,8 +51,8 @@ public class SWTUserController extends Controller{
         } else {
             user.update();
         }
-        flash("success", String.format("Hello %s! Please login to your new account.", user));
-        return redirect(routes.SWTUserController.loginForm());
+//        flash("success", String.format("Hello %s! Please login to your new account.", user));
+        return redirect(routes.SWTUserController.addSWTYearsForm(user.id));
     }
 
     public Result listAllUsers() {
@@ -58,6 +63,15 @@ public class SWTUserController extends Controller{
     public Result registerForm() {
         return ok(register.render(formFactory.form(SWTUser.class).bindFromRequest()));
     }
+
+    public Result addSWTYearsForm(Long userId) {
+
+        return ok(views.html.swtYearsAdd.render(userId));
+    }
+
+
+
+
 
     public Result loginForm() {
         return ok(login.render(formFactory.form(SWTUser.class)));

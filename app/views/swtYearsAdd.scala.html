@@ -1,0 +1,43 @@
+@(userId: Long)
+@main("SWT Years") {
+
+    <div class="row">
+    <div class="col-md-4">
+        <h4>Add past or present swt year:</h4>
+        <table id="SWTYearTable" class="table" id="grid">
+            <thead>
+            <tr>
+                <th>Year</th>
+                <th>Agency</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>
+                    <select id="addYear" class="form-control"></select>
+                </td>
+                <td>
+                    <input type="text" id="addAgency" class="form-control" />
+                </td>
+                <td>
+                    <button type="button" id="addButton" class="btn btn-primary">
+                        <span class="glyphicon glyphicon-plus"></span>
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <a href="@routes.Public.landing()" class="btn btn-success">
+            Ok
+        </a>
+    </div>
+
+
+</div>
+
+    <script src="@routes.Assets.at("javascripts/SWTYearSetup.js")"
+    data-userId="@userId" type="text/javascript"></script>
+
+
+}

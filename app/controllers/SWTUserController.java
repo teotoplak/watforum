@@ -5,6 +5,7 @@ import models.Rating;
 import models.SWTUser;
 import models.SWTYear;
 import models.WatUser;
+import play.api.cache.Cache;
 import play.data.DynamicForm;
 import play.data.Form;
 import play.data.FormFactory;
@@ -15,7 +16,7 @@ import play.mvc.Security;
 import views.html.login;
 import views.html.register;
 import views.html.*;
-
+import play.cache.*;
 
 import javax.inject.Inject;
 import javax.sound.sampled.Control;
@@ -31,6 +32,9 @@ import static play.mvc.Results.redirect;
  * Created by TeoLenovo on 4/10/2017.
  */
 public class SWTUserController extends Controller{
+
+    @Inject
+    private CacheApi cache;
 
     @Inject
     private FormFactory formFactory;
@@ -51,8 +55,9 @@ public class SWTUserController extends Controller{
         } else {
             user.update();
         }
-//        flash("success", String.format("Hello %s! Please login to your new account.", user));
-        return redirect(routes.SWTUserController.addSWTYearsForm(user.id));
+
+        cache.set("userId", user.id, 30);
+        return redirect(routes.SWTYearController.addSWTYearsForm());
     }
 
     public Result listAllUsers() {
@@ -64,10 +69,6 @@ public class SWTUserController extends Controller{
         return ok(register.render(formFactory.form(SWTUser.class).bindFromRequest()));
     }
 
-    public Result addSWTYearsForm(Long userId) {
-
-        return ok(views.html.swtYearsAdd.render(userId));
-    }
 
 
 

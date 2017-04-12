@@ -1,6 +1,7 @@
 package models;
 
 import com.avaje.ebean.Model;
+import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -9,7 +10,7 @@ import java.util.Set;
  * Created by TeoLenovo on 4/6/2017.
  */
 @Entity
-public class SWTYear extends Model{
+public class SWTYear extends Model implements Comparable{
 
     public SWTYear(Integer year, String agency, SWTUser user) {
         this.year = year;
@@ -43,5 +44,14 @@ public class SWTYear extends Model{
                 .eq("year", year).and()
                 .eq("user_id", userId)
                 .findUnique();
+    }
+
+    @Override
+    public int compareTo(@NotNull Object o) {
+        SWTYear comparingYear = (SWTYear) o;
+        if (comparingYear.year == year) {
+            return 0;
+        }
+        return comparingYear.year > year? -1: 1;
     }
 }

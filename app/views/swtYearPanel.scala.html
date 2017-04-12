@@ -1,0 +1,44 @@
+@(userId: Long, swtYears: List[SWTYear])
+<table id="SWTYearTable" class="table" id="grid">
+    <thead>
+        <tr>
+            <th>Year</th>
+            <th>Agency</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if(swtYears != null) {
+            @for(swtYear <- swtYears) {
+                <tr>
+                    <td>
+                    @swtYear.year
+                    </td>
+                    <td>
+                    @swtYear.agency
+                    </td>
+                    <td>
+                         <button class="deleteButton btn btn-danger">
+                             <span class=' glyphicon glyphicon-minus'></span>
+                         </button>
+                    </td>
+                </tr>
+            }
+        }
+        <tr>
+            <td>
+                <select id="addYear" class="form-control"></select>
+            </td>
+            <td>
+                <input type="text" id="addAgency" class="form-control" />
+            </td>
+            <td>
+                <button type="button" id="addButton" class="btn btn-primary">
+                    <span class="glyphicon glyphicon-plus"></span>
+                </button>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<script src="@routes.Assets.at("javascripts/SWTYearSetup.js")"
+data-userId="@userId" type="text/javascript"></script>

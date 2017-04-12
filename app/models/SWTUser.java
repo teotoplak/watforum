@@ -1,6 +1,7 @@
 package models;
 
 import com.avaje.ebean.Model;
+import javafx.collections.transformation.SortedList;
 import models.enumerations.SWTNationality;
 import play.data.validation.Constraints;
 import play.libs.F;
@@ -42,7 +43,7 @@ public class SWTUser extends Model {
     public String email;
 
     @OneToMany(mappedBy = "user")
-    public Set<SWTYear> swtYears;
+    public List<SWTYear> swtYears;
 
     //for auth
     public List<String> loginProfiles;

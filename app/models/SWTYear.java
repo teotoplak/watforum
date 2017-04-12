@@ -52,6 +52,6 @@ public class SWTYear extends Model implements Comparable{
         if (comparingYear.year == year) {
             return 0;
         }
-        return comparingYear.year > year? -1: 1;
+        return comparingYear.year > year? 1: -1;
     }
 }

@@ -8,8 +8,8 @@ var deleteButtons = document.getElementsByClassName("deleteButton")
 //put delete buttons on existing data
 for(var i = 0; i < deleteButtons.length; i++)
 {
-    var deleteButton = deleteButtons.item(i);
-    deleteButton.addEventListener("click", function() { deleteBtnFunction(deleteButton, userId)});
+    var currentDeleteBtn = deleteButtons.item(i);
+    currentDeleteBtn.addEventListener("click", createDeleteBtnFunction(currentDeleteBtn));
 }
 
 //year selector
@@ -83,6 +83,13 @@ function addYearToRow(i) {
     });
 }
 
+//this is because of the closures in javascript
+function createDeleteBtnFunction(deleteButton) {
+    return function () {
+        deleteBtnFunction(deleteButton);
+    }
+}
+
 function deleteBtnFunction(deleteButton) {
 
     var rowToDelete = deleteButton.parentNode.parentNode;
@@ -94,7 +101,6 @@ function deleteBtnFunction(deleteButton) {
     yearText = yearText.replace(/\s/g,'')
     agencyText = agencyText.replace(/\s/g,'')
 
-    // table.deleteRow(rowToDelete.rowIndex);
     rowToDelete.parentNode.removeChild(rowToDelete);
 
     var obj = {

@@ -54,9 +54,13 @@ public class SWTUser extends Model {
     //should I have this? get them over swtYears
     public Set<SWTWorkRating> ratings;
 
+    public List<SWTYear> getSortedYears() {
+        List<SWTYear> list = this.swtYears;
+        Collections.sort(list);
+        return list;
+    }
 
     //DAO
-
     public static Finder<Long, SWTUser> find = new Finder<>(SWTUser.class);
     public static List<SWTUser> findAll() {
         return find.all();
@@ -89,6 +93,8 @@ public class SWTUser extends Model {
             return new F.Tuple<String,Object[]>("error.invalid.username", new Object[]{});
         }
     }
+
+
 
 
 }

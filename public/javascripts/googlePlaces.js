@@ -1,6 +1,7 @@
 /**
  * Created by teo on 11/29/16.
  */
+
 // This example adds a search box to a map, using the Google Place Autocomplete
 // feature. People can enter geographical searches. The search box will return a
 // pick list containing a mix of places and predicted search terms.
@@ -19,6 +20,7 @@ function initAutocomplete() {
     // Create the search box and link it to the UI element.
     var input = document.getElementById('pac-input');
     var searchBox = new google.maps.places.SearchBox(input);
+
         // map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
 
     // Bias the SearchBox results towards current map's viewport.
@@ -26,7 +28,7 @@ function initAutocomplete() {
     //     searchBox.setBounds(map.getBounds());
     // });
 
-    var markers = [];
+    // var markers = [];
     // Listen for the event fired when the user selects a prediction and retrieve
     // more details for that place.
     searchBox.addListener('places_changed', function() {
@@ -39,17 +41,19 @@ function initAutocomplete() {
         if (places.length == 0) {
             return;
         }
-        var finalPlace;
-        var num = 0;
-        places.forEach(function(place) {
-            finalPlace = place;
-            num++;
-        });
-        // map.fitBounds(bounds);
-        if(num>1) {
-            alert("You have selected " + num + "places. Select just one!")
+        if(places.length > 1) {
+            var arguments = "?ids=";
+            for(var i = 0; i < places.length; i++) {
+                arguments += places[i].place_id + ","
+            }
+            //removing last comma
+            arguments.substring(0, arguments.length - 1);
+            window.location.href = "http://localhost:9000/places" +  arguments;
+            return;
         } else {
-            window.location.href = "http://localhost:9000/watplace/" +  finalPlace.place_id;
-        };
+        var place = places[0];
+        window.location.href = "http://localhost:9000/swtplace/" +  place.place_id;
+        }
+
 });
 }

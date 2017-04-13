@@ -29,9 +29,6 @@ public class Watplaces extends Controller {
 
     private static final String googleAPIkey = "AIzaSyBOVsLLDx5MQmY4CUaD9-kt5Dqw5tPjJV4";
 
-    public Result searchBox() {
-        return ok(search.render());
-    }
 
 //    public Result watPlace() {
 //        JsonNode json = request().body().asJson();
@@ -56,8 +53,8 @@ public class Watplaces extends Controller {
 
         WatPlace place = new WatPlace(json);
         if (place.name == null || place.name.isEmpty()) {
-            flash("error", "Bad request was made - place doesn't exist! ");
-            return redirect(routes.Watplaces.searchBox());
+//            flash("error", "Bad request was made - place doesn't exist! ");
+//            return redirect(routes.Watplaces.searchBox());
         }
         if (WatPlace.findWatPlaceByGoogleId(place.googleID) == null) {
             place.save();

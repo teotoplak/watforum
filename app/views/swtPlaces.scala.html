@@ -1,0 +1,31 @@
+@(places: List[SWTGooglePlace])
+@main("Places") {
+
+    <div class="row">
+        <h2>Search:</h2>
+        <div class="col-md-8">
+            <table class="table table-bordered">
+                <thead>
+                    <tr><th>Name</th><th>Website</th><th>Address</th></tr>
+                </thead>
+                <tbody>
+                @for(place <- places) {
+                    <tr>
+                        <td>
+                        @place.name
+                        </td>
+                        <td>
+                        @place.website
+                        </td>
+                        <td>
+                        @place.address
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+
+}

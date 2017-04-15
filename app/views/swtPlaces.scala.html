@@ -10,7 +10,7 @@
                 </thead>
                 <tbody>
                 @for(place <- places) {
-                    <tr>
+                    <tr class='clickable-row' data-href='@routes.SWTPlaceController.place(place.googleID)'>
                         <td>
                         @place.name
                         </td>
@@ -27,5 +27,13 @@
 
         </div>
     </div>
+
+    <script>
+            jQuery(document).ready(function($) {
+                $(".clickable-row").click(function() {
+                    window.location = $(this).data("href");
+                });
+            });
+    </script>
 
 }

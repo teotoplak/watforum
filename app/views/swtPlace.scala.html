@@ -1,0 +1,63 @@
+@(place: SWTPlace, gplace: SWTGooglePlace)
+@import helper._
+
+@main(gplace.name) {
+
+  <link rel="stylesheet" type="text/css" href="@routes.Assets.at("stylesheets/place.css")">
+
+  @*google maps*@
+  <script>
+          function initMap() {
+            var map = new google.maps.Map(document.getElementById('googleMap'), {
+              center: {lat: @gplace.lat, lng: @gplace.lng},
+              zoom: 15
+            });
+
+            var infowindow = new google.maps.InfoWindow();
+            var service = new google.maps.places.PlacesService(map);
+
+            service.getDetails({
+              placeId: '@place.googleId'
+            }, function(place, status) {
+              if (status === google.maps.places.PlacesServiceStatus.OK) {
+                var marker = new google.maps.Marker({
+                  map: map,
+                  position: place.geometry.location
+                });
+                google.maps.event.addListener(marker, 'click', function() {
+                  infowindow.setContent('<div><strong>' + place.name + '</strong><br>' +
+                          'Place ID: ' + place.place_id + '<br>' +
+                          place.formatted_address + '</div>');
+                  infowindow.open(map, this);
+                });
+              }
+            });
+          }
+  </script>
+  <script src="@routes.Assets.at("javascripts/stars.js")" type="text/javascript"></script>
+
+
+  <div class="window">
+    <div class="row">
+      <div class="col-md-6">
+        <h2>@gplace.name</h2>
+        <dl class="dl-horizontal">
+          @if(gplace.address != null) { <dt>Address</dt> <dd>@gplace.address</dd> }
+          @if(gplace.weekdayText != null) { <dt>Week day</dt> <dd>@gplace.weekdayText</dd> }
+          @if(gplace.phoneNumber != null) { <dt>Phone</dt> <dd>@gplace.phoneNumber</dd> }
+          @if(gplace.website != null) { <dt>Website</dt> <dd><a href="@gplace.website">@gplace.website</a> </dd> }
+          @if(gplace.googleMaps != null) { <dt>Google maps</dt> <dd><a href="@gplace.googleMaps">link</a></dd> }
+        </dl>
+      </div>
+      <div class="col-md-5 col-md-offset-1">
+        <div id="googleMap"></div>
+      </div>
+    </div>
+  </div>
+
+
+  <script async defer
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBOVsLLDx5MQmY4CUaD9-kt5Dqw5tPjJV4&libraries=places&callback=initMap">
+  </script>
+
+}

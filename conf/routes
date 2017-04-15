@@ -31,5 +31,6 @@ POST    /deleteYear          controllers.SWTYearController.deleteSWTYear()
 #place
 GET     /search             controllers.SWTPlaceController.searchBox()
 GET     /places           controllers.SWTPlaceController.places(ids: String)
+GET     /place             controllers.SWTPlaceController.place(id: String)
 
 

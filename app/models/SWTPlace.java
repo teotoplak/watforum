@@ -1,43 +1,32 @@
 package models;
 
 import com.avaje.ebean.Model;
+import controllers.SWTGooglePlace;
 
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
-import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
-import java.util.Date;
+import javax.persistence.*;
+import java.util.Set;
 
 /**
  * Created by TeoLenovo on 4/6/2017.
  */
-@MappedSuperclass
+@Entity
 public class SWTPlace extends Model {
+
+    public SWTPlace(String googleId) {
+        this.googleId = googleId;
+    }
 
     @Id
     public Long id;
 
-    public String name;
+    public String googleId;
 
-    public String address;
-
-    public String phoneNumber;
-
-    public String icon;
-
-    public Date createdAt;
-
-    public Date updatedAt;
-
-    @PrePersist
-    public void createdAt() {
-        this.createdAt = this.updatedAt = new Date();
+    public SWTGooglePlace getGooglePlace() throws IllegalArgumentException {
+        return new SWTGooglePlace(googleId);
     }
 
-    @PreUpdate
-    public void updatedAt() {
-        this.updatedAt = new Date();
-    }
 
+    @OneToMany(mappedBy = "swtPlace")
+    public Set<SWTRating> ratings;
 
 }

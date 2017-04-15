@@ -10,11 +10,22 @@ import java.util.Set;
  * Created by TeoLenovo on 4/6/2017.
  */
 //this annotation means that there will be no table for this class
-@MappedSuperclass
+@Entity
 public class SWTRating extends Model {
 
     @Id
     public Long id;
+
+    @ManyToOne
+    @JoinColumn(name = "swtPlace")
+    public SWTPlace swtPlace;
+
+    public Integer rating;
+    public String comment;
+    public boolean providingHousing;
+    public Integer hoursPerWeekWork;
+    public Integer payment;
+    public String workPosition;
 
     @ManyToOne
     @JoinColumn(name = "swtYear_id")

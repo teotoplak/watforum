@@ -52,7 +52,7 @@ function initAutocomplete() {
             return;
         } else {
         var place = places[0];
-        window.location.href = "http://localhost:9000/swtplace/" +  place.place_id;
+        window.location.href = "http://localhost:9000/place?id=" +  place.place_id;
         }
 
 });

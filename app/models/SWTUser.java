@@ -1,8 +1,6 @@
 package models;
 
 import com.avaje.ebean.Model;
-import javafx.collections.transformation.SortedList;
-import models.enumerations.SWTNationality;
 import play.data.validation.Constraints;
 import play.libs.F;
 
@@ -52,7 +50,7 @@ public class SWTUser extends Model {
     public String livingLocation;
 
     //should I have this? get them over swtYears
-    public Set<SWTWorkRating> ratings;
+    public Set<SWTRating> ratings;
 
     public List<SWTYear> getSortedYears() {
         List<SWTYear> list = this.swtYears;

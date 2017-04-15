@@ -29,7 +29,7 @@ public class SWTYear extends Model implements Comparable{
     public SWTUser user;
 
     @OneToMany(mappedBy = "swtYear")
-    public Set<SWTWorkRating> ratings;
+    public Set<SWTRating> ratings;
 
     @Override
     public String toString() {

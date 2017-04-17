@@ -1,3 +1,17 @@
 #googleMap {
     height: 400px;
 }
+
+.c-rating {
+
+}
+
+.c-rating__item {
+    font-size: 1.7em;
+    margin: 2px;
+}
+
+.c-rating__item:hover,
+.c-rating__item.is-active {
+    color: orange;
+}

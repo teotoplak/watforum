@@ -18,7 +18,7 @@ POST    /login              controllers.SWTUserController.login()
 GET     /logout             controllers.SWTUserController.logout()
 GET     /profile            controllers.SWTUserController.profile()
 GET    /watplace/:id           controllers.Watplaces.watPlace(id: String)
-POST    /rate               controllers.Watplaces.rate
+#POST    /rate               controllers.Watplaces.rate
 GET     /ratings            controllers.Ratings.listAll
 GET     /test/:id                controllers.Watplaces.test(id: String)
 GET     /                   controllers.Public.landing()
@@ -33,4 +33,6 @@ GET     /search             controllers.SWTPlaceController.searchBox()
 GET     /places           controllers.SWTPlaceController.places(ids: String)
 GET     /place             controllers.SWTPlaceController.place(id: String)
 
+#rating
+POST     /rate               controllers.SWTRatingController.rate()
 

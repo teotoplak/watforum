@@ -4,6 +4,8 @@
 @main(gplace.name) {
 
     <link rel="stylesheet" type="text/css" href="@routes.Assets.at("stylesheets/place.css")">
+    <link rel="stylesheet" type="text/css" href="@routes.Assets.at("fa/css/font-awesome.min.css")">
+
     @*google maps*@
     <script>
             function initMap() {
@@ -91,21 +93,42 @@
                         // rating instance
                         var myRating = rating(el, currentRating, maxRating, callback);
                 </script>
+
                 <div class="form-group">
                     <label for="position">Position:</label>
                     <input type="text" class="form-control" name="position" id="position">
                 </div>
+
                 <div class="form-group">
                     <label for="comment">Comment:</label>
                     <input type="text" class="form-control" name="comment" id="comment">
                 </div>
+
                 <div class="form-group">
-                    <label for="workload">Hours per week:</label>
-                    <input type="text" class="form-control" name="workload" id="workload">
+                    <label for="workload">Workload:</label>
+                    <div class="input-group spinner spinDollars">
+                        <span class="input-group-addon left-addon">
+                            <i class="fa fa-clock-o"></i>
+                        </span>
+                        <input type="text" class="form-control" name="workload" id="workload" value="30">
+                        <div class="input-group-btn-vertical">
+                            <button class="btn btn-default" type="button"><i class="fa fa-caret-up"></i></button>
+                            <button class="btn btn-default" type="button"><i class="fa fa-caret-down"></i></button>
+                        </div>
+                    </div>
                 </div>
                 <div class="form-group">
                     <label for="payment">Payment:</label>
-                    <input type="text" class="form-control" name="payment" id="payment">
+                    <div class="input-group spinner spinHours">
+                        <span class="input-group-addon left-addon">
+                            <i class="fa fa-usd"></i>
+                        </span>
+                        <input type="text" class="form-control" name="payment" id="payment" value="10">
+                        <div class="input-group-btn-vertical">
+                            <button class="btn btn-default" type="button"><i class="fa fa-caret-up"></i></button>
+                            <button class="btn btn-default" type="button"><i class="fa fa-caret-down"></i></button>
+                        </div>
+                    </div>
                 </div>
                 <div class="checkbox">
                     <label><input type="checkbox" value="">Providing housing</label>
@@ -128,6 +151,7 @@
     <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBOVsLLDx5MQmY4CUaD9-kt5Dqw5tPjJV4&libraries=places&callback=initMap">
     </script>
+    <script src="@routes.Assets.at("javascripts/spinner.js")" type="text/javascript"></script>
 
 
 }

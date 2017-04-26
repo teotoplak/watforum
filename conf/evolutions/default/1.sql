@@ -13,6 +13,7 @@ create table rating (
 create table swtplace (
   id                            bigserial not null,
   google_id                     varchar(255),
+  constraint uq_swtplace_google_id unique (google_id),
   constraint pk_swtplace primary key (id)
 );
 
@@ -22,7 +23,7 @@ create table swtrating (
   rating                        integer,
   comment                       varchar(255),
   providing_housing             boolean,
-  hours_per_week_work           integer,
+  work_load                     integer,
   payment                       integer,
   work_position                 varchar(255),
   swtyear_id                    bigint,

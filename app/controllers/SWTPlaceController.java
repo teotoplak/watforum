@@ -39,7 +39,10 @@ public class SWTPlaceController extends Controller {
 
     public Result place(String id) {
 
-        SWTPlace place = new SWTPlace(id);
+        SWTPlace place = SWTPlace.findPlaceByGoogleId(id);
+        if (place == null) {
+             place = new SWTPlace(id);
+        }
         SWTGooglePlace gplace;
         try {
             gplace = place.getGooglePlace();

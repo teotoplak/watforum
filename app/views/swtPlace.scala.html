@@ -79,6 +79,15 @@
                 <button type="submit">Rate</button>
             </form>
         </div>
+
+        <div class="row">
+            <h3>Rated places:</h3>
+            <div class="col-md-8 separate">
+                @for(rating <- place.ratings) {
+                    @rating.swtYear.user.username @rating.rating
+                }
+            </div>
+        </div>
     </div>
 
 

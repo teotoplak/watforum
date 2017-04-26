@@ -13,6 +13,18 @@ import java.util.Set;
 @Entity
 public class SWTRating extends Model {
 
+    public SWTRating(SWTPlace swtPlace, Integer rating, String comment, boolean providingHousing, Integer workLoad,
+                     Integer payment, String workPosition, SWTYear swtYear) {
+        this.swtPlace = swtPlace;
+        this.rating = rating;
+        this.comment = comment;
+        this.providingHousing = providingHousing;
+        this.workLoad = workLoad;
+        this.payment = payment;
+        this.workPosition = workPosition;
+        this.swtYear = swtYear;
+    }
+
     @Id
     public Long id;
 
@@ -23,7 +35,7 @@ public class SWTRating extends Model {
     public Integer rating;
     public String comment;
     public boolean providingHousing;
-    public Integer hoursPerWeekWork;
+    public Integer workLoad;
     public Integer payment;
     public String workPosition;
 

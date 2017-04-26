@@ -58,11 +58,22 @@ public class SWTUser extends Model {
         return list;
     }
 
+    //helper methods
+    public SWTYear findYearByYearNumber(Integer yearNum) {
+        for (SWTYear year : this.swtYears) {
+            if (year.year.equals(yearNum)) {
+                return year;
+            }
+        }
+        return null;
+    }
+
     //DAO
     public static Finder<Long, SWTUser> find = new Finder<>(SWTUser.class);
     public static List<SWTUser> findAll() {
         return find.all();
     }
+
     public static SWTUser checkUser(String username, String password) {
         return find.where().eq("username", username).and().eq("password", password).findUnique();
     }

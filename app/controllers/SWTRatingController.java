@@ -1,6 +1,7 @@
 package controllers;
 
 import models.SWTPlace;
+import models.SWTUser;
 import play.Logger;
 import play.data.DynamicForm;
 import play.data.Form;
@@ -33,7 +34,9 @@ public class SWTRatingController extends Controller {
             logger.error("Error while fetching json for google place");
             return redirect(routes.SWTPlaceController.searchBox());
         }
-        return ok(views.html.rate.render(place,gplace));
+
+        SWTUser user = SWTUserController.currentUser();
+        return ok(views.html.rate.render(place,gplace,user.swtYears));
     }
 
 }

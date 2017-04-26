@@ -1,11 +1,10 @@
-@(place: SWTPlace, gplace: SWTGooglePlace)
+@(place: SWTPlace, gplace: SWTGooglePlace, years: List[SWTYear])
 @import helper._
 
 @main(gplace.name + " rating") {
 
   <link rel="stylesheet" type="text/css" href="@routes.Assets.at("fa/css/font-awesome.min.css")">
   <link rel="stylesheet" type="text/css" href="@routes.Assets.at("stylesheets/rating.css")">
-  <link rel="stylesheet" type="text/css" href="@routes.Assets.at("stylesheets/place.css")">
 
   @*validetta*@
   <script src="@routes.Assets.at("validetta/validetta.js")" type="text/javascript"></script>
@@ -23,7 +22,7 @@
           <div class="form-group">
             <label for="starsRating">Rating:</label>
             <div id="starsRating"></div>
-            <input type="hidden" name="rating" id="rating">
+            <input type="hidden" name="rating" id="rating" data-validetta="required">
           </div>
           <script src="@routes.Assets.at("javascripts/starRating.js")" type="text/javascript"></script>
           <script>
@@ -43,12 +42,12 @@
 
           <div class="form-group">
             <label for="position">Position:</label>
-            <input type="text" class="form-control" name="position" id="position" data-validetta="">
+            <input type="text" class="form-control" name="position" id="position" data-validetta="required">
           </div>
 
           <div class="form-group">
             <label for="comment">Comment:</label>
-            <input type="text" class="form-control" name="comment" id="comment" data-validetta="required,number">
+            <input type="text" class="form-control" name="comment" id="comment" data-validetta="required">
           </div>
 
           <div class="form-group">
@@ -57,7 +56,7 @@
               <span class="input-group-addon left-addon">
                 <i class="fa fa-clock-o"></i>
               </span>
-              <input type="text" class="form-control" name="workload" id="workload" value="30">
+              <input type="text" class="form-control" name="workload" id="workload" value="30" data-validetta="required,number">
               <div class="input-group-btn-vertical">
                 <button class="btn btn-default" type="button"><i class="fa fa-caret-up"></i></button>
                 <button class="btn btn-default" type="button"><i class="fa fa-caret-down"></i></button>
@@ -70,7 +69,7 @@
               <span class="input-group-addon left-addon">
                 <i class="fa fa-usd"></i>
               </span>
-              <input type="text" class="form-control" name="payment" id="payment" value="10">
+              <input type="text" class="form-control" name="payment" id="payment" value="10" data-validetta="required,number">
               <div class="input-group-btn-vertical">
                 <button class="btn btn-default" type="button"><i class="fa fa-caret-up"></i></button>
                 <button class="btn btn-default" type="button"><i class="fa fa-caret-down"></i></button>
@@ -83,10 +82,9 @@
           <div class="form-group">
             <label for="swtYear">SWT Year:</label>
             <select class="form-control" id="swtYear" name="swtYear">
-              <option>1</option>
-              <option>2</option>
-              <option>3</option>
-              <option>4</option>
+              @for(year <- years) {
+                <option value="@year.year">@year.toString</option>
+              }
             </select>
           </div>
           <button type="submit">Rate</button>

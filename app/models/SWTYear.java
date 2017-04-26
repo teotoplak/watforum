@@ -33,7 +33,7 @@ public class SWTYear extends Model implements Comparable{
 
     @Override
     public String toString() {
-        return user.firstName + year + agency;
+        return year + ". (" + agency + ")";
     }
 
     public static Finder<Long, SWTYear> find = new Finder<>(SWTYear.class);

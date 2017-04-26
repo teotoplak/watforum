@@ -2,7 +2,6 @@ package controllers;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import models.SWTPlace;
-import models.WatPlace;
 import play.Logger;
 import play.libs.ws.WSClient;
 import play.libs.ws.WSResponse;

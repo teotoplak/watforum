@@ -1,4 +1,4 @@
-@(user: SWTUser)(userRating: List[Rating])
+@(user: SWTUser)
 @import helper._
 
 @main("WatUser profile") {
@@ -12,31 +12,6 @@
     @if(user.birth != null) { <dt>Birth date</dt> <dd>@(user.birth.format("dd/MM/yyyy"))</dd> }
     </h3>
   </dl>
-
-
-  @if(!userRating.isEmpty) {
-    <h3>Previous reviews</h3>
-    <table class="table table-bordered">
-      <thead>
-        <tr><th>Place</th><th>Rating</th><th>Created at</th></tr>
-      </thead>
-      <tbody>
-      @for(rating <- userRating) {
-        <tr>
-          <td>
-            <a href="@routes.Watplaces.watPlace(rating.watPlace.googleID+"")"> @rating.watPlace.name</a>
-          </td>
-          <td>
-          @rating.rating
-          </td>
-          <td>
-          @rating.getRatedAt
-          </td>
-        </tr>
-      }
-      </tbody>
-    </table>
-  }
 
   <div class="row">
     <div class="col-md-5">

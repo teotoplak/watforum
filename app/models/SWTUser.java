@@ -21,7 +21,7 @@ public class SWTUser extends Model {
 
     @Constraints.Required
     @Column(unique=true)
-    @Constraints.ValidateWith(value= WatUser.UsernameValidator.class,message = "Username must contain " +
+    @Constraints.ValidateWith(value= SWTUser.UsernameValidator.class,message = "Username must contain " +
             "at least 3 characters. All letters, numbers, points, dashes and underscores allowed.")
     public String username;
 

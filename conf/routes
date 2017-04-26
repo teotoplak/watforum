@@ -17,10 +17,7 @@ GET     /login              controllers.SWTUserController.loginForm()
 POST    /login              controllers.SWTUserController.login()
 GET     /logout             controllers.SWTUserController.logout()
 GET     /profile            controllers.SWTUserController.profile()
-GET    /watplace/:id           controllers.Watplaces.watPlace(id: String)
 #POST    /rate               controllers.Watplaces.rate
-GET     /ratings            controllers.Ratings.listAll
-GET     /test/:id                controllers.Watplaces.test(id: String)
 GET     /                   controllers.Public.landing()
 
 #year

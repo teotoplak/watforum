@@ -1,6 +1,5 @@
 package controllers;
 
-import models.WatUser;
 import play.data.Form;
 import play.data.FormFactory;
 import play.mvc.Controller;

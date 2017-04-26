@@ -1,10 +1,8 @@
 package controllers;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import models.Rating;
 import models.SWTUser;
 import models.SWTYear;
-import models.WatUser;
 import play.api.cache.Cache;
 import play.data.DynamicForm;
 import play.data.Form;
@@ -116,11 +114,9 @@ public class SWTUserController extends Controller{
         return SWTUser.findUserByUsername(ctx().session().get("username"));
     }
 
-    @Security.Authenticated(Secured.class)
     public Result profile() {
         SWTUser user = currentUser();
-        List<Rating> userRatings = Rating.userRatings(user.id);
-        return ok(profile.render(user,userRatings));
+        return ok(profile.render(user));
     }
 
 }

@@ -34,5 +34,6 @@ GET     /places           controllers.SWTPlaceController.places(ids: String)
 GET     /place             controllers.SWTPlaceController.place(id: String)
 
 #rating
-POST     /rate               controllers.SWTRatingController.rate()
+POST     /rating               controllers.SWTRatingController.ratingForm(id: String)
+POST     /rate                  controllers.SWTRatingController.rate()
 

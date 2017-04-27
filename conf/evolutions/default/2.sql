@@ -1,12 +1,8 @@
 # --- !Ups
 
-SET REFERENTIAL_INTEGRITY TRUE ;
-
-INSERT INTO user (id,username, password, country) VALUES (0,'admin','admin','Croatia');
-INSERT INTO user (id,username, password, country) VALUES (1,'Albert','Albert','Spain');
-INSERT INTO user (id,username, password, country) VALUES (2,'Gabriel','Gabriel','Italy');
+INSERT INTO swtuser (id,username, password) VALUES (0,'admin','admin');
+INSERT INTO swtuser (id,username, password) VALUES (1,'Albert','Albert');
+INSERT INTO swtuser (id,username, password) VALUES (2,'Gabriel','Gabriel');
 
 drop sequence user_seq;
 create sequence user_seq START WITH 3;
-
-SET REFERENTIAL_INTEGRITY TRUE;

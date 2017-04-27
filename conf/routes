@@ -5,23 +5,43 @@
 # Home page
 
 # Map static resources from the /public folder to the /assets URL path
-GET     /register           controllers.Public.registerForm()
-POST    /register           controllers.Public.register()
 
-GET     /assets/*file      controllers.Assets.at(path="/public", file)
-GET     /webjars/*file     controllers.WebJarAssets.at(file)
-GET     /listing            controllers.Users.listAllUsers()
-GET     /                    controllers.Public.landing()
-GET     /josko                    controllers.Public.loginForm()
-GET     /josko1                    controllers.Public.notAuthLoginForm()
-GET     /login              controllers.Public.login()
-GET     /logouta            controllers.Users.logout()
-GET     /profile            controllers.Users.profile()
-GET     /search             controllers.Watplaces.searchBox()
-GET    /watplace/:id           controllers.Watplaces.watPlace(id: String)
-POST    /rate               controllers.Watplaces.rate
-GET     /ratings                  controllers.Ratings.listAll
-GET     /test/:id                 controllers.Watplaces.test(id: String)
+#GET     /register           controllers.Public.registerForm()
+#POST    /register           controllers.Public.register()
+
+# GET     /josko                    controllers.Public.loginForm()
+# GET     /login              controllers.Public.login()
 GET     /callback             @org.pac4j.play.CallbackController.callback()
 POST    /callback             @org.pac4j.play.CallbackController.callback()
 GET     /logout               @org.pac4j.play.LogoutController.logout()
+
+GET     /assets/*file      controllers.Assets.at(path="/public", file)
+GET     /webjars/*file     controllers.WebJarAssets.at(file)
+
+#user
+GET     /listing            controllers.SWTUserController.listAllUsers()
+GET     /register           controllers.SWTUserController.registerForm()
+POST    /register           controllers.SWTUserController.register()
+GET     /login              controllers.SWTUserController.loginForm()
+POST    /login              controllers.SWTUserController.login()
+GET     /logout             controllers.SWTUserController.logout()
+GET     /profile            controllers.SWTUserController.profile()
+#POST    /rate               controllers.Watplaces.rate
+GET     /                   controllers.Public.landing()
+
+#year
+GET     /addYears           controllers.SWTYearController.addSWTYearsForm()
+POST    /saveYear          controllers.SWTYearController.saveSWTYear()
+POST    /deleteYear          controllers.SWTYearController.deleteSWTYear()
+
+#place
+GET     /search             controllers.SWTPlaceController.searchBox()
+GET     /places           controllers.SWTPlaceController.places(ids: String)
+GET     /place             controllers.SWTPlaceController.place(id: String)
+
+#rating
+POST     /rating               controllers.SWTRatingController.ratingForm(id: String)
+POST     /rate                  controllers.SWTRatingController.rate(id: String)
+
+GET      /fblogin           controllers.SWTUserController.fblogin()
+

@@ -1,4 +1,4 @@
-@(userForm: Form[User])
+@(userForm: Form[SWTUser])
 @import helper._
 
 @main("Login") {
@@ -6,13 +6,13 @@
   <div class="container separate">
     <div class="col-4-md col-md-offset-4">
         <h2>Login</h2>
-        @helper.form(action=routes.Public.login()) {
+        @helper.form(action=routes.SWTUserController.login()) {
           <fieldset>
             @helper.inputText(userForm("username"), '_showConstraints -> false, '_showErrors -> false)
             @helper.inputPassword(userForm("password"), '_showConstraints -> false, '_showErrors -> false)
           </fieldset>
           <button type="submit" class="btn btn-primary"> Login </button>
-          <a class="btn btn-primary" href="@routes.Public.registerForm()"> Register </a>
+          <a class="btn btn-primary" href="@routes.SWTUserController.registerForm()"> Register </a>
         }
     </div>
   </div>

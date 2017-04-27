@@ -1,17 +1,30 @@
 @import org.pac4j.core.profile.CommonProfile
-@(profile: CommonProfile)
 @import helper._
+@(user: SWTUser)(profile: CommonProfile)
 
-@main("User profile") {
+@main("WatUser profile") {
   <dl class="dl-horizontal">
     <h2><dd>Profile</dd></h2>
-    <h3>
-    @if(profile.getUsername() != null) { <dt>Username</dt> <dd>@(profile.getUsername())</dd> }
-    @if(profile.getFirstName() != null) { <dt>Name</dt> <dd>@(profile.getFirstName())</dd> }
-    @if(profile.getFamilyName() != null) { <dt>Surname</dt> <dd>@(profile.getFamilyName())</dd> }
-    @if(profile.getLocation() != null) { <dt>Country</dt> <dd>@(profile.getLocation())</dd> }
-    @if(profile.getPictureUrl() != null) { <dt>Birth date</dt> <dd>@(profile.getPictureUrl())</dd> }
-    </h3>
+      @if(profile!=null) {
+          <h3>
+              @if(profile.getUsername() != null) { <dt>Username</dt> <dd>@(profile.getUsername())</dd> }
+              @if(profile.getFirstName() != null) { <dt>Name</dt> <dd>@(profile.getFirstName())</dd> }
+              @if(profile.getFamilyName() != null) { <dt>Surname</dt> <dd>@(profile.getFamilyName())</dd> }
+              @if(profile.getLocation() != null) { <dt>Country</dt> <dd>@(profile.getLocation())</dd> }
+              @if(profile.getPictureUrl() != null) { <dt>Birth date</dt> <dd>@(profile.getPictureUrl())</dd> }
+          </h3>
+      }
+
+    @if(user.username != null) { <dt>Username</dt> <dd>@(user.username)</dd> }
+    @if(user.firstName != null) { <dt>Name</dt> <dd>@(user.firstName)</dd> }
+      @if(user.password != null) { <dt>Password</dt> <dd>@(user.password)</dd> }
+      @if(user.lastName != null) { <dt>Surname</dt> <dd>@(user.lastName)</dd> }
+    @if(user.birth != null) { <dt>Birth date</dt> <dd>@(user.birth.format("dd/MM/yyyy"))</dd> }
   </dl>
 
+  <div class="row">
+    <div class="col-md-5">
+    @swtYearPanel(user.id , user.getSortedYears)
+    </div>
+  </div>
 }

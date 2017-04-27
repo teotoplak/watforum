@@ -1,7 +1,7 @@
 package modules;
 
 import com.google.inject.AbstractModule;
-import controllers.CurrentUserUtility;
+import controllers.SWTUserController;
 import org.pac4j.core.client.Clients;
 import org.pac4j.core.config.Config;
 import org.pac4j.oauth.client.FacebookClient;
@@ -38,7 +38,7 @@ public class SecurityModule extends AbstractModule {
 
         final PlayCacheSessionStore playCacheSessionStore = new PlayCacheSessionStore(getProvider(CacheApi.class));
         bind(PlaySessionStore.class).toInstance(playCacheSessionStore);
-        requestStaticInjection(CurrentUserUtility.class);
+        requestStaticInjection(SWTUserController.class);
 
         // OAuth
         final FacebookClient facebookClient = new FacebookClient(fbId, fbSecret);

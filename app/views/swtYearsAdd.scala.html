@@ -1,0 +1,13 @@
+@(userId: Long)
+@main("SWT Years") {
+    <div class="row">
+    <div class="col-md-4">
+        <h4>Add past or present swt year:</h4>
+        @swtYearPanel(userId, null);
+        <a href="@routes.Public.landing()" class="btn btn-success">
+            Ok
+        </a>
+    </div>
+</div>
+
+}

@@ -48,7 +48,7 @@ public class SWTYearController extends Model {
             logger.error(ex.getMessage());
             return badRequest();
         }
-        logger.info("Got request to do year (save:" + save + "): " + nodeString);
+        logger.debug("Got request to do year (save:" + save + "): " + nodeString);
 
         try {
             agency = node.get("agency").asText();

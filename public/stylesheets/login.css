@@ -1,0 +1,15 @@
+.login-frame {
+    border: solid darkgray 1px;
+    padding: 20px;
+
+}
+.oauth-form {
+    margin-top: 15px;
+    border-top: solid darkgray 1px;
+}
+.oauth-label {
+    margin: 10px 0;
+}
+.oauth-options {
+    padding: 0px 30px;
+}

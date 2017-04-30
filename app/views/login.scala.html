@@ -1,20 +1,47 @@
 @(userForm: Form[SWTUser])
-@import helper._
 
-@main("Login") {
+    @main("Login") {
 
-  <div class="container separate">
-    <div class="col-4-md col-md-offset-4">
-        <h2>Login</h2>
-        @helper.form(action=routes.SWTUserController.login()) {
-          <fieldset>
-            @helper.inputText(userForm("username"), '_showConstraints -> false, '_showErrors -> false)
-            @helper.inputPassword(userForm("password"), '_showConstraints -> false, '_showErrors -> false)
-          </fieldset>
-          <button type="submit" class="btn btn-primary"> Login </button>
-          <a class="btn btn-primary" href="@routes.SWTUserController.registerForm()"> Register </a>
-        }
-    </div>
-  </div>
+        <link rel="stylesheet" type="text/css" href="@routes.Assets.at("stylesheets/login.css")" >
+        <link rel="stylesheet" type="text/css" href="@routes.Assets.at("stylesheets/bootstrap-social.css")" >
 
-}
+        <div class="separate">
+            <div class="row">
+                <div class="col-md-4 col-md-offset-4 text-center">
+                    <h2>Sign up or login</h2>
+                    <div class="login-frame">
+                        <form action="@routes.SWTUserController.login()" method="post">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <div class="input-group-addon"> <span class="glyphicon glyphicon-user"> </span></div>
+                                    <input type="text" class="form-control" name="username" id="username"
+                                    placeholder="Username or mail"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <div class="input-group-addon"> <span class="glyphicon glyphicon-lock"> </span></div>
+                                    <input type="password" class="form-control" name="password" id="password"
+                                    placeholder="Password">
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary"> Login </button>
+                            <a class="btn btn-primary" href="@routes.SWTUserController.registerForm()"> Register </a>
+                        </form>
+                        <div class="oauth-form">
+                            <div class="oauth-label text-center">Or connect with:</div>
+                            <div class="oauth-options">
+                                <a class="btn btn-block btn-social btn-facebook">
+                                    <span class="fa fa-facebook"></span> Facebook
+                                </a>
+                                <a class="btn btn-block btn-social btn-twitter">
+                                    <span class="fa fa-twitter"></span> Twitter
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    }

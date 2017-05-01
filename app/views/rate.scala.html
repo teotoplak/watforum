@@ -93,7 +93,11 @@
   </div>
 
   <script>
-          $("#rate_form").validetta();
+          $("#rate_form").validetta({
+            realTime: true,
+            display : 'inline',
+            errorTemplateClass : 'validetta-inline'
+          });
   </script>
 
   <script src="@routes.Assets.at("javascripts/spinner.js")" type="text/javascript"></script>

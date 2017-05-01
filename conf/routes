@@ -13,21 +13,23 @@
 # GET     /login              controllers.Public.login()
 GET     /callback             @org.pac4j.play.CallbackController.callback()
 POST    /callback             @org.pac4j.play.CallbackController.callback()
-GET     /logout               @org.pac4j.play.LogoutController.logout()
+GET     /logoutoauth           @org.pac4j.play.LogoutController.logout()
 
 GET     /assets/*file      controllers.Assets.at(path="/public", file)
 GET     /webjars/*file     controllers.WebJarAssets.at(file)
+GET     /                   controllers.Public.landing()
 
 #user
 GET     /listing            controllers.SWTUserController.listAllUsers()
-GET     /register           controllers.SWTUserController.registerForm()
-POST    /register           controllers.SWTUserController.register()
+POST    /register           controllers.SWTUserController.register(hash: String ?= "")
+GET     /register           controllers.SWTUserController.register(hash: String ?= "")
 GET     /login              controllers.SWTUserController.loginForm()
 POST    /login              controllers.SWTUserController.login()
 GET     /logout             controllers.SWTUserController.logout()
 GET     /profile            controllers.SWTUserController.profile()
-#POST    /rate               controllers.Watplaces.rate
-GET     /                   controllers.Public.landing()
+POST    /saveUser           controllers.SWTUserController.saveUser()
+POST    /checkUsername          controllers.SWTUserController.checkUsername()
+
 
 #year
 GET     /addYears           controllers.SWTYearController.addSWTYearsForm()

@@ -3,6 +3,15 @@
 
 # --- !Ups
 
+create table swtoauth_user (
+  id                            bigserial not null,
+  oauth_id                      varchar(255) not null,
+  client                        integer not null,
+  swt_user_id                   bigint not null,
+  constraint ck_swtoauth_user_client check (client in (0)),
+  constraint pk_swtoauth_user primary key (id)
+);
+
 create table swtplace (
   id                            bigserial not null,
   google_id                     varchar(255),
@@ -31,8 +40,9 @@ create table swtuser (
   password                      varchar(255),
   first_name                    varchar(255),
   last_name                     varchar(255),
-  contact                       varchar(255),
+  profile_picture_url           varchar(255),
   birth                         timestamp,
+  gender                        varchar(255),
   email                         varchar(255),
   living_location               varchar(255),
   constraint uq_swtuser_username unique (username),
@@ -68,6 +78,8 @@ drop index if exists ix_swtrating_swtyear_id;
 
 alter table if exists swtyear drop constraint if exists fk_swtyear_user_id;
 drop index if exists ix_swtyear_user_id;
+
+drop table if exists swtoauth_user cascade;
 
 drop table if exists swtplace cascade;
 

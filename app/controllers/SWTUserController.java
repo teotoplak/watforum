@@ -1,18 +1,25 @@
 package controllers;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import models.ProfileInConstruction;
+import models.SWTOAuthUser;
+import models.enumerations.OAuthClient;
 import org.pac4j.play.java.Secure;
 import models.SWTUser;
 import models.SWTYear;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import play.api.cache.Cache;
 import play.data.DynamicForm;
 import play.data.Form;
 import play.data.FormFactory;
+import play.libs.Json;
 import play.mvc.BodyParser;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security;
-import views.html.login;
+import scala.util.parsing.json.JSONObject;
 import views.html.register;
 import views.html.*;
 import play.cache.*;
@@ -25,9 +32,12 @@ import org.pac4j.play.store.PlaySessionStore;
 import javax.inject.Inject;
 import javax.sound.sampled.Control;
 
+import java.net.URI;
+import java.net.URL;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.UUID;
 
 import static play.mvc.Controller.flash;
 import static play.mvc.Results.badRequest;
@@ -47,36 +57,14 @@ public class SWTUserController extends Controller{
     @Inject
     protected static PlaySessionStore playSessionStore;
 
-    public Result register() {
-        Form<SWTUser> boundForm = formFactory.form(SWTUser.class).bindFromRequest();
-        if (boundForm == null) {
-            return null;
-        }
-        if(boundForm.hasErrors()){
-            flash("error", "Incorrect register!");
-            return badRequest(register.render(boundForm));
-        }
-        SWTUser user = boundForm.get();
+    private static final String PROFILE_PIC_KEY = "profilePicKey";
 
-        if(user.id == null) {
-            user.save();
-        } else {
-            user.update();
-        }
-
-        cache.set("userId", user.id, 30);
-        return redirect(routes.SWTYearController.addSWTYearsForm());
-    }
+    private Logger logger = LoggerFactory.getLogger(getClass());
 
     public Result listAllUsers() {
         List<SWTUser> list = SWTUser.findAll();
         return ok(listing.render(list));
     }
-
-    public Result registerForm() {
-        return ok(register.render(formFactory.form(SWTUser.class).bindFromRequest()));
-    }
-
 
     public Result loginForm() {
         return ok(login.render(formFactory.form(SWTUser.class)));
@@ -88,33 +76,106 @@ public class SWTUserController extends Controller{
         return redirect(routes.SWTUserController.loginForm());
     }
 
+    /**
+     * Normal form login
+     * @return
+     */
     public Result login() {
-        Form<SWTUser> boundForm = formFactory.form(SWTUser.class).bindFromRequest();
-        SWTUser enteredUser;
-        try {
-            enteredUser = boundForm.get();
-        } catch (IllegalStateException ex) {
-            return loginError(boundForm);
-        }
-        SWTUser user = SWTUser.checkUser(enteredUser.username, enteredUser.password);
+        DynamicForm form = Form.form().bindFromRequest();
+        String usernameOrEmail = form.get("username");
+        String password = form.get("password");
+        SWTUser user = SWTUser.verifyCredentials(usernameOrEmail, password);
         if (user == null) {
-            return loginError(boundForm);
+            flash("error", "Incorrect login!");
+            return redirect(routes.SWTUserController.login());
         }
-
-        session().clear();
-        session("username", user.username);
+        logInUser(user);
         return redirect(routes.Public.landing());
     }
 
     @Secure(clients = "FacebookClient", authorizers = "custom")
     public Result fblogin() {
-        flash("logged in!!");
-        return redirect(request().getHeader("referer"));
+        PlayWebContext webContext = new PlayWebContext(ctx(), playSessionStore);
+        ProfileManager<CommonProfile> profileManager = new ProfileManager(webContext);
+        Optional<CommonProfile> profileOptional = profileManager.get(true);
+        if (!profileOptional.isPresent()) {
+            flash("error", "Failed login!");
+            return redirect(routes.Public.landing());
+        }
+        //CHANGE THIS - DELEGATE PROFILE PIC TO OAUTH LOGIN, NO NEED TO DO THIS IF USER EXISTS ALSO!!
+        CommonProfile profile = profileOptional.get();
+        profile.addAttribute(PROFILE_PIC_KEY,
+                "http://graph.facebook.com/"+ profile.getId() +"/picture?type=large");
+        return oAuthLogin(profile, OAuthClient.FACEBOOK);
     }
 
-    private Result loginError(Form<SWTUser> boundForm) {
-        flash("error", "Incorrect login!");
-        return badRequest(views.html.login.render(boundForm));
+    public Result saveUser() {
+        DynamicForm form = Form.form().bindFromRequest();
+        String username = form.get("username");
+        String password = form.get("password");
+        String email = form.get("email");
+        String firstName = form.get("firstName");
+        String lastName = form.get("lastName");
+        String contact = form.get("contact");
+        SWTUser user = new SWTUser(username, password, firstName, lastName, null, null, null, null, email, null);
+        user.save();
+
+        //if it was oauth login
+        String oauthId = form.get("oauthId");
+        OAuthClient client = OAuthClient.convertStringToClass(form.get("client"));
+        if (oauthId != null && client != null) {
+            SWTOAuthUser swtoAuthUser = new SWTOAuthUser(oauthId, client, user.id);
+            swtoAuthUser.save();
+        }
+
+        flash("success", "Profile created!");
+        logInUser(user);
+        return redirect(routes.SWTUserController.profile());
+    }
+
+    public Result register(String profileInConstructionHash) {
+        ProfileInConstruction profileInConstruction = cache.get(profileInConstructionHash);
+        if (profileInConstruction != null) {
+            return ok(views.html.register.render(profileInConstruction));
+        }
+        return ok(views.html.register.render(null));
+    }
+
+    private Result oAuthLogin(CommonProfile commonProfile, OAuthClient client) {
+        String oauthId = commonProfile.getId();
+        SWTUser user;
+        user = SWTOAuthUser.getSWTUser(oauthId,client);
+        //if user already exists
+        if (user != null) {
+            logInUser(user);
+            return redirect(routes.Public.landing());
+        } else {
+            user = commonProfileIntoSWTProfile(commonProfile);
+            ProfileInConstruction profileInConstruction =
+                    new ProfileInConstruction(user, client, oauthId);
+            String hashIdentifier = UUID.randomUUID().toString();
+            cache.set(hashIdentifier,profileInConstruction,60);
+            return register(hashIdentifier);
+        }
+    }
+
+    private void logInUser(SWTUser user) {
+        session().clear();
+        session("username", user.username);
+    }
+
+    private SWTUser commonProfileIntoSWTProfile(CommonProfile commonProfile) {
+        String oauthId = commonProfile.getId();
+        String gender = commonProfile.getGender().toString();
+        String firstName = commonProfile.getFirstName();
+        String lastName = commonProfile.getFamilyName();
+        URI linkToProfile = commonProfile.getProfileUrl();
+        String email = commonProfile.getEmail();
+        String livingLocation = commonProfile.getLocation();
+        String profilePictureUrl = (String)commonProfile.getAttribute(PROFILE_PIC_KEY);
+        SWTUser user = new SWTUser(firstName, lastName, profilePictureUrl, linkToProfile,
+                null, email, gender, livingLocation);
+        return user;
     }
 
     public Result logout() {
@@ -136,17 +197,27 @@ public class SWTUserController extends Controller{
             }
             return null;
         }
-    public static String getPACUserPictureUrl() {
-        if (currentPACUser().getClientName().equals("FacebookClient")) {
-            return "http://graph.facebook.com/"+ currentPACUser().getId() +"/picture";
-        }
-        return null;
-    }
 
 
     public Result profile() {
         SWTUser user = currentUser();
         return ok(profile.render(user, currentPACUser()));
+    }
+
+    /**
+     * Used for ajax calls from user register form
+     */
+    public Result checkUsername() {
+        DynamicForm form = Form.form().bindFromRequest();
+        String username = form.get("username");
+        ObjectNode result = Json.newObject();
+        if (SWTUser.findUserByUsername(username) != null) {
+            result.put("valid", false);
+            result.put("message", "This username is already taken!");
+        } else {
+            result.put("valid", true);
+        }
+        return ok(result);
     }
 
 }

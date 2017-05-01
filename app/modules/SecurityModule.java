@@ -35,7 +35,6 @@ public class SecurityModule extends AbstractModule {
     @Override
     protected void configure() {
 
-
         final PlayCacheSessionStore playCacheSessionStore = new PlayCacheSessionStore(getProvider(CacheApi.class));
         bind(PlaySessionStore.class).toInstance(playCacheSessionStore);
         requestStaticInjection(SWTUserController.class);

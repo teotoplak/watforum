@@ -16,7 +16,7 @@ public class MyCustomAuth extends ProfileAuthorizer<CommonProfile> {
 
     @Override
     public boolean isAuthorized(final WebContext context, final List<CommonProfile> profiles) throws HttpAction {
-        logger.error("checking if one of the profiles is authorized..");
+        logger.debug("checking if one of the profiles is authorized..");
         return isAnyAuthorized(context, profiles);
     }
 
@@ -24,7 +24,7 @@ public class MyCustomAuth extends ProfileAuthorizer<CommonProfile> {
     public boolean isProfileAuthorized(final WebContext context, final CommonProfile profile) {
 //        this iterates through everyProfile
         context.setSessionAttribute("profile", profile.getFirstName());
-        logger.error("checking if the profile> "+ profile.getFirstName() +" is authorized..");
+        logger.debug("checking if the profile> "+ profile.getFirstName() +" is authorized..");
         if (profile == null) {
             return false;
         }

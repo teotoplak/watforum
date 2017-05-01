@@ -26,7 +26,6 @@ public class SWTUser extends Model {
             "at least 3 characters. All letters, numbers, points, dashes and underscores allowed.")
     public String username;
 
-    @Constraints.Required
     public String password;
 
 

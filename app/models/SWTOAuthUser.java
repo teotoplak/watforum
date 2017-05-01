@@ -35,6 +35,10 @@ public class SWTOAuthUser extends Model {
     }
 
     public static SWTUser getSWTUser(String oauthId, OAuthClient client) {
-        return SWTUser.findUserById(findSWTUserByOAuthIdAndClient(oauthId,client).swtUserId);
+        SWTOAuthUser swtoAuthUser = findSWTUserByOAuthIdAndClient(oauthId,client);
+        if (swtoAuthUser == null) {
+            return null;
+        }
+        return SWTUser.findUserById(swtoAuthUser.swtUserId);
     }
 }

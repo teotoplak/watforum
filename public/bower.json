@@ -16,6 +16,6 @@
     "tests"
   ],
   "dependencies": {
-
+    "bootstrap-fileinput": "^4.3.9"
   }
 }

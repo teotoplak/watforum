@@ -86,7 +86,7 @@ public class SWTUserController extends Controller{
         String password = form.get("password");
         SWTUser user = SWTUser.verifyCredentials(usernameOrEmail, password);
         if (user == null) {
-            flash("error", "Incorrect login!");
+            flash("error", "Invalid login or password. Please try again.");
             return redirect(routes.SWTUserController.login());
         }
         logInUser(user);
@@ -110,13 +110,15 @@ public class SWTUserController extends Controller{
     }
 
     public Result saveUser() {
-        DynamicForm form = Form.form().bindFromRequest();
+        DynamicForm form = formFactory.form().bindFromRequest();
         String username = form.get("username");
         String password = form.get("password");
         String email = form.get("email");
         String firstName = form.get("firstName");
         String lastName = form.get("lastName");
         String contact = form.get("contact");
+
+        String profilePictureUrl = form.get("avatar");
         SWTUser user = new SWTUser(username, password, firstName, lastName, null, null, null, null, email, null);
         user.save();
 
@@ -165,11 +167,15 @@ public class SWTUserController extends Controller{
     }
 
     private SWTUser commonProfileIntoSWTProfile(CommonProfile commonProfile) {
-        String oauthId = commonProfile.getId();
         String gender = commonProfile.getGender().toString();
         String firstName = commonProfile.getFirstName();
         String lastName = commonProfile.getFamilyName();
         URI linkToProfile = commonProfile.getProfileUrl();
+        if (linkToProfile == null) {
+            try{
+            linkToProfile = (URI)commonProfile.getAttribute("link");
+            } catch (Exception ignorable){}
+        }
         String email = commonProfile.getEmail();
         String livingLocation = commonProfile.getLocation();
         String profilePictureUrl = (String)commonProfile.getAttribute(PROFILE_PIC_KEY);
@@ -208,12 +214,27 @@ public class SWTUserController extends Controller{
      * Used for ajax calls from user register form
      */
     public Result checkUsername() {
-        DynamicForm form = Form.form().bindFromRequest();
+        DynamicForm form = formFactory.form().bindFromRequest();
         String username = form.get("username");
         ObjectNode result = Json.newObject();
         if (SWTUser.findUserByUsername(username) != null) {
             result.put("valid", false);
             result.put("message", "This username is already taken!");
+        } else {
+            result.put("valid", true);
+        }
+        return ok(result);
+    }
+    /**
+     * Used for ajax calls from user register form
+     */
+    public Result checkEmail() {
+        DynamicForm form = formFactory.form().bindFromRequest();
+        String email = form.get("email");
+        ObjectNode result = Json.newObject();
+        if (SWTUser.findUserByEmail(email) != null) {
+            result.put("valid", false);
+            result.put("message", "Account with this mail already exists!");
         } else {
             result.put("valid", true);
         }

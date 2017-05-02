@@ -27,6 +27,9 @@ public enum OAuthClient {
     }
 
     public static OAuthClient convertStringToClass(String client) throws IllegalArgumentException{
+        if (client == null) {
+            return null;
+        }
         OAuthClient[] clients = OAuthClient.values();
         for (OAuthClient currentClient : clients) {
             if (client.toLowerCase().contains(currentClient.toString().toLowerCase())) {

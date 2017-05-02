@@ -82,6 +82,10 @@ public class SWTUser extends Model {
         return find.where().eq("username", username).findUnique();
     }
 
+    public static SWTUser findUserByEmail(String email) {
+        return find.where().eq("email", email).findUnique();
+    }
+
     public static SWTUser findUserById(Long id) {
         return find.where().eq("id", id).findUnique();
     }
@@ -105,7 +109,9 @@ public class SWTUser extends Model {
     public SWTUser(String firstName, String lastName, String profilePictureUrl, URI contact, Date birth, String email, String gender, String livingLocation) {
         this.firstName = firstName;
         this.lastName = lastName;
+        if (profilePictureUrl != null) {
         this.profilePictureUrl = profilePictureUrl;
+        }
         List<URI> contacts = new LinkedList<>();
         contacts.add(contact);
         this.contacts = contacts;
@@ -120,7 +126,9 @@ public class SWTUser extends Model {
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
+        if (profilePictureUrl != null) {
         this.profilePictureUrl = profilePictureUrl;
+        }
         List<URI> contacts = new LinkedList<>();
         contacts.add(contact);
         this.contacts = contacts;

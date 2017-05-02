@@ -29,10 +29,10 @@
         @navigation()
 
         @if(flash.containsKey("success")) {
-        <div class="alert alert-success">@flash.get("success")</div>
+        <div class="alert alert-success text-center">@flash.get("success")</div>
         }
         @if(flash.containsKey("error")) {
-        <div class="alert alert-danger">@flash.get("error")</div>
+        <div class="alert alert-danger text-center">@flash.get("error")</div>
         }
         @content
         </div>

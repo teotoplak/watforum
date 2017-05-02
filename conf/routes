@@ -29,6 +29,7 @@ GET     /logout             controllers.SWTUserController.logout()
 GET     /profile            controllers.SWTUserController.profile()
 POST    /saveUser           controllers.SWTUserController.saveUser()
 POST    /checkUsername          controllers.SWTUserController.checkUsername()
+POST    /checkEmail          controllers.SWTUserController.checkEmail()
 
 
 #year

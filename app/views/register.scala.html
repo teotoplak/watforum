@@ -8,19 +8,10 @@
   <script src="@routes.Assets.at("validetta/validetta.min.js")" type="text/javascript"></script>
   <link rel="stylesheet" type="text/css" href="@routes.Assets.at("validetta/validetta.min.css")">
 
-  @*bootstrap-fileinput*@
-  <link href="@routes.Assets.at("bower_components/bootstrap-fileinput/css/fileinput.min.css")"
-  media="all" rel="stylesheet" type="text/css" />
-  <script src="@routes.Assets.at("bower_components/bootstrap-fileinput/js/plugins/canvas-to-blob.min.js")"
-  type="text/javascript"></script>
-  <script src="@routes.Assets.at("bower_components/bootstrap-fileinput/js/fileinput.min.js")"></script>
 
-  <div id="kv-avatar-errors-1" class="alert alert-success text-center"></div>
+
   <div class="window">
-    <div class="row">
-      <h2>Register</h2>
-    </div>
-    <div class="row">
+    <div class="row separate">
         <form action="@routes.SWTUserController.saveUser()" method="post" id="register_form">
       <div class="col-md-5">
           <div class="form-group">
@@ -60,6 +51,16 @@
             <input type="text" class="form-control" name="contact" id="contact" data-validetta=""
             @if(oauth){value="@profileInConstruction.user.contacts.get(0)"}>
           </div>
+          <div class="form-group">
+              <label for="country">Nationality:</label>
+              <div class="form-item">
+                  <input id="country_selector" class="form-control" type="text">
+              </div>
+              <div class="form-item" style="display:none;">
+                  <input type="text" id="country_selector_code" name="country_selector_code" data-countrycodeinput="1" readonly="readonly" placeholder="Selected country code will appear here" />
+                  <label for="country_selector_code">...and the selected country code will be updated here</label>
+              </div>
+          </div>
 
           @if(profileInConstruction != null) {
             <input type="hidden" name="client" id="client" value="@profileInConstruction.client.toString" >
@@ -69,47 +70,14 @@
           <button type="submit">Rate</button>
       </div>
           <div class="col-md-5">
-            @*bootstrap-fileinput*@
-              <!-- the avatar markup -->
-            @*<form class="text-center" action="/avatar_upload.php" method="post" enctype="multipart/form-data">*@
-              <div class="kv-avatar center-block" style="width:200px">
-                <input id="avatar" name="avatar" type="file" class="file-loading">
-              </div>
-                <!-- include other inputs if needed and include a form submit (save) button -->
-            @*</form>*@
+            @if(oauth) {
+                <img src="@profileInConstruction.user.profilePictureUrl" alt="Profile picture">
+            }
+
           </div>
         </form>
     </div>
   </div>
-
-    <!-- the fileinput plugin initialization -->
-  <script>
-          var btnCust = '<button type="button" class="btn btn-default" title="Add picture tags" ' +
-                  'onclick="alert(\'Call your custom code here.\')">' +
-                  '<i class="glyphicon glyphicon-tag"></i>' +
-                  '</button>';
-          $("#avatar").fileinput({
-            overwriteInitial: true,
-            maxFileSize: 1500,
-            showClose: false,
-            showCaption: false,
-            browseLabel: '',
-            removeLabel: '',
-            browseIcon: '<i class="glyphicon glyphicon-folder-open"></i>',
-            removeIcon: '<i class="glyphicon glyphicon-remove"></i>',
-            removeTitle: 'Cancel or reset changes',
-            elErrorContainer: '#kv-avatar-errors-1',
-            msgErrorClass: 'alert alert-block alert-danger',
-            defaultPreviewContent:
-                    @if(oauth) {
-                    '<img src="@profileInConstruction.user.profilePictureUrl" alt="Your Avatar" style="width:160px">',
-            } else {
-            '<img src="@routes.Assets.at("images/profiles/user-default.png")" alt="Your Avatar" style="width:160px">',
-            }
-            layoutTemplates: {main2: '{preview} ' +  btnCust + ' {remove} {browse}'},
-            allowedFileExtensions: ["jpg", "png"]
-          });
-  </script>
 
   <script>
           $("#register_form").validetta({
@@ -138,4 +106,27 @@
             }
           });
   </script>
+
+
+
+
+    <h1>Country Select JS</h1>
+    <form>
+
+        <button type="submit" style="display:none;">Submit</button>
+    </form>
+
+    @*country-select lib*@
+    <link rel="stylesheet" type="text/css" href="@routes.Assets.at("stylesheets/countrySelect.css")">
+    <script src="@routes.Assets.at("javascripts/countrySelect.js")" type="text/javascript"></script>
+    <script>
+            getFlagImageFor('hr');
+            $("#country_selector").countrySelect({
+                //defaultCountry: "jp",
+                //onlyCountries: ['us', 'gb', 'ch', 'ca', 'do'],
+//                preferredCountries: ['ca', 'gb', 'us']
+            });
+    </script>
+
+
 }

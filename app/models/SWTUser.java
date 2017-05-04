@@ -25,30 +25,31 @@ public class SWTUser extends Model {
     @Constraints.ValidateWith(value= SWTUser.UsernameValidator.class,message = "Username must contain " +
             "at least 3 characters. All letters, numbers, points, dashes and underscores allowed.")
     public String username;
-
+    //not required since there is also oauth
     public String password;
-
-
-    public String firstName;
-    public String lastName;
-    public String profilePictureUrl = "http://localhost:9000/assets/images/profiles/user-default.png";
-    public List<URI> contacts;
-    public Date birth;
-    public String gender;
-
     @Column(unique = true)
     @Constraints.Email
     public String email;
-
+    public String firstName;
+    public String lastName;
+    public String profilePictureUrl = "http://localhost:9000/assets/images/profiles/user-default.png";
+    //iso2 format
+    public String country;
+    public List<URI> contacts;
     @OneToMany(mappedBy = "user")
     public List<SWTYear> swtYears;
+    //should I have this? get them over swtYears
+    public Set<SWTRating> ratings;
 
+    /*
+    those below still not used
+     */
+    public Date birth;
+    public String gender;
 //    public SWTNationality nationality;
     //should be other then string
     public String livingLocation;
 
-    //should I have this? get them over swtYears
-    public Set<SWTRating> ratings;
 
     public List<SWTYear> getSortedYears() {
         List<SWTYear> list = this.swtYears;

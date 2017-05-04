@@ -3,6 +3,17 @@
     /*padding: 0 50px 0px 50px;*/
 }
 
+.main-container {
+    background: white;
+    padding: 0;
+    box-shadow: 0 0 8px rgba(0,0,0,0.3);
+    min-height: 100vh;
+}
+
+body {
+    background: #edf0f2;
+}
+
 .separate {
     margin-top: 40px;
 }

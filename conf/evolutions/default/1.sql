@@ -7,7 +7,7 @@ create table swtoauth_user (
   id                            bigserial not null,
   oauth_id                      varchar(255) not null,
   client                        integer not null,
-  swt_user_id                   bigint not null,
+  user_id                       bigint,
   constraint ck_swtoauth_user_client check (client in (0)),
   constraint pk_swtoauth_user primary key (id)
 );
@@ -42,10 +42,11 @@ create table swtuser (
   first_name                    varchar(255),
   last_name                     varchar(255),
   profile_picture_url           varchar(255),
-  country                       varchar(255),
+  country                       varchar(20),
+  gender                        integer,
   birth                         timestamp,
-  gender                        varchar(255),
   living_location               varchar(255),
+  constraint ck_swtuser_gender check (gender in (0,1)),
   constraint uq_swtuser_username unique (username),
   constraint uq_swtuser_email unique (email),
   constraint pk_swtuser primary key (id)
@@ -59,6 +60,9 @@ create table swtyear (
   constraint pk_swtyear primary key (id)
 );
 
+alter table swtoauth_user add constraint fk_swtoauth_user_user_id foreign key (user_id) references swtuser (id) on delete restrict on update restrict;
+create index ix_swtoauth_user_user_id on swtoauth_user (user_id);
+
 alter table swtrating add constraint fk_swtrating_swtplace foreign key (swtplace) references swtplace (id) on delete restrict on update restrict;
 create index ix_swtrating_swtplace on swtrating (swtplace);
 
@@ -70,6 +74,9 @@ create index ix_swtyear_user_id on swtyear (user_id);
 
 
 # --- !Downs
+
+alter table if exists swtoauth_user drop constraint if exists fk_swtoauth_user_user_id;
+drop index if exists ix_swtoauth_user_user_id;
 
 alter table if exists swtrating drop constraint if exists fk_swtrating_swtplace;
 drop index if exists ix_swtrating_swtplace;

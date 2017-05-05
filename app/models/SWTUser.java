@@ -1,6 +1,7 @@
 package models;
 
 import com.avaje.ebean.Model;
+import models.enumerations.SWTGender;
 import play.data.validation.Constraints;
 import play.libs.F;
 
@@ -34,7 +35,8 @@ public class SWTUser extends Model {
     public String lastName;
     public String profilePictureUrl = "http://localhost:9000/assets/images/profiles/user-default.png";
     //iso2 format
-    public String country;
+    public Locale country;
+    public SWTGender gender;
     public List<URI> contacts;
     @OneToMany(mappedBy = "user")
     public List<SWTYear> swtYears;
@@ -45,7 +47,6 @@ public class SWTUser extends Model {
     those below still not used
      */
     public Date birth;
-    public String gender;
 //    public SWTNationality nationality;
     //should be other then string
     public String livingLocation;
@@ -107,22 +108,8 @@ public class SWTUser extends Model {
         }
     }
 
-    public SWTUser(String firstName, String lastName, String profilePictureUrl, URI contact, Date birth, String email, String gender, String livingLocation) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        if (profilePictureUrl != null) {
-        this.profilePictureUrl = profilePictureUrl;
-        }
-        List<URI> contacts = new LinkedList<>();
-        contacts.add(contact);
-        this.contacts = contacts;
-        this.birth = birth;
-        this.email = email;
-        this.gender = gender;
-        this.livingLocation = livingLocation;
-    }
-
-    public SWTUser(String username, String password, String firstName, String lastName, String profilePictureUrl,URI contact, Date birth, String gender, String email, String livingLocation) {
+    public SWTUser(String username, String password, String firstName, String lastName, String profilePictureUrl,
+                   URI contact, Date birth, SWTGender gender, String email, String livingLocation, Locale country) {
         this.username = username;
         this.password = password;
         this.firstName = firstName;
@@ -137,6 +124,7 @@ public class SWTUser extends Model {
         this.gender = gender;
         this.email = email;
         this.livingLocation = livingLocation;
+        this.country = country;
     }
 
     @Override

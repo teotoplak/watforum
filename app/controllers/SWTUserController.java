@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import models.ProfileInConstruction;
 import models.SWTOAuthUser;
 import models.enumerations.OAuthClient;
+import models.enumerations.SWTGender;
 import org.pac4j.play.java.Secure;
 import models.SWTUser;
 import models.SWTYear;
@@ -34,10 +35,7 @@ import javax.sound.sampled.Control;
 
 import java.net.URI;
 import java.net.URL;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 import static play.mvc.Controller.flash;
 import static play.mvc.Results.badRequest;
@@ -117,16 +115,19 @@ public class SWTUserController extends Controller{
         String firstName = form.get("firstName");
         String lastName = form.get("lastName");
         String contact = form.get("contact");
+        Locale country = new Locale(form.get("country_selector_code"));
+        SWTGender gender = SWTGender.valueOf(form.get("gender"));
 
         String profilePictureUrl = form.get("avatar");
-        SWTUser user = new SWTUser(username, password, firstName, lastName, null, null, null, null, email, null);
+        SWTUser user = new SWTUser(username, password, firstName, lastName, contact, null, null,
+                gender, email, null, country);
         user.save();
 
         //if it was oauth login
         String oauthId = form.get("oauthId");
         OAuthClient client = OAuthClient.convertStringToClass(form.get("client"));
         if (oauthId != null && client != null) {
-            SWTOAuthUser swtoAuthUser = new SWTOAuthUser(oauthId, client, user.id);
+            SWTOAuthUser swtoAuthUser = new SWTOAuthUser(oauthId, client, user);
             swtoAuthUser.save();
         }
 
@@ -167,7 +168,7 @@ public class SWTUserController extends Controller{
     }
 
     private SWTUser commonProfileIntoSWTProfile(CommonProfile commonProfile) {
-        String gender = commonProfile.getGender().toString();
+        logger.error(commonProfile.toString());
         String firstName = commonProfile.getFirstName();
         String lastName = commonProfile.getFamilyName();
         URI linkToProfile = commonProfile.getProfileUrl();
@@ -179,8 +180,9 @@ public class SWTUserController extends Controller{
         String email = commonProfile.getEmail();
         String livingLocation = commonProfile.getLocation();
         String profilePictureUrl = (String)commonProfile.getAttribute(PROFILE_PIC_KEY);
-        SWTUser user = new SWTUser(firstName, lastName, profilePictureUrl, linkToProfile,
-                null, email, gender, livingLocation);
+        SWTGender gender = SWTGender.toValue(commonProfile.getGender().toString());
+        SWTUser user = new SWTUser(null, null, firstName, lastName, profilePictureUrl, linkToProfile,
+                null, gender, email, livingLocation, null);
         return user;
     }
 

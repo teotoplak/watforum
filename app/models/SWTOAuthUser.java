@@ -3,8 +3,7 @@ package models;
 import com.avaje.ebean.Model;
 import models.enumerations.OAuthClient;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -19,13 +18,14 @@ public class SWTOAuthUser extends Model {
     public String oauthId;
     @NotNull
     public OAuthClient client;
-    @NotNull
-    public Long swtUserId;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    public SWTUser user;
 
-    public SWTOAuthUser(String oauthId, OAuthClient client, Long swtUserId) {
+    public SWTOAuthUser(String oauthId, OAuthClient client, SWTUser user) {
         this.oauthId = oauthId;
         this.client = client;
-        this.swtUserId = swtUserId;
+        this.user = user;
     }
 
     public static Finder<Long, SWTOAuthUser> find = new Finder<>(SWTOAuthUser.class);
@@ -39,6 +39,6 @@ public class SWTOAuthUser extends Model {
         if (swtoAuthUser == null) {
             return null;
         }
-        return SWTUser.findUserById(swtoAuthUser.swtUserId);
+        return swtoAuthUser.user;
     }
 }

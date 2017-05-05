@@ -228,6 +228,8 @@ function getFlagImageFor(countryIso2) {
 				}
 				that.countryInput.val(that.getSelectedCountryData().name);
 			});
+			//select all text when focused (made by teotoplak)
+			this.countryInput.focus(function() { $(this).select(); } );
 		},
 		_initAutoCountry: function() {
 			if (this.options.initialCountry === "auto") {

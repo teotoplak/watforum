@@ -67,7 +67,7 @@
             <input type="hidden" name="oauthId" id="oauthId" value="@profileInConstruction.oauthId" >
             <input type="hidden" name="profilePicture" id="profilePicture" value="@profileInConstruction.user." >
           }
-          <button type="submit">Rate</button>
+          <button type="submit">Submit</button>
       </div>
           <div class="col-md-5">
             @if(oauth) {
@@ -107,22 +107,12 @@
           });
   </script>
 
-
-
-
-    <h1>Country Select JS</h1>
-    <form>
-
-        <button type="submit" style="display:none;">Submit</button>
-    </form>
-
     @*country-select lib*@
     <link rel="stylesheet" type="text/css" href="@routes.Assets.at("stylesheets/countrySelect.css")">
     <script src="@routes.Assets.at("javascripts/countrySelect.js")" type="text/javascript"></script>
     <script>
-            getFlagImageFor('hr');
             $("#country_selector").countrySelect({
-                //defaultCountry: "jp",
+                defaultCountry: "hr",
                 //onlyCountries: ['us', 'gb', 'ch', 'ca', 'do'],
 //                preferredCountries: ['ca', 'gb', 'us']
             });

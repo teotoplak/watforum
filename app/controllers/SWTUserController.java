@@ -34,6 +34,7 @@ import javax.inject.Inject;
 import javax.sound.sampled.Control;
 
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.*;
 
@@ -115,11 +116,15 @@ public class SWTUserController extends Controller{
         String firstName = form.get("firstName");
         String lastName = form.get("lastName");
         String contact = form.get("contact");
-        Locale country = new Locale(form.get("country_selector_code"));
-        SWTGender gender = SWTGender.valueOf(form.get("gender"));
+        URI contactURI = null;
+        try {
+        contactURI = new URI(contact);
+        } catch (URISyntaxException ex) {}
 
+        Locale country = new Locale(form.get("country_selector_code"));
+        SWTGender gender = SWTGender.toValue(form.get("gender"));
         String profilePictureUrl = form.get("avatar");
-        SWTUser user = new SWTUser(username, password, firstName, lastName, contact, null, null,
+        SWTUser user = new SWTUser(username, password, firstName, lastName, profilePictureUrl, contactURI, null,
                 gender, email, null, country);
         user.save();
 
@@ -168,7 +173,6 @@ public class SWTUserController extends Controller{
     }
 
     private SWTUser commonProfileIntoSWTProfile(CommonProfile commonProfile) {
-        logger.error(commonProfile.toString());
         String firstName = commonProfile.getFirstName();
         String lastName = commonProfile.getFamilyName();
         URI linkToProfile = commonProfile.getProfileUrl();

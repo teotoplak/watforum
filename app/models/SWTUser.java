@@ -118,7 +118,9 @@ public class SWTUser extends Model {
         this.profilePictureUrl = profilePictureUrl;
         }
         List<URI> contacts = new LinkedList<>();
+        if (contact != null) {
         contacts.add(contact);
+        }
         this.contacts = contacts;
         this.birth = birth;
         this.gender = gender;

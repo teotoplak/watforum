@@ -12,9 +12,9 @@
 
 
   <div class="window">
-    <div class="row separate">
         <form action="@routes.SWTUserController.saveUser()" method="post" id="register_form">
-      <div class="col-md-5">
+    <div class="row separate">
+      <div class="col-md-5 leftForm">
           <div class="form-group">
             <label for="username">Username:</label>
             <input type="text" class="form-control" name="username" id="username"
@@ -37,29 +37,40 @@
             data-validetta="required,email,remote[check_email]"
               @if(oauth){value="@profileInConstruction.user.email"}>
           </div>
-          <div class="form-group">
-            <label for="firstName">First name:</label>
-            <input type="text" class="form-control" name="firstName" id="firstName" data-validetta=""
-              @if(oauth){value="@profileInConstruction.user.firstName"}>
+          <div class="row">
+              <div class="col-md-6">
+                  <div class="form-group">
+                      <label for="firstName">First name:</label>
+                      <input type="text" class="form-control" name="firstName" id="firstName" data-validetta=""
+                          @if(oauth){value="@profileInConstruction.user.firstName"}>
+                  </div>
+              </div>
+              <div class="col-md-6">
+                  <div class="form-group">
+                      <label for="lastName">Last name:</label>
+                      <input type="text" class="form-control" name="lastName" id="lastName" data-validetta=""
+                          @if(oauth){value="@profileInConstruction.user.lastName"}>
+                  </div>
+              </div>
           </div>
           <div class="form-group">
-            <label for="lastName">Last name:</label>
-            <input type="text" class="form-control" name="lastName" id="lastName" data-validetta=""
-              @if(oauth){value="@profileInConstruction.user.lastName"}>
-          </div>
-          <div class="form-group">
-            <label for="contact">Contact:</label>
+            <label for="contact">Contact website URL:</label>
             <input type="text" class="form-control" name="contact" id="contact" data-validetta=""
             @if(oauth){value="@profileInConstruction.user.contacts.get(0)"}>
           </div>
           <div class="form-group">
-              @if(oauth) {
                   @* should be changed to fill out radio buttons *@
-                  <input type="hidden" name="gender" value="@profileInConstruction.user.gender.name()">
-              } else {
-              <label><input type="radio" name="gender" value="male"/> Male</label>
-              <label><input type="radio" name="gender" value="female"/> Female</label>
-              }
+              <label><input type="radio" name="gender" value="male"
+                  @if(oauth) {
+                    @if(profileInConstruction.user.gender == SWTGender.MALE){checked="checked"}
+                  } else {checked="checked"} >
+                  Male</label>
+
+              <label><input type="radio" name="gender" value="female"
+                  @if(oauth) {
+                      @if(profileInConstruction.user.gender == SWTGender.FEMALE){checked="checked"}
+                  } >
+                  Female</label>
           </div>
           <div class="form-group">
               <label for="country">Nationality:</label>
@@ -75,18 +86,23 @@
           @if(profileInConstruction != null) {
             <input type="hidden" name="client" id="client" value="@profileInConstruction.client.toString" >
             <input type="hidden" name="oauthId" id="oauthId" value="@profileInConstruction.oauthId" >
-            <input type="hidden" name="profilePicture" id="profilePicture" value="@profileInConstruction.user." >
+            <input type="hidden" name="avatar" id="avatar" value="@profileInConstruction.user.profilePictureUrl" >
           }
-          <button type="submit">Submit</button>
       </div>
-          <div class="col-md-5">
+          <div class="col-md-5 rightForm">
             @if(oauth) {
-                <img src="@profileInConstruction.user.profilePictureUrl" alt="Profile picture">
-            }
+                <img class="avatarImg" src="@profileInConstruction.user.profilePictureUrl" alt="Profile picture">
+            } else {
 
+            }
           </div>
-        </form>
     </div>
+            <div class="row separate">
+                <div class="col-md-5">
+          <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </div>
+        </form>
   </div>
 
   <script>

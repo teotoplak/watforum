@@ -16,23 +16,23 @@
     <div class="row separate">
       <div class="col-md-5 leftForm">
           <div class="form-group">
-            <label for="username">Username:</label>
+            <label for="username">Username</label>
             <input type="text" class="form-control" name="username" id="username"
             data-validetta="required,remote[check_username],regExp[check_username],minLength[3],maxLength[15]">
           </div>
           @if(oauth==false) {
             <div class="form-group">
-              <label for="password">Password:</label>
+              <label for="password">Password</label>
               <input type="password" class="form-control" name="password" id="password" data-validetta="required">
             </div>
             <div class="form-group">
-              <label for="rpassword">Repeat password:</label>
+              <label for="rpassword">Repeat password</label>
               <input type="password" class="form-control" name="rpassword" id="rpassword"
               data-validetta="required,equalTo[password]">
             </div>
           }
           <div class="form-group">
-            <label for="email">Email:</label>
+            <label for="email">Email</label>
             <input type="text" class="form-control" name="email" id="email"
             data-validetta="required,email,remote[check_email]"
               @if(oauth){value="@profileInConstruction.user.email"}>
@@ -40,22 +40,28 @@
           <div class="row">
               <div class="col-md-6">
                   <div class="form-group">
-                      <label for="firstName">First name:</label>
+                      <label for="firstName">First name</label>
                       <input type="text" class="form-control" name="firstName" id="firstName" data-validetta=""
                           @if(oauth){value="@profileInConstruction.user.firstName"}>
                   </div>
               </div>
               <div class="col-md-6">
                   <div class="form-group">
-                      <label for="lastName">Last name:</label>
+                      <label for="lastName">Last name</label>
                       <input type="text" class="form-control" name="lastName" id="lastName" data-validetta=""
                           @if(oauth){value="@profileInConstruction.user.lastName"}>
                   </div>
               </div>
           </div>
           <div class="form-group">
-            <label for="contact">Contact website URL:</label>
+            <label for="contact">
+                Contact website URL
+                <span data-toggle="tooltip" title="Preferred way of connecting with other participants">
+                    <i class="fa fa-question-circle"></i>
+                   </span>
+            </label>
             <input type="text" class="form-control" name="contact" id="contact" data-validetta=""
+                placeholder="Facebook, Twitter, LinkedIn ..."
             @if(oauth){value="@profileInConstruction.user.contacts.get(0)"}>
           </div>
           <div class="form-group">
@@ -73,7 +79,7 @@
                   Female</label>
           </div>
           <div class="form-group">
-              <label for="country">Nationality:</label>
+              <label for="country">Nationality</label>
               <div class="form-item">
                   <input id="country_selector" class="form-control" type="text">
               </div>
@@ -136,6 +142,12 @@
     @*country-select lib*@
     <link rel="stylesheet" type="text/css" href="@routes.Assets.at("stylesheets/countrySelect.css")">
     <script src="@routes.Assets.at("javascripts/countrySelect.js")" type="text/javascript"></script>
+    @*activate all tooltips*@
+    <script>
+            $(document).ready(function(){
+                $('[data-toggle="tooltip"]').tooltip();
+            });
+    </script>
     <script>
             $("#country_selector").countrySelect({
                 defaultCountry: "hr",

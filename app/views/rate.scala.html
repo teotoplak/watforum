@@ -19,7 +19,7 @@
       <div class="col-md-5">
         <form action="@routes.SWTRatingController.rate(place.googleId)" method="post" id="rate_form">
           <div class="form-group">
-            <label for="starsRating">Rating:</label>
+            <label for="starsRating">Rating</label>
             <div id="starsRating"></div>
             <input type="hidden" name="rating" id="rating" data-validetta="required">
           </div>
@@ -40,17 +40,17 @@
           </script>
 
           <div class="form-group">
-            <label for="position">Position:</label>
+            <label for="position">Position</label>
             <input type="text" class="form-control" name="position" id="position" data-validetta="required">
           </div>
 
           <div class="form-group">
-            <label for="comment">Comment:</label>
+            <label for="comment">Comment</label>
             <input type="text" class="form-control" name="comment" id="comment" data-validetta="required">
           </div>
 
           <div class="form-group">
-            <label for="workload">Workload:</label>
+            <label for="workload">Workload</label>
             <div class="input-group spinner spinDollars">
               <span class="input-group-addon left-addon">
                 <i class="fa fa-clock-o"></i>
@@ -63,7 +63,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label for="payment">Payment:</label>
+            <label for="payment">Payment</label>
             <div class="input-group spinner spinHours">
               <span class="input-group-addon left-addon">
                 <i class="fa fa-usd"></i>
@@ -79,7 +79,7 @@
             <label><input name="providingHousing" type="checkbox" value="false">Providing housing</label>
           </div>
           <div class="form-group">
-            <label for="swtYear">SWT Year:</label>
+            <label for="swtYear">SWT Year</label>
             <select class="form-control" id="swtYear" name="swtYear">
               @for(year <- years) {
                 <option value="@year.year">@year.toString</option>

@@ -167,11 +167,21 @@ public class SWTUserController extends Controller{
         }
     }
 
+    /**
+     * Clears all session data and logs in user
+     * @param user
+     */
     private void logInUser(SWTUser user) {
         session().clear();
         session("username", user.username);
     }
 
+    /**
+     * Converting {@link CommonProfile} into {@link SWTUser}
+     * Use PROFILE_PIC_KEY as attribute for profile picture
+     * @param commonProfile
+     * @return
+     */
     private SWTUser commonProfileIntoSWTProfile(CommonProfile commonProfile) {
         String firstName = commonProfile.getFirstName();
         String lastName = commonProfile.getFamilyName();

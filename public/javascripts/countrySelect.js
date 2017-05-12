@@ -1,7 +1,3 @@
-//made by teotoplak
-function getFlagImageFor(countryIso2) {
-	document.write('<div class="country-select"><div class="flag ' + countryIso2 +' "></div></div>');
-}
 // wrap in UMD - see https://github.com/umdjs/umd/blob/master/jqueryPlugin.js
 (function(factory) {
 	if (typeof define === "function" && define.amd) {

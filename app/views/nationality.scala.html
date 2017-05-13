@@ -1,11 +1,9 @@
 @(countryISO2: String)
+@* should be removed because of duplicates when in loop *@
 <link rel="stylesheet" type="text/css" href="@routes.Assets.at("stylesheets/countrySelect.css")">
-<div>
-<div class="country-select">
-  <div class="flag @countryISO2" style="float: left">
-  </div>
+<div class="country-select" style="display: inline-block">
+  <div class="flag @countryISO2.toLowerCase"></div>
 </div>
   <span style="padding-left: 5px">
   @countryISO2.toUpperCase()
   </span>
-</div>

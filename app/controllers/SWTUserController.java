@@ -127,6 +127,7 @@ public class SWTUserController extends Controller{
         SWTUser user = new SWTUser(username, password, firstName, lastName, profilePictureUrl, contactURI, null,
                 gender, email, null, country);
         user.save();
+        logger.debug("saving swt user: " + user.toString());
 
         //if it was oauth login
         String oauthId = form.get("oauthId");
@@ -136,9 +137,10 @@ public class SWTUserController extends Controller{
             swtoAuthUser.save();
         }
 
-        flash("success", "Profile created!");
         logInUser(user);
-        return redirect(routes.SWTUserController.profile());
+        logger.debug("logging in user: " + user.username);
+        flash("Great! Now add your SWT years!");
+        return redirect(routes.SWTUserController.placesPanel());
     }
 
     public Result register(String profileInConstructionHash) {
@@ -255,6 +257,11 @@ public class SWTUserController extends Controller{
             result.put("valid", true);
         }
         return ok(result);
+    }
+
+    public Result placesPanel() {
+        SWTUser user = controllers.SWTUserController.currentUser();
+        return ok(placesPanel.render(user));
     }
 
 }

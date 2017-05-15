@@ -30,6 +30,8 @@ GET     /profile            controllers.SWTUserController.profile()
 POST    /saveUser           controllers.SWTUserController.saveUser()
 POST    /checkUsername          controllers.SWTUserController.checkUsername()
 POST    /checkEmail          controllers.SWTUserController.checkEmail()
+#shouldnt be get?
+GET    /placesPanel        controllers.SWTUserController.placesPanel()
 
 
 #year
@@ -43,7 +45,7 @@ GET     /places           controllers.SWTPlaceController.places(ids: String)
 GET     /place             controllers.SWTPlaceController.place(id: String)
 
 #rating
-POST     /rating               controllers.SWTRatingController.ratingForm(id: String)
+GET     /rating               controllers.SWTRatingController.ratingForm(id: String)
 POST     /rate                  controllers.SWTRatingController.rate(id: String)
 
 GET      /fblogin           controllers.SWTUserController.fblogin()

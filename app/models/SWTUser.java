@@ -136,15 +136,7 @@ public class SWTUser extends Model {
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", profilePicture=" + profilePictureUrl +
-                ", contacts=" + contacts +
-                ", birth=" + birth +
-                ", gender='" + gender + '\'' +
                 ", email='" + email + '\'' +
-                ", swtYears=" + swtYears +
-                ", livingLocation='" + livingLocation + '\'' +
-                ", ratings=" + ratings +
                 '}';
     }
 }

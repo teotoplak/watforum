@@ -1,3 +1,11 @@
+/*used by fold text javascript*/
+.foldText {
+    position: absolute;
+    height: auto;
+    width: auto;
+    white-space: nowrap; /* Thanks to Herb Caudill comment */
+}
+
 .descHeading {
     margin: 30px 0;
 }

@@ -2,14 +2,12 @@
 @(user: SWTUser)
 
 @main("WatUser profile") {
-  <dl class="dl-horizontal">
-    <h2><dd>Places panel</dd></h2>
-  </dl>
   <div class="window">
-  <div class="row">
-    <div class="col-md-5">
+  <div class="row separate">
+    <div class="col-md-5 col-md-offset-1">
     @swtYearPanel(user.id , user.getSortedYears)
     </div>
   </div>
+
   </div>
 }

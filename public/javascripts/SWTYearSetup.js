@@ -21,16 +21,18 @@ for (var i = 0; i <= 15; i++) {
     addYear.appendChild(option);
 }
 addYear.value = current;
-addYear.style.minWidth = "80px";
+// addYear.style.minWidth = "80px";
 
+//add button listener
 addButton.addEventListener("click", function () {
     var addingYear = addYear.options[addYear.selectedIndex].value;
+    //if there is no years
     if (table.rows.length == 2) {
-        addYearToRow(1);
+        addYearToRow(2);
         return;
     }
     var lastYear;
-    for (var i = 1; i < table.rows.length - 1; i++) {
+    for (var i = 2; i < table.rows.length; i++) {
         var row = table.rows[i];
         lastYear = row.cells[0].innerHTML;
         //trimming
@@ -45,7 +47,7 @@ addButton.addEventListener("click", function () {
             return;
         }
     }
-    addYearToRow(table.rows.length - 1);
+    addYearToRow(table.rows.length);
 
 });
 

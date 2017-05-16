@@ -1,21 +1,57 @@
 /**
  * Created by teo on 5/16/17.
  */
-function setFoldEffect(textElementId) {
-    var textElement = document.getElementById(textElementId);
-    var text = textElement.innerHTML;
-    var dimensions = calculateWordDimensions(text);
-    var width = dimensions.width;
-    textElement.style.maxWidth = "15px";
+/*Fold text to abbreviation JS*/
+var steps = 35;
+var timeStep = 7;
 
+
+async function setFoldEffect(initialLetterId,textElementId) {
+    var textElement = document.getElementById(textElementId);
+    var initialLetter = document.getElementById(initialLetterId);
+    var initialWidth = parseInt($(textElement).css('width'), 10);
+    initialLetter.addEventListener("mouseover", function () {
+        foldOut(textElement,initialWidth)
+    }, true);
+    initialLetter.addEventListener("mouseout", function () {
+        foldIn(textElement)
+    }, false);
+    // textElement.addEventListener("mouseover",foldOut(textElement,initialWidth),true);
+    // textElement.addEventListener("mouseout",foldIn(textElement,initialWidth),true);
+    // initialLetter.addEventListener("mouseover",alertMe());
+    // initialLetter.addEventListener("mouseover",foldOut(textElement,initialWidth),true);
+    // initialLetter.addEventListener("mouseout",foldIn(textElement,initialWidth),false);
+    // foldIn(textElement,initialWidth);
+
+}
+
+function sleep(ms) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
 // textElement should be span id
-function foldIn(textElement) {
+async function foldOut(textElement, initialWidth) {
+    var step = initialWidth / steps;
+    var currentSize = 0;
+    var i;
+    for(i = 0; i < steps; i++) {
+        await sleep(timeStep);
+        currentSize += step;
+        textElement.style.maxWidth = currentSize + "px";
+    }
 
 }
-function foldOut(textElement) {
-
+async function foldIn(textElement) {
+    var initialWidth = parseInt($(textElement).css('width'), 10);
+    var step = initialWidth / steps;
+    var currentSize = initialWidth;
+    var i;
+    for(i = 0; i < steps; i++) {
+        await sleep(timeStep);
+        currentSize -= step;
+        textElement.style.maxWidth = currentSize + "px";
+    }
+    textElement.style.maxWidth = 0 + "px";
 
 }
 

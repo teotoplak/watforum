@@ -10,11 +10,12 @@
             <span class="first-h words">First</span>,
             <span class="international-h words">international</span>,
             <span class="online-h words">online</span>,
-            USA
-            <span id="foldingText" class="foldText">
-              S</span><span id="summer" class="foldText">ummer</span>
-              W<span id="work" class="foldText">ork</span>
-              T<span id="travel" class="foldText">ravel</span>
+            USA <br>
+            <span class="foldText">
+            <span id="bigS" class="foldText">S</span><span id="ummer" class="foldText">ummer&nbsp;</span>
+            <span id="bigW" class="foldText">W</span><span id="ork" class="foldText">ork&nbsp;</span>
+            <span id="bigT" class="foldText">T</span><span id="ravel" class="foldText">ravel&nbsp;</span>
+            </span>
             work travel community </h1>
         </div>
       </div>
@@ -83,7 +84,7 @@
 
   <script src="@routes.Assets.at("javascripts/foldToAbbr.js")" type="text/javascript"></script>
   <script>
-    setFoldEffect("foldingText", "summer" )
+          setFoldEffect(["bigS", "bigW", "bigT"], ["ummer", "ork", "ravel"]);
   </script>
 
 

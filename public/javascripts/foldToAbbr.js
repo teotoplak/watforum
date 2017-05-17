@@ -4,21 +4,27 @@
 /*Fold text to abbreviation JS*/
 var steps = 35;
 var timeStep = 7;
-
+var stepPerElement = [];
+var textElements = [];
+var textElementsCurrentWidths = [];
 
 async function setFoldEffect(initialLetterIds,textElementIds) {
-    for(var i = 0; i<initialLetterIds.length;i++) {
+    //process all elements steps
+    for(var i = 0; i<textElementIds.length;i++) {
         var textElement = document.getElementById(textElementIds[i]);
-        var initialLetter = document.getElementById(initialLetterIds[i]);
-        initialLetter.addEventListener("mouseover", createFoldOutFunction(textElement), true);
-        initialLetter.addEventListener("mouseout",createFoldInFunction(textElement), false);
+        var initialWidth = parseInt($(textElement).css('width'), 10);
+        var step = initialWidth / steps;
+        stepPerElement.push(step);
+        textElements.push(textElement);
+        textElementsCurrentWidths.push(initialWidth);
     }
-    // textElement.addEventListener("mouseover",foldOut(textElement,initialWidth),true);
-    // textElement.addEventListener("mouseout",foldIn(textElement,initialWidth),true);
-    // initialLetter.addEventListener("mouseover",alertMe());
-    // initialLetter.addEventListener("mouseover",foldOut(textElement,initialWidth),true);
-    // initialLetter.addEventListener("mouseout",foldIn(textElement,initialWidth),false);
-    // foldIn(textElement,initialWidth);
+    await sleep(1100);
+    foldIn()
+    for(var i = 0; i<initialLetterIds.length;i++) {
+        var initialLetter = document.getElementById(initialLetterIds[i]);
+        initialLetter.onmouseout = createFoldInFunction()
+        initialLetter.onmouseover = createFoldOutFunction()
+    }
 
 }
 
@@ -26,46 +32,47 @@ function sleep(ms) {
     return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-function createFoldOutFunction(textElement) {
+function createFoldOutFunction() {
     return function () {
-        foldOut(textElement);
+        foldOut();
     }
 }
 
-function createFoldInFunction(textElement) {
+function createFoldInFunction() {
     return function () {
-        foldIn(textElement);
+        foldIn();
     }
 }
 
 // textElement should be span id
-async function foldOut(textElement) {
-    //get initial width
-    textElement.style.maxWidth = "initial";
-    var initialWidth = parseInt($(textElement).css('width'), 10);
-    textElement.style.maxWidth = 0 + "px";
-
-    var step = initialWidth / steps;
-    var currentSize = 0;
-    var i;
-    for(i = 0; i < steps; i++) {
+async function foldOut() {
+    for(var i = 0; i < steps; i++) {
         await sleep(timeStep);
-        currentSize += step;
-        textElement.style.maxWidth = currentSize + "px";
+        for(var j = 0; j < textElements.length; j++) {
+            var currentWidth = textElementsCurrentWidths[j];
+            var stepi = stepPerElement[j];
+            var newWidth = currentWidth + stepi;
+            textElementsCurrentWidths[j] = newWidth;
+            textElements[j].style.maxWidth = newWidth + "px";
+        }
     }
-
+  
 }
 async function foldIn(textElement) {
-    var initialWidth = parseInt($(textElement).css('width'), 10);
-    var step = initialWidth / steps;
-    var currentSize = initialWidth;
-    var i;
-    for(i = 0; i < steps; i++) {
+    for(var i = 0; i < steps; i++) {
         await sleep(timeStep);
-        currentSize -= step;
-        textElement.style.maxWidth = currentSize + "px";
+        for(var j = 0; j < textElements.length; j++) {
+            var currentWidth = textElementsCurrentWidths[j];
+            var stepi = stepPerElement[j];
+            var newWidth = currentWidth - stepi;
+            textElementsCurrentWidths[j] = newWidth;
+            textElements[j].style.maxWidth = newWidth + "px";
+        }
     }
-    textElement.style.maxWidth = 0 + "px";
+    for(var j = 0; j < textElements.length; j++) {
+        textElements[j].style.maxWidth = 0 + "px";
+        textElementsCurrentWidths[j] = 0;
+    }
 
 }
 

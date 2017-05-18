@@ -3,9 +3,28 @@
 <script src="@routes.Assets.at("validetta/validetta.min.js")" type="text/javascript"></script>
 <link rel="stylesheet" type="text/css" href="@routes.Assets.at("validetta/validetta.min.css")">
 
-
-
 <div class="row">
+<form class="form-horizontal">
+    <div class="form-group">
+        <label for="addAgency" class="col-md-2 control-label">Agency</label>
+        <div class="col-md-6">
+            <input class="form-control" type="text" id="addAgency">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="addYear" class="col-md-2 control-label">Year</label>
+        <div class="col-md-3">
+            <select id="addYear" class="form-control"></select>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-4">
+            <button type="button" id="addButton" class="btn btn-primary">
+                Add <span class="glyphicon glyphicon-plus"></span>
+            </button>
+        </div>
+    </div>
+</form>
 <table id="SWTYearTable" class="table text-center" id="grid">
     <thead>
         <tr>
@@ -15,21 +34,6 @@
         </tr>
     </thead>
     <tbody>
-        <form id="addForm">
-        <tr class="active">
-            <td>
-                <select id="addYear" class="form-control"></select>
-            </td>
-            <td>
-                <input type="text" id="addAgency" class="form-control"/>
-            </td>
-            <td>
-                <button type="button" id="addButton" class="btn btn-primary">
-                    <span class="glyphicon glyphicon-plus"></span>
-                </button>
-            </td>
-        </tr>
-        </form>
         @if(swtYears != null) {
             @for(swtYear <- swtYears) {
                 <tr>
@@ -49,8 +53,7 @@
         }
     </tbody>
 </table>
-<script src="@routes.Assets.at("javascripts/SWTYearSetup.js")"
-data-userId="@userId" type="text/javascript"></script>
+<script src="@routes.Assets.at("javascripts/SWTYearSetup.js")" data-userId="@userId" type="text/javascript"></script>
 </div>
 
 <script>

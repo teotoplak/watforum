@@ -1,12 +1,11 @@
 .avatarImg {
     border-radius: 10px;
-    width: 200px;
-    height: 200px;
+    width: 150px;
+    height: 150px;
 }
-.leftForm {
-    padding-right: 30px;
-    border-right: solid darkgrey 1px;
+.pictureWrap {
+    margin-top: 25px;
 }
-.rightForm {
-    margin-top: 20px;
+#changeAvatarButton {
+    margin-left: 15px;
 }

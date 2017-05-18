@@ -14,7 +14,7 @@
   <div class="window">
         <form action="@routes.SWTUserController.saveUser()" method="post" id="register_form">
     <div class="row separate">
-      <div class="col-md-5 leftForm">
+      <div class="col-md-offset-3 col-md-5">
           <div class="form-group">
             <label for="username">Username</label>
             <input type="text" class="form-control" name="username" id="username"
@@ -94,20 +94,17 @@
             <input type="hidden" name="oauthId" id="oauthId" value="@profileInConstruction.oauthId" >
             <input type="hidden" name="avatar" id="avatar" value="@profileInConstruction.user.profilePictureUrl" >
           }
-      </div>
-          <div class="col-md-5 rightForm">
-            @if(oauth) {
-                <img class="avatarImg" src="@profileInConstruction.user.profilePictureUrl" alt="Profile picture">
-            } else {
-
-            }
-          </div>
-    </div>
-            <div class="row separate">
-                <div class="col-md-5">
-          <button type="submit" class="btn btn-primary">Submit</button>
-                </div>
+          @if(oauth) {
+            <div class="pictureWrap">
+              <img class="avatarImg" src="@profileInConstruction.user.profilePictureUrl" alt="Profile picture">
+              <button type="button" class="btn btn-default" id="changeAvatarButton">Use default</button>
             </div>
+          }
+          <button type="submit" class="btn btn-primary separate">Submit</button>
+      </div>
+
+    </div>
+
         </form>
   </div>
 
@@ -156,7 +153,22 @@
                 $('[data-toggle="tooltip"]').tooltip();
             });
     </script>
-
-
+    @*change avatar button*@
+    <script>
+            var oauthAvatarUrl = $('.avatarImg').attr("src");
+            var buttonText = $('#changeAvatarButton').text();
+            var changed = false;
+            $('#changeAvatarButton').click(function() {
+                if(changed) {
+                    $(this).text(buttonText);
+                    $('.avatarImg').attr("src",  oauthAvatarUrl);
+                    changed = false;
+                } else {
+                    $(this).text("Undo");
+                    $('.avatarImg').attr("src", "@routes.Assets.at("images/profiles/user-default.png")");
+                    changed = true;
+                }
+            })
+    </script>
 
 }

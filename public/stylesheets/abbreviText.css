@@ -1,0 +1,14 @@
+.foldText span {
+    display: inline-block;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    vertical-align: bottom;
+    white-space: nowrap;
+}
+.foldText {
+    display: inline-block;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    vertical-align: bottom;
+    white-space: nowrap;
+}

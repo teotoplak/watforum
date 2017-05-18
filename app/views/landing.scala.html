@@ -9,14 +9,11 @@
           <h1 class="descHeading">
             <span class="first-h words">First</span>,
             <span class="international-h words">international</span>,
-            <span class="online-h words">online</span>,
-            USA <br>
-            <span class="foldText">
-            <span id="bigS" class="foldText">S</span><span id="ummer" class="foldText">ummer&nbsp;</span>
-            <span id="bigW" class="foldText">W</span><span id="ork" class="foldText">ork&nbsp;</span>
-            <span id="bigT" class="foldText">T</span><span id="ravel" class="foldText">ravel&nbsp;</span>
-            </span>
-            work travel community </h1>
+            <span class="online-h words">online</span>, <br>
+            <div id="abbrvText" class="foldText">
+            S<span id="ummer">ummer&nbsp;</span>W<span id="ork">ork&nbsp;</span>T<span id="ravel">ravel&nbsp;</span> USA
+            </div><br>
+            portal </h1>
         </div>
       </div>
 
@@ -82,9 +79,10 @@
   </div>
 
 
-  <script src="@routes.Assets.at("javascripts/foldToAbbr.js")" type="text/javascript"></script>
+  <script src="@routes.Assets.at("javascripts/abbreviText.js")" type="text/javascript"></script>
+  <link rel="stylesheet" type="text/css" href="@routes.Assets.at("stylesheets/abbreviText.css")"/>
   <script>
-          setFoldEffect(["bigS", "bigW", "bigT"], ["ummer", "ork", "ravel"]);
+          abbreviText("abbrvText", ["ummer", "ork", "ravel"]);
   </script>
 
 

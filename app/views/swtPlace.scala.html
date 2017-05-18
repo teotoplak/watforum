@@ -73,11 +73,8 @@
             </div>
         </div>
 
-
         <div class="row">
-            <form method="get" action="@routes.SWTRatingController.ratingForm(place.googleId)">
-                <button type="submit">Rate</button>
-            </form>
+                <a type="button" class="btn btn-primary" href="@routes.SWTRatingController.ratingForm(place.googleId)">Rate</a>
         </div>
 
         <div class="row">

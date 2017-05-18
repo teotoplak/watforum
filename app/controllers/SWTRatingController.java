@@ -42,7 +42,11 @@ public class SWTRatingController extends Controller {
     }
 
     public Result ratingForm(String id) {
-
+        //check if user created some swt year
+        if (SWTUserController.currentUser().swtYears.isEmpty()) {
+            flash("error","You have to add some SWT experience to rate places!");
+            return ok(placesPanel.render(SWTUserController.currentUser()));
+        }
         SWTPlace place = new SWTPlace(id);
         SWTGooglePlace gplace;
         try {

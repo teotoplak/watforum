@@ -73,21 +73,5 @@ public class SWTYearController extends Model {
         return ok();
     }
 
-//    /**
-//     * Need user id in cache!! (Long)
-//     * @return
-//     */
-//    public Result addSWTYearsForm() {
-//
-//        Long userId =  cache.get("userId");
-//
-//        if (userId == null) {
-//            flash("error", "Internal problem with cached data");
-//            logger.error("Didnt get any cached data");
-//            return redirect(routes.Public.landing());
-//        }
-//        return ok(views.html.swtYearsAdd.render(userId));
-//    }
-
 
 }

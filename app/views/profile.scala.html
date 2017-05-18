@@ -22,9 +22,4 @@
     @if(user.birth != null) { <dt>Birth date</dt> <dd>@(user.birth.format("dd/MM/yyyy"))</dd> }
   </dl>
 
-  <div class="row">
-    <div class="col-md-5">
-    @swtYearPanel(user.id , user.getSortedYears)
-    </div>
-  </div>
 }

@@ -35,7 +35,6 @@ GET    /placesPanel        controllers.SWTUserController.placesPanel()
 
 
 #year
-GET     /addYears           controllers.SWTYearController.addSWTYearsForm()
 POST    /saveYear          controllers.SWTYearController.saveSWTYear()
 POST    /deleteYear          controllers.SWTYearController.deleteSWTYear()
 

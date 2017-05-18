@@ -21,7 +21,6 @@ for (var i = 0; i <= 15; i++) {
     addYear.appendChild(option);
 }
 addYear.value = current;
-// addYear.style.minWidth = "80px";
 
 //add button listener
 addButton.addEventListener("click", function () {
@@ -53,6 +52,10 @@ addButton.addEventListener("click", function () {
 
 function addYearToRow(i) {
 
+    if(table.rows.length == 1) {
+        $(table).show();
+    }
+
     var row = table.insertRow(i);
     var cell1 = row.insertCell(-1);
     var cell2 = row.insertCell(-1);
@@ -69,6 +72,7 @@ function addYearToRow(i) {
 
     addAgency.value = "";
 
+
     var obj = {
         year: addingYear,
         agency: addingAgency,
@@ -83,6 +87,10 @@ function addYearToRow(i) {
             'Content-Type': 'application/json'
         }
     });
+
+
+
+
 }
 
 //this is because of the closures in javascript

@@ -20,6 +20,15 @@
             <input type="text" class="form-control" name="username" id="username"
             data-validetta="required,remote[check_username],regExp[check_username],minLength[3],maxLength[15]">
           </div>
+          <div class="form-group">
+              <label for="anonymous">
+                  Anonymous
+                  <span data-toggle="tooltip" title="Hide my personal information to public">
+                      <i class="fa fa-question-circle"></i>
+                  </span>
+              </label>
+              <input type="checkbox" name="anonymous" id="anonymous"/>
+          </div>
           @if(oauth==false) {
             <div class="form-group">
               <label for="password">Password</label>

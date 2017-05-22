@@ -11,17 +11,17 @@
 // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
 
 function initAutocomplete() {
-        // var map = new google.maps.Map(document.getElementById('map'), {
-        //     center: {lat: 38, lng: 260},
-        //     zoom: 5,
-        //     mapTypeId: 'roadmap'
-        // });
+    // var map = new google.maps.Map(document.getElementById('map'), {
+    //     center: {lat: 38, lng: 260},
+    //     zoom: 5,
+    //     mapTypeId: 'roadmap'
+    // });
 
     // Create the search box and link it to the UI element.
     var input = document.getElementById('pac-input');
     var searchBox = new google.maps.places.SearchBox(input);
 
-        // map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+    // map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
 
     // Bias the SearchBox results towards current map's viewport.
     // map.addListener('bounds_changed', function() {
@@ -31,7 +31,7 @@ function initAutocomplete() {
     // var markers = [];
     // Listen for the event fired when the user selects a prediction and retrieve
     // more details for that place.
-    searchBox.addListener('places_changed', function() {
+    searchBox.addListener('places_changed', function () {
         var places = searchBox.getPlaces();
         // window.location.replace("http://localhost:9000");
         $.ajax({
@@ -41,19 +41,19 @@ function initAutocomplete() {
         if (places.length == 0) {
             return;
         }
-        if(places.length > 1) {
+        if (places.length > 1) {
             var arguments = "?ids=";
-            for(var i = 0; i < places.length; i++) {
+            for (var i = 0; i < places.length; i++) {
                 arguments += places[i].place_id + ","
             }
             //removing last comma
             arguments.substring(0, arguments.length - 1);
-            window.location.href = "http://localhost:9000/places" +  arguments;
+            window.location.href = "http://localhost:9000/places" + arguments;
             return;
         } else {
-        var place = places[0];
-        window.location.href = "http://localhost:9000/place?id=" +  place.place_id;
+            var place = places[0];
+            window.location.href = "http://localhost:9000/place?id=" + place.place_id;
         }
 
-});
+    });
 }

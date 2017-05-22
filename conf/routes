@@ -47,5 +47,8 @@ GET     /place             controllers.SWTPlaceController.place(id: String)
 GET     /rating               controllers.SWTRatingController.ratingForm(id: String)
 POST     /rate                  controllers.SWTRatingController.rate(id: String)
 
+#oauth
 GET      /fblogin           controllers.SWTUserController.fblogin()
 
+#connecting with people
+GET      /connect           controllers.SWTConnectController.connect()

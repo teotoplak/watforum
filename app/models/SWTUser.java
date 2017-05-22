@@ -38,6 +38,8 @@ public class SWTUser extends Model {
     public Locale country;
     public SWTGender gender;
     public List<URI> contacts;
+    //be anonymous to public with your data
+    public boolean anonymous;
     @OneToMany(mappedBy = "user")
     public List<SWTYear> swtYears;
     //should I have this? get them over swtYears
@@ -108,7 +110,7 @@ public class SWTUser extends Model {
         }
     }
 
-    public SWTUser(String username, String password, String firstName, String lastName, String profilePictureUrl,
+    public SWTUser(String username, boolean anonymous, String password, String firstName, String lastName, String profilePictureUrl,
                    URI contact, Date birth, SWTGender gender, String email, String livingLocation, Locale country) {
         this.username = username;
         this.password = password;

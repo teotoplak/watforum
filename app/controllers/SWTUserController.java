@@ -116,6 +116,7 @@ public class SWTUserController extends Controller{
         String firstName = form.get("firstName");
         String lastName = form.get("lastName");
         String contact = form.get("contact");
+        boolean anonymous = Boolean.parseBoolean(form.get("anonymous"));
         URI contactURI = null;
         try {
         contactURI = new URI(contact);
@@ -124,7 +125,7 @@ public class SWTUserController extends Controller{
         Locale country = new Locale(form.get("country_selector_code"));
         SWTGender gender = SWTGender.toValue(form.get("gender"));
         String profilePictureUrl = form.get("avatar");
-        SWTUser user = new SWTUser(username, password, firstName, lastName, profilePictureUrl, contactURI, null,
+        SWTUser user = new SWTUser(username, anonymous, password, firstName, lastName, profilePictureUrl, contactURI, null,
                 gender, email, null, country);
         user.save();
         logger.debug("saving swt user: " + user.toString());
@@ -197,7 +198,7 @@ public class SWTUserController extends Controller{
         String livingLocation = commonProfile.getLocation();
         String profilePictureUrl = (String)commonProfile.getAttribute(PROFILE_PIC_KEY);
         SWTGender gender = SWTGender.toValue(commonProfile.getGender().toString());
-        SWTUser user = new SWTUser(null, null, firstName, lastName, profilePictureUrl, linkToProfile,
+        SWTUser user = new SWTUser(null, false, null, firstName, lastName, profilePictureUrl, linkToProfile,
                 null, gender, email, livingLocation, null);
         return user;
     }

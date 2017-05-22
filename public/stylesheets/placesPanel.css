@@ -1,3 +1,9 @@
 .marginOnRight  {
     margin-right: 10px;
 }
+
+
+.currentParticipantInfo {
+    padding: 15px;
+    border-radius: 5px;
+}

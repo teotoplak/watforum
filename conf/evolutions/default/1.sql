@@ -44,6 +44,7 @@ create table swtuser (
   profile_picture_url           varchar(255),
   country                       varchar(20),
   gender                        integer,
+  anonymous                     boolean,
   birth                         timestamp,
   living_location               varchar(255),
   constraint ck_swtuser_gender check (gender in (0,1)),

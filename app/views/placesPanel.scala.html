@@ -21,7 +21,7 @@
               <select id="addYear" class="form-control"></select>
           </div>
           <div class="form-group">
-              <button type="button" id="addButton" class="btn btn-primary">
+              <button type="button" id="addButton" class="btn btn-success">
                 Add <span class="glyphicon glyphicon-plus"></span>
               </button>
           </div>
@@ -59,6 +59,10 @@
           }
           </tbody>
         </table>
+      <p class="bg-success separate currentParticipantInfo" style="display: none">
+        We can see that you are current participant, that's great! You can connect with other current
+        participants <a href="@routes.SWTConnectController.connect()">here <i class="fa fa-arrow-right"></i></a>
+      </p>
     </div>
     </div>
     <div class="row separate">

@@ -3,7 +3,8 @@ var table = document.getElementById("SWTYearTable")
 var addYear = document.getElementById("addYear")
 var addButton = document.getElementById("addButton");
 var addAgency = document.getElementById("addAgency");
-var deleteButtons = document.getElementsByClassName("deleteButton")
+var deleteButtons = document.getElementsByClassName("deleteButton");
+var currentYear;
 
 //put delete buttons on existing data
 for(var i = 0; i < deleteButtons.length; i++)
@@ -13,14 +14,14 @@ for(var i = 0; i < deleteButtons.length; i++)
 }
 
 //year selector
-var current = new Date().getFullYear();
+currentYear = new Date().getFullYear();
 for (var i = 0; i <= 15; i++) {
     var option = document.createElement('option');
-    option.value = current - i;
-    option.innerHTML = current - i;
+    option.value = currentYear - i;
+    option.innerHTML = currentYear - i;
     addYear.appendChild(option);
 }
-addYear.value = current;
+addYear.value = currentYear;
 
 //add button listener
 addButton.addEventListener("click", function () {
@@ -88,7 +89,9 @@ function addYearToRow(i) {
         }
     });
 
-
+    if(currentYear == addingYear) {
+        $('.currentParticipantInfo').slideDown();
+    }
 
 
 }

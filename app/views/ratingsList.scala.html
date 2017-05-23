@@ -1,0 +1,33 @@
+@(ratings: Set[SWTRating])
+@()
+
+<link rel="stylesheet" type="text/css" href="@routes.Assets.at("stylesheets/ratingCard.css")"/>
+
+<ul class="list-group">
+@for(rating <- ratings) {
+    <li class="list-group-item">
+            <div class=" row ratingInfo">
+                <div class="col-md-4">
+                    @rating.swtYear.user.getName
+                    <img src="@rating.swtYear.user.profilePictureUrl" class="profile-image">
+                </div>
+                <div class="col-md-4">
+                    (@rating.workPosition)
+                    <i class="fa fa-dollar"></i>
+                    @rating.payment
+                    <i class="fa fa-clock-o"></i>
+                    @rating.workLoad
+                year: @rating.swtYear.year
+                rating:@rating.rating
+                </div>
+                <div class="col-md-4">
+                @rating.getUpdatedAtPretty()
+                </div>
+            </div>
+            <div class="row ratingComment">
+            @rating.comment
+            </div>
+    </li>
+</ul>
+
+}

@@ -1,5 +1,4 @@
 @(place: SWTPlace, gplace: SWTGooglePlace, years: List[SWTYear])
-@import helper._
 
 @main(gplace.name + " rating") {
 
@@ -22,17 +21,12 @@
           </div>
           <script src="@routes.Assets.at("javascripts/starRating.js")" type="text/javascript"></script>
           <script>
-                  // target element
                   var el = document.querySelector('#starsRating');
-                  // current rating, or initial rating
                   var currentRating = 0;
-                  // max rating, i.e. number of stars you want
                   var maxRating = 5;
-                  // callback to run after setting the rating
                   var callback = function (rating) {
                     document.getElementById("rating").value = rating;
                   };
-                  // rating instance
                   var myRating = rating(el, currentRating, maxRating, callback);
           </script>
 

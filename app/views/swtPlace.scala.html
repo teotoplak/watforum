@@ -77,12 +77,8 @@
                 <a type="button" class="btn btn-primary" href="@routes.SWTRatingController.ratingForm(place.googleId)">Rate</a>
         </div>
 
-        <div class="row">
-            <div class="col-md-8 separate">
-                @for(rating <- place.ratings) {
-                    @rating.swtYear.user.username @rating.rating
-                }
-            </div>
+        <div class="row separate">
+            @ratingsList(place.ratings)
         </div>
     </div>
 

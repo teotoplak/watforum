@@ -1,6 +1,8 @@
 package models;
 
 import com.avaje.ebean.Model;
+import org.ocpsoft.prettytime.PrettyTime;
+import utilities.PrettyTimeUtility;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -55,6 +57,10 @@ public class SWTRating extends Model {
     @PreUpdate
     public void updatedAt() {
         this.updatedAt = new Date();
+    }
+
+    public String getUpdatedAtPretty() {
+        return PrettyTimeUtility.prettyTime(updatedAt);
     }
 
 

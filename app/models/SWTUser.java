@@ -141,4 +141,16 @@ public class SWTUser extends Model {
                 ", email='" + email + '\'' +
                 '}';
     }
+
+    /**
+     * Get users name and surname or username if he's
+     * anonymous
+     * @return name
+     */
+    public String getName() {
+        if (anonymous)
+            return username;
+        return firstName + " " + lastName;
+
+    }
 }

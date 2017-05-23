@@ -22,6 +22,10 @@
          */
         var stars = [];
 
+        /*created by teotoplak*/
+        var description;
+        var descString = ["terrible", "bad", "ok", "good", "great!" ];
+
         /**
          * init
          *
@@ -44,7 +48,28 @@
                 stars.push(star);
                 attachStarEvents(star);
             }
+
+            /* Added by teotoplak. Add description to starts */
+            if(maxRating>descString.length) {
+                alert("There is not enough descriptions for defined maxRating stars!")
+            }
+            description = document.createElement('span');
+            description.textContent = setStarDescription(currentRating);
+            description.classList.add('text-muted');
+            description.style.fontSize = "1.2em";
+            description.style.marginLeft = "5px";
+            el.appendChild(description);
+
         })();
+
+        /*created by teotoplak*/
+        function setStarDescription(index) {
+                if(index === undefined) {
+                    description.innerHTML = "";
+                    return
+                }
+                description.innerHTML = descString[index];
+        }
 
         /**
          * iterate
@@ -84,6 +109,7 @@
             star.addEventListener('mouseover', function(e) {
                 iterate(stars, function(item, index) {
                     if (index <= parseInt(star.getAttribute('data-index'))) {
+                        setStarDescription(index);
                         item.classList.add('is-active');
                     } else {
                         item.classList.remove('is-active');
@@ -116,6 +142,7 @@
             star.addEventListener('click', function(e) {
                 e.preventDefault();
                 setRating(parseInt(star.getAttribute('data-index')) + 1, true);
+                setStarDescription(star.getAttribute('data-index'));
             });
         }
 
@@ -129,8 +156,12 @@
          *   callback or not
          */
         function setRating(value, doCallback) {
-            if (value && value < 0 || value > maxRating) { return; }
-            if (doCallback === undefined) { doCallback = true; }
+            if (value && value < 0 || value > maxRating) {
+                return;
+            }
+            if (doCallback === undefined) {
+                doCallback = true;
+            }
 
             currentRating = value || currentRating;
 
@@ -141,7 +172,6 @@
                     star.classList.remove('is-active');
                 }
             });
-
             if (callback && doCallback) { callback(getRating()); }
         }
 

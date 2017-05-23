@@ -12,12 +12,9 @@
 
   <div class="window">
     <div class="row">
+      <div class="col-md-offset-3 col-md-5">
         <h2>Rating @gplace.name</h2>
-    </div>
-
-    <div class="row">
-      <div class="col-md-5">
-        <form action="@routes.SWTRatingController.rate(place.googleId)" method="post" id="rate_form">
+        <form action="@routes.SWTRatingController.rate(place.googleId)" method="post" id="rate_form" class="separate">
           <div class="form-group">
             <label for="starsRating">Rating</label>
             <div id="starsRating"></div>

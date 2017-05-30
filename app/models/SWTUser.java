@@ -129,6 +129,7 @@ public class SWTUser extends Model {
         this.email = email;
         this.livingLocation = livingLocation;
         this.country = country;
+        this.anonymous = anonymous;
     }
 
     @Override

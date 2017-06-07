@@ -1,24 +1,6 @@
-@main("Watplaces") {
-  <link rel="stylesheet" type="text/css" href="@routes.Assets.at("stylesheets/search.css")">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-  <script src="@routes.Assets.at("javascripts/googlePlaces.js")" type="text/javascript"></script>
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBOVsLLDx5MQmY4CUaD9-kt5Dqw5tPjJV4&libraries=places&callback=initAutocomplete"
-  async defer></script>
+@main("Search") {
 
-<div class="window">
     <h1 class="text-center">Work. Travel. Experience.</h1>
-    <div class="row separate">
-          <div class="input-group col-md-8 col-md-offset-2">
-              <input type="text" id="pac-input" class="form-control input-lg"
-              placeholder="Search for any employer or housing ..." />
-              <span class="input-group-btn">
-                  <button class="btn btn-primary btn-lg" type="button">
-                      <i class="glyphicon glyphicon-search"></i>
-                  </button>
-              </span>
-          </div>
-    </div>
-
-</div>
+    @seachBox()
 
 }

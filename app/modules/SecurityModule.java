@@ -17,7 +17,10 @@ import security.CustomHttpActionAdapter;
 import controllers.CustomLogoutController;
 import security.MyCustomAuth;
 
-/*For now only supporting facebook client*/
+/**
+ * Used for setting up security module.
+ * Using pac4j framework
+ */
 public class SecurityModule extends AbstractModule {
 
     private final Configuration configuration;

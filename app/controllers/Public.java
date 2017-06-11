@@ -21,7 +21,6 @@ public class Public extends Controller {
     @Inject
     private FormFactory formFactory;
 
-it st
     public Result landing() {
         return ok(landing.render());
     }

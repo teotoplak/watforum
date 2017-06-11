@@ -166,7 +166,8 @@ public class SWTUserController extends Controller{
                     new ProfileInConstruction(user, client, oauthId);
             String hashIdentifier = UUID.randomUUID().toString();
             cache.set(hashIdentifier,profileInConstruction,60);
-            flash("success", "We filled in some data for you, please ensure that everything is correct and fill the rest!");
+            flash("info", "We filled in some data for you, please" +
+                    " ensure that everything is correct and fill the rest!");
             return register(hashIdentifier);
         }
     }

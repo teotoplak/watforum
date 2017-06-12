@@ -23,9 +23,7 @@
           <div class="form-group">
               <label for="anonymous">
                   Anonymous
-                  <span data-toggle="tooltip" title="Hide my personal information to public">
-                      <i class="fa fa-question-circle"></i>
-                  </span>
+                  @questionTooltip("Hide my personal information to public")
               </label>
               <input type="checkbox" name="anonymous" id="anonymous"/>
           </div>
@@ -65,9 +63,7 @@
           <div class="form-group">
             <label for="contact">
                 Contact website URL
-                <span data-toggle="tooltip" title="Preferred way of connecting with other participants">
-                    <i class="fa fa-question-circle"></i>
-                   </span>
+                @questionTooltip("Preferred way of connecting with other participants")
             </label>
             <input type="text" class="form-control" name="contact" id="contact" data-validetta=""
                 placeholder="Facebook, Twitter, LinkedIn ..."

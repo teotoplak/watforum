@@ -8,6 +8,7 @@ import play.libs.F;
 import javax.persistence.*;
 import java.awt.*;
 import java.net.URI;
+import java.time.Year;
 import java.util.*;
 import java.util.List;
 
@@ -42,8 +43,6 @@ public class SWTUser extends Model {
     public boolean anonymous;
     @OneToMany(mappedBy = "user")
     public List<SWTYear> swtYears;
-    //should I have this? get them over swtYears
-    public Set<SWTRating> ratings;
 
     /*
     those below still not used
@@ -58,6 +57,14 @@ public class SWTUser extends Model {
         List<SWTYear> list = this.swtYears;
         Collections.sort(list);
         return list;
+    }
+
+    public Set<SWTRating> getAllRatings() {
+        Set<SWTRating> ratings = new HashSet<>();
+        for (SWTYear year : this.swtYears) {
+            ratings.addAll(year.ratings);
+        }
+        return  ratings;
     }
 
     //helper methods

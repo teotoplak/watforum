@@ -10,7 +10,9 @@
                     @rating.swtYear.user.getName
                     <img src="@rating.swtYear.user.profilePictureUrl" class="profile-image">
                 <span class="cardInfoItem">@reviewStars(rating.rating)</span>
-                @*<span class="cardInfoItem">@rating.getUpdatedAtPretty()</span>*@
+                @if(SWTUserController.currentUser().id.equals(rating.swtYear.user.id)) {
+                <a href="@routes.SWTRatingController.ratingForm(rating.swtPlace.googleId,rating.id+"")">Edit</a>
+                }
             </div>
             <div class="row ratingComment">
             @rating.comment

@@ -15,6 +15,9 @@ import java.util.Set;
 @Entity
 public class SWTRating extends Model {
 
+    public SWTRating() {
+    }
+
     public SWTRating(SWTPlace swtPlace, Integer rating, String comment, boolean providingHousing, Integer workLoad,
                      Integer payment, String workPosition, SWTYear swtYear) {
         this.swtPlace = swtPlace;
@@ -63,5 +66,10 @@ public class SWTRating extends Model {
         return PrettyTimeUtility.prettyTime(updatedAt);
     }
 
+    //DAO
+    public static Finder<Long, SWTRating> find = new Finder<>(SWTRating.class);
+    public static SWTRating findRatingById(Long id) {
+        return find.where().eq("id", id).findUnique();
+    }
 
 }

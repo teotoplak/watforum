@@ -1,5 +1,5 @@
-@(place: SWTPlace, gplace: SWTGooglePlace, years: List[SWTYear])
-
+@(place: SWTPlace, gplace: SWTGooglePlace, years: List[SWTYear], rating: SWTRating)
+@edit = @{rating!=null}
 @main(gplace.name + " rating") {
 
   <link rel="stylesheet" type="text/css" href="@routes.Assets.at("stylesheets/rating.css")">
@@ -14,21 +14,26 @@
       <div class="col-md-offset-3 col-md-5">
         <h2>Rating @gplace.name</h2>
         <form action="@routes.SWTRatingController.rate(place.googleId)" method="post" id="rate_form" class="separate">
+          @if(edit){
+            <input type="hidden" name="existingRatingId" value="@rating.id">
+          }
           <div class="form-group">
             <label for="starsRating">Rating</label>
             <div id="starsRating"></div>
-            <input type="hidden" name="rating" id="rating" data-validetta="required">
+            <input type="hidden" name="rating" id="rating" data-validetta="required"
+              @if(edit){value="@rating.rating"}>
           </div>
 
           <div class="form-group">
             <label for="position">Position</label>
-            <input type="text" class="form-control" name="position" id="position" data-validetta="required">
+            <input type="text" class="form-control" name="position" id="position" data-validetta="required"
+              @if(edit){value="@rating.workPosition"}>
           </div>
 
           <div class="form-group">
             <label for="comment">Comment</label>
             <textarea type="text" class="form-control" name="comment" rows="4"
-            id="comment" data-validetta="required,minLength[30],maxLength[500]"></textarea>
+            id="comment" data-validetta="required,minLength[30],maxLength[500]">@if(edit){@rating.comment}</textarea>
           </div>
 
           <div class="form-group">
@@ -38,7 +43,8 @@
                 <i class="fa fa-clock-o"></i>
               </span>
               <input type="text" class="form-control" name="workload"
-                id="workload" value="30" data-validetta="required">
+                id="workload" data-validetta="required"
+                @if(edit){value="@rating.workLoad" }else{value="30"}>
               <div class="input-group-btn-vertical">
                 <button class="btn btn-default" type="button"><i class="fa fa-caret-up"></i></button>
                 <button class="btn btn-default" type="button"><i class="fa fa-caret-down"></i></button>
@@ -52,7 +58,8 @@
                 <i class="fa fa-usd"></i>
               </span>
               <input type="text" class="form-control" name="payment"
-                id="payment" value="10" data-validetta="required">
+                id="payment" data-validetta="required"
+                @if(edit){value="@rating.payment" }else{value="10"}>
               <div class="input-group-btn-vertical">
                 <button class="btn btn-default" type="button"><i class="fa fa-caret-up"></i></button>
                 <button class="btn btn-default" type="button"><i class="fa fa-caret-down"></i></button>
@@ -60,7 +67,8 @@
             </div>
           </div>
           <div class="checkbox">
-            <label><input name="providingHousing" type="checkbox" value="false">
+            <label><input name="providingHousing" type="checkbox"
+              @if(edit){value="@rating.providingHousing" }else{value="false"}>
               Providing housing
               @snippets.questionTooltip("Check if the employer provided you housing during work")
             </label>
@@ -84,6 +92,9 @@
   <script>
           var el = document.querySelector('#starsRating');
           var currentRating = 0;
+          @if(edit){
+            currentRating= @rating.rating;
+          }
           var maxRating = 5;
           var callback = function (rating) {
             document.getElementById("rating").value = rating;

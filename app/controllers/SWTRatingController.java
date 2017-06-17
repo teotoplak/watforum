@@ -27,6 +27,8 @@ public class SWTRatingController extends Controller {
             place = new SWTPlace(id);
             place.save();
         }
+
+        //parameters
         DynamicForm form = Form.form().bindFromRequest();
         Integer rating = Integer.parseInt(form.get("rating"));
         String position = form.get("position");
@@ -35,19 +37,36 @@ public class SWTRatingController extends Controller {
         Integer payment = Integer.parseInt(form.get("payment"));
         boolean providingHousing = form.get("providingHousing")==null ? false : true;
         SWTYear swtYear = user.findYearByYearNumber(Integer.parseInt(form.get("swtYear")));
-        SWTRating swtRating = new SWTRating(place, rating, comment, providingHousing, workload, payment, position, swtYear);
+        String existingRatingIdString = form.get("existingRatingId");
+
+        SWTRating swtRating;
+        if(existingRatingIdString==null) {
+            swtRating = new SWTRating();
+        } else {
+            Long existingRatingId = Long.parseLong(existingRatingIdString);
+            swtRating = SWTRating.findRatingById(existingRatingId);
+        }
+        swtRating.swtPlace = place;
+        swtRating.rating = rating;
+        swtRating.comment = comment;
+        swtRating.providingHousing = providingHousing;
+        swtRating.workLoad = workload;
+        swtRating.payment = payment;
+        swtRating.workPosition = position;
+        swtRating.swtYear = swtYear;
         swtRating.save();
         flash("success", "Rated!");
         return redirect(routes.SWTPlaceController.place(id));
     }
 
-    public Result ratingForm(String id) {
+
+    public Result ratingForm(String placeId, String ratingIdString) {
         //check if user created some swt year
         if (SWTUserController.currentUser().swtYears.isEmpty()) {
             flash("error","You have to add some SWT experience to rate places!");
             return ok(placesPanel.render(SWTUserController.currentUser()));
         }
-        SWTPlace place = new SWTPlace(id);
+        SWTPlace place = new SWTPlace(placeId);
         SWTGooglePlace gplace;
         try {
             gplace = place.getGooglePlace();
@@ -58,7 +77,14 @@ public class SWTRatingController extends Controller {
         }
 
         SWTUser user = SWTUserController.currentUser();
-        return ok(views.html.rate.render(place,gplace,user.swtYears));
+        SWTRating rating;
+        try {
+            Long ratingId = Long.parseLong(ratingIdString);
+            rating = SWTRating.findRatingById(ratingId);
+        } catch (Exception ignorable) {
+            rating = null;
+        }
+        return ok(views.html.rate.render(place,gplace,user.swtYears,rating));
     }
 
 }

@@ -68,16 +68,16 @@
                         <dt>Google maps</dt>
                         <dd><a href="@gplace.googleMaps">link</a></dd>
                     }
+                    <dt>
+                        <a type="button" class="btn btn-primary separate"
+                        href="@routes.SWTRatingController.ratingForm(place.googleId,"none")">Rate</a>
+                    </dt>
                 </dl>
+
             </div>
             <div class="col-md-6">
                 <div id="googleMap"></div>
             </div>
-        </div>
-
-        <div class="row">
-                <a type="button" class="btn btn-primary"
-                href="@routes.SWTRatingController.ratingForm(place.googleId)">Rate</a>
         </div>
 
         <div class="row separate">

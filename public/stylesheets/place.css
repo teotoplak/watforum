@@ -1,4 +1,6 @@
 #googleMap {
     height: 300px;
 }
-
+.dl-custom {
+    font-size: 1.1em !important;
+}

@@ -12,10 +12,6 @@
     margin: 3px;
     font-size: 0.9em;
 }
-.cardAdditionalInfo:hover {
-    color: inherit;
-    text-decoration: none;
-}
 .leftMargin {
     margin-left: 5px;
 }

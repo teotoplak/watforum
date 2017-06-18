@@ -18,6 +18,22 @@
             <input type="hidden" name="existingRatingId" value="@rating.id">
           }
           <div class="form-group">
+            <label for="swtYear">
+              SWT Year
+              @snippets.questionTooltip("Showing only years that haven't been used for rating this place")
+            </label>
+            <select class="form-control" id="swtYear" name="swtYear">
+            @for(year <- years) {
+              <option
+                @if(rating!=null) {
+                  @if(rating.swtYear.equals(year)) {selected="selected"}
+                }
+              value="@year.year">@year.toString
+              </option>
+            }
+            </select>
+          </div>
+          <div class="form-group">
             <label for="starsRating">Rating</label>
             <div id="starsRating"></div>
             <input type="hidden" name="rating" id="rating" data-validetta="required"
@@ -72,14 +88,6 @@
               Providing housing
               @snippets.questionTooltip("Check if the employer provided you housing during work")
             </label>
-          </div>
-          <div class="form-group">
-            <label for="swtYear">SWT Year</label>
-            <select class="form-control" id="swtYear" name="swtYear">
-              @for(year <- years) {
-                <option value="@year.year">@year.toString</option>
-              }
-            </select>
           </div>
           <button class="btn btn-primary" type="submit">Rate</button>
           <a type="button" class="btn btn-default"  href="@request.getHeader("referer")">Cancel</a>

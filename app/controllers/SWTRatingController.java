@@ -12,6 +12,10 @@ import play.mvc.Result;
 import scala.Int;
 import views.html.*;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+
 /**
  * Created by TeoLenovo on 4/17/2017.
  */
@@ -75,7 +79,6 @@ public class SWTRatingController extends Controller {
             logger.error("Error while fetching json for google place");
             return redirect(routes.SWTPlaceController.searchBox());
         }
-
         SWTUser user = SWTUserController.currentUser();
         SWTRating rating;
         try {
@@ -84,7 +87,27 @@ public class SWTRatingController extends Controller {
         } catch (Exception ignorable) {
             rating = null;
         }
-        return ok(views.html.rate.render(place,gplace,user.swtYears,rating));
+
+        //handling swt years list
+        List<SWTYear> swtYears = new ArrayList<>();
+        swtYears = user.swtYears;
+        Set<SWTRating> ratings = user.getAllRatings();
+        for (SWTRating currentRating : ratings) {
+            if (swtYears.contains(currentRating.swtYear)
+                    && currentRating.swtPlace.googleId.equals(placeId)) {
+                swtYears.remove(currentRating.swtYear);
+            }
+        }
+        if (rating != null) {
+            swtYears.add(rating.swtYear);
+        }
+        if (swtYears.isEmpty()) {
+            flash("warning", "You already rated this place with all available SWT years!");
+            return redirect(routes.SWTPlaceController.place(placeId));
+        }
+
+
+        return ok(views.html.rate.render(place,gplace,swtYears,rating));
     }
 
 }

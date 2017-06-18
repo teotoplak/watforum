@@ -54,4 +54,22 @@ public class SWTYear extends Model implements Comparable{
         }
         return comparingYear.year > year? 1: -1;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        SWTYear swtYear = (SWTYear) o;
+
+        if (!year.equals(swtYear.year)) return false;
+        return agency.equals(swtYear.agency);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = year.hashCode();
+        result = 31 * result + agency.hashCode();
+        return result;
+    }
 }

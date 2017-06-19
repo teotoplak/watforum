@@ -1,4 +1,4 @@
-@(place: SWTPlace, gplace: SWTGooglePlace, years: List[SWTYear], rating: SWTRating)
+@(place: SWTPlace, gplace: SWTGooglePlace, years: List[SWTYear], rating: SWTRating, previousUrl: String)
 @edit = @{rating!=null}
 @main(gplace.name + " rating") {
 
@@ -14,6 +14,7 @@
       <div class="col-md-offset-3 col-md-5">
         <h2>Rating @gplace.name</h2>
         <form action="@routes.SWTRatingController.rate(place.googleId)" method="post" id="rate_form" class="separate">
+          <input type="hidden" name="previousUrl" value="@previousUrl">
           @if(edit){
             <input type="hidden" name="existingRatingId" value="@rating.id">
           }
@@ -89,7 +90,10 @@
               @snippets.questionTooltip("Check if the employer provided you housing during work")
             </label>
           </div>
-          <button class="btn btn-primary" type="submit">Rate</button>
+          <button class="btn btn-primary" name="action" type="submit" value="save">Save</button>
+          @if(edit) {
+              <button class="btn btn-danger" name="action" type="submit" value="delete">Delete</button>
+          }
           <a type="button" class="btn btn-default"  href="@request.getHeader("referer")">Cancel</a>
         </form>
       </div>

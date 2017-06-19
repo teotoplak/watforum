@@ -10,6 +10,7 @@ import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
 import scala.Int;
+import sun.reflect.annotation.ExceptionProxy;
 import views.html.*;
 
 import java.util.ArrayList;
@@ -25,6 +26,7 @@ public class SWTRatingController extends Controller {
 
 
     public Result rate(String id) {
+
         SWTUser user = SWTUserController.currentUser();
         SWTPlace place = SWTPlace.findPlaceByGoogleId(id);
         if (place == null) {
@@ -34,6 +36,7 @@ public class SWTRatingController extends Controller {
 
         //parameters
         DynamicForm form = Form.form().bindFromRequest();
+        String previousUrl = form.get("previousUrl");
         Integer rating = Integer.parseInt(form.get("rating"));
         String position = form.get("position");
         String comment = form.get("comment");
@@ -42,6 +45,13 @@ public class SWTRatingController extends Controller {
         boolean providingHousing = form.get("providingHousing")==null ? false : true;
         SWTYear swtYear = user.findYearByYearNumber(Integer.parseInt(form.get("swtYear")));
         String existingRatingIdString = form.get("existingRatingId");
+
+        //determine if delete
+        String[] postAction = request().body().asFormUrlEncoded().get("action");
+        String action = postAction[0];
+        if (action.equals("delete")) {
+            return deleteRating(existingRatingIdString, previousUrl);
+        }
 
         SWTRating swtRating;
         if(existingRatingIdString==null) {
@@ -60,7 +70,7 @@ public class SWTRatingController extends Controller {
         swtRating.swtYear = swtYear;
         swtRating.save();
         flash("success", "Rated!");
-        return redirect(routes.SWTPlaceController.place(id));
+        return redirect(previousUrl);
     }
 
 
@@ -105,9 +115,21 @@ public class SWTRatingController extends Controller {
             flash("warning", "You already rated this place with all available SWT years!");
             return redirect(routes.SWTPlaceController.place(placeId));
         }
+        String previousUrl = request().getHeader("referer");
 
+        return ok(views.html.rate.render(place,gplace,swtYears,rating,previousUrl));
+    }
 
-        return ok(views.html.rate.render(place,gplace,swtYears,rating));
+    private Result deleteRating(String ratingId, String previousUrl) {
+        try {
+            SWTRating rating = SWTRating.findRatingById(Long.parseLong(ratingId));
+            rating.delete();
+            flash("success", "Rating deleted!");
+        } catch (Exception ex) {
+            flash("error", "Error deleting rating");
+            logger.error("Error deleting rating");
+        }
+        return redirect(previousUrl);
     }
 
 }

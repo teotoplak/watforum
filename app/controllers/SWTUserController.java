@@ -169,11 +169,6 @@ public class SWTUserController extends Controller{
         return ok(views.html.register.render(null,null,null));
     }
 
-    public Result updatePassword() {
-        return ok(views.html.updatePassword.render());
-    }
-
-
     private Result oAuthLogin(CommonProfile commonProfile, OAuthClient client) {
         String oauthId = commonProfile.getId();
         SWTUser user;

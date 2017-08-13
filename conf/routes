@@ -33,8 +33,6 @@ POST    /checkUsername          controllers.SWTUserController.checkUsername()
 POST    /checkEmail          controllers.SWTUserController.checkEmail()
 #shouldnt be get?
 GET    /placesPanel        controllers.SWTUserController.placesPanel()
-GET    /update-password      controllers.SWTUserController.updatePassword()
-
 
 #year
 POST    /saveYear          controllers.SWTYearController.saveSWTYear()

@@ -109,26 +109,37 @@ public class SWTUserController extends Controller{
     }
 
     public Result saveUser() {
-        DynamicForm form = formFactory.form().bindFromRequest();
-        String username = form.get("username");
-        String password = form.get("password");
-        String email = form.get("email");
-        String firstName = form.get("firstName");
-        String lastName = form.get("lastName");
-        String contact = form.get("contact");
-        boolean anonymous = Boolean.parseBoolean(form.get("anonymous"));
-        URI contactURI = null;
-        try {
-        contactURI = new URI(contact);
-        } catch (URISyntaxException ex) {}
 
-        Locale country = new Locale(form.get("country_selector_code"));
-        SWTGender gender = SWTGender.toValue(form.get("gender"));
-        String profilePictureUrl = form.get("avatar");
-        SWTUser user = new SWTUser(username, anonymous, password, firstName, lastName, profilePictureUrl, contactURI, null,
-                gender, email, null, country);
-        user.save();
-        logger.debug("saving swt user: " + user.toString());
+        SWTUser user;
+        boolean editing = currentUser() != null;
+        if (editing) {
+            user = currentUser();
+        } else {
+            user = new SWTUser();
+        }
+
+        DynamicForm form = formFactory.form().bindFromRequest();
+        user.username = form.get("username");
+        user.password = form.get("password");
+        user.email = form.get("email");
+        user.firstName = form.get("firstName");
+        user.lastName = form.get("lastName");
+        user.anonymous = Boolean.parseBoolean(form.get("anonymous"));
+        user.country = new Locale(form.get("country_selector_code"));
+        user.gender = SWTGender.toValue(form.get("gender"));
+        if(form.get("avatar")!=null) {
+            user.profilePictureUrl = form.get("avatar");
+        }
+
+        if (editing) {
+            user.update();
+            logger.debug("updated swt user: " + user.toString());
+        } else {
+            user.save();
+            logger.debug("saved swt user: " + user.toString());
+            logInUser(user);
+            logger.debug("logged in user: " + user.username);
+        }
 
         //if it was oauth login
         String oauthId = form.get("oauthId");
@@ -138,19 +149,30 @@ public class SWTUserController extends Controller{
             swtoAuthUser.save();
         }
 
-        logInUser(user);
-        logger.debug("logging in user: " + user.username);
-        flash("Great! Now add your SWT years!");
-        return redirect(routes.SWTUserController.placesPanel());
+        if (editing) {
+            flash("success", "Successfully updated!");
+            return redirect(routes.SWTUserController.profile());
+        } else {
+            flash("success", "Great! Now add your SWT years!");
+            return redirect(routes.SWTUserController.placesPanel());
+        }
+
     }
 
     public Result register(String profileInConstructionHash) {
         ProfileInConstruction profileInConstruction = cache.get(profileInConstructionHash);
         if (profileInConstruction != null) {
-            return ok(views.html.register.render(profileInConstruction));
+            return ok(views.html.register.render(
+                    profileInConstruction.user, profileInConstruction.client, profileInConstruction.oauthId));
         }
-        return ok(views.html.register.render(null));
+        // it was not oauth register
+        return ok(views.html.register.render(null,null,null));
     }
+
+    public Result updatePassword() {
+        return ok(views.html.updatePassword.render());
+    }
+
 
     private Result oAuthLogin(CommonProfile commonProfile, OAuthClient client) {
         String oauthId = commonProfile.getId();
@@ -188,20 +210,13 @@ public class SWTUserController extends Controller{
      * @return
      */
     private SWTUser commonProfileIntoSWTProfile(CommonProfile commonProfile) {
-        String firstName = commonProfile.getFirstName();
-        String lastName = commonProfile.getFamilyName();
-        URI linkToProfile = commonProfile.getProfileUrl();
-        if (linkToProfile == null) {
-            try{
-            linkToProfile = (URI)commonProfile.getAttribute("link");
-            } catch (Exception ignorable){}
-        }
-        String email = commonProfile.getEmail();
-        String livingLocation = commonProfile.getLocation();
-        String profilePictureUrl = (String)commonProfile.getAttribute(PROFILE_PIC_KEY);
-        SWTGender gender = SWTGender.toValue(commonProfile.getGender().toString());
-        SWTUser user = new SWTUser(null, false, null, firstName, lastName, profilePictureUrl, linkToProfile,
-                null, gender, email, livingLocation, null);
+        SWTUser user = new SWTUser();
+        user.firstName = commonProfile.getFirstName();
+        user.lastName = commonProfile.getFamilyName();
+        user.email = commonProfile.getEmail();
+        user.livingLocation = commonProfile.getLocation();
+        user.profilePictureUrl = (String)commonProfile.getAttribute(PROFILE_PIC_KEY);
+        user.gender = SWTGender.toValue(commonProfile.getGender().toString());
         return user;
     }
 
@@ -231,6 +246,11 @@ public class SWTUserController extends Controller{
         return ok(profile.render(user, currentPACUser()));
     }
 
+    public Result editProfile() {
+        SWTUser user = currentUser();
+        return ok(views.html.register.render(user,null,null));
+    }
+
     /**
      * Used for ajax calls from user register form
      */
@@ -238,6 +258,13 @@ public class SWTUserController extends Controller{
         DynamicForm form = formFactory.form().bindFromRequest();
         String username = form.get("username");
         ObjectNode result = Json.newObject();
+        SWTUser currentUser = currentUser();
+        if(currentUser !=null) {
+          if(currentUser.username.equals(username)) {
+              result.put("valid", true);
+              return ok(result);
+          }
+        }
         if (SWTUser.findUserByUsername(username) != null) {
             result.put("valid", false);
             result.put("message", "This username is already taken!");
@@ -252,7 +279,14 @@ public class SWTUserController extends Controller{
     public Result checkEmail() {
         DynamicForm form = formFactory.form().bindFromRequest();
         String email = form.get("email");
+        SWTUser currentUser = currentUser();
         ObjectNode result = Json.newObject();
+        if(currentUser !=null) {
+            if(currentUser.email.equals(email)) {
+                result.put("valid", true);
+                return ok(result);
+            }
+        }
         if (SWTUser.findUserByEmail(email) != null) {
             result.put("valid", false);
             result.put("message", "Account with this mail already exists!");

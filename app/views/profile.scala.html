@@ -22,4 +22,8 @@
     @if(user.birth != null) { <dt>Birth date</dt> <dd>@(user.birth.format("dd/MM/yyyy"))</dd> }
   </dl>
 
+    <a type="button" class="btn btn-primary" href="@routes.SWTUserController.editProfile()">
+        Edit profile
+    </a>
+
 }

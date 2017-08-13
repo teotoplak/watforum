@@ -21,6 +21,7 @@ GET     /                   controllers.Public.landing()
 
 #user
 GET     /listing            controllers.SWTUserController.listAllUsers()
+GET     /profile-edit            controllers.SWTUserController.editProfile()
 POST    /register           controllers.SWTUserController.register(hash: String ?= "")
 GET     /register           controllers.SWTUserController.register(hash: String ?= "")
 GET     /login              controllers.SWTUserController.loginForm()
@@ -32,6 +33,7 @@ POST    /checkUsername          controllers.SWTUserController.checkUsername()
 POST    /checkEmail          controllers.SWTUserController.checkEmail()
 #shouldnt be get?
 GET    /placesPanel        controllers.SWTUserController.placesPanel()
+GET    /update-password      controllers.SWTUserController.updatePassword()
 
 
 #year

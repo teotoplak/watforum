@@ -8,3 +8,5 @@ project/boot
 /.settings
 /RUNNING_PID
 /.sbtserver/connections/*.log
+/conf/application.conf
+!/conf/application.conf

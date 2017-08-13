@@ -31,15 +31,19 @@ public class SWTUser extends Model {
     public String password;
     @Column(unique = true)
     @Constraints.Email
+    @Constraints.Required
     public String email;
+    @Constraints.Required
     public String firstName;
+    @Constraints.Required
     public String lastName;
-    public String profilePictureUrl = "http://localhost:9000/assets/images/profiles/user-default.png";
+    public String profilePictureUrl;
     //iso2 format
     public Locale country;
+    @Constraints.Required
     public SWTGender gender;
-    public List<URI> contacts;
     //be anonymous to public with your data
+    @Constraints.Required
     public boolean anonymous;
     @OneToMany(mappedBy = "user")
     public List<SWTYear> swtYears;
@@ -117,26 +121,9 @@ public class SWTUser extends Model {
         }
     }
 
-    public SWTUser(String username, boolean anonymous, String password, String firstName, String lastName, String profilePictureUrl,
-                   URI contact, Date birth, SWTGender gender, String email, String livingLocation, Locale country) {
-        this.username = username;
-        this.password = password;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        if (profilePictureUrl != null) {
-        this.profilePictureUrl = profilePictureUrl;
-        }
-        List<URI> contacts = new LinkedList<>();
-        if (contact != null) {
-        contacts.add(contact);
-        }
-        this.contacts = contacts;
-        this.birth = birth;
-        this.gender = gender;
-        this.email = email;
-        this.livingLocation = livingLocation;
-        this.country = country;
-        this.anonymous = anonymous;
+    public SWTUser() {
+       swtYears = new LinkedList<>();
+       profilePictureUrl = "http://localhost:9000/assets/images/profiles/user-default.png";
     }
 
     @Override

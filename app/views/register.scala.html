@@ -1,7 +1,11 @@
 @import models.enumerations.SWTGender
-@(profileInConstruction: ProfileInConstruction)
-@oauth = @{profileInConstruction!=null}
-@import helper._
+@import models.enumerations.OAuthClient
+@(user: SWTUser, client: OAuthClient, oauthId: String)
+@*oauth login made*@
+@oauth = @{oauthId!=null}
+@*editing profile*@
+@edit = @{oauthId==null && user!=null}
+
 @main("Student form") {
 
   <link rel="stylesheet" type="text/css" href="@routes.Assets.at("stylesheets/register.css")" >
@@ -12,12 +16,12 @@
 
 
   <div class="window">
-        <form action="@routes.SWTUserController.saveUser()" method="post" id="register_form">
     <div class="row separate">
       <div class="col-md-offset-3 col-md-5">
+          <form action="@routes.SWTUserController.saveUser()" method="post" id="register_form">
           <div class="form-group">
             <label for="username">Username</label>
-            <input type="text" class="form-control" name="username" id="username"
+            <input type="text" class="form-control" name="username" id="username" @if(edit){value="@user.username"}
             data-validetta="required,remote[check_username],regExp[check_username],minLength[3],maxLength[15]">
           </div>
           <div class="form-group">
@@ -25,9 +29,9 @@
                   Anonymous
                   @snippets.questionTooltip("Hide my personal information to public")
               </label>
-              <input type="checkbox" name="anonymous" id="anonymous"/>
+              <input type="checkbox" name="anonymous" id="anonymous" @if(edit){value="@user.anonymous"}/>
           </div>
-          @if(oauth==false) {
+          @if(!oauth && !edit) {
             <div class="form-group">
               <label for="password">Password</label>
               <input type="password" class="form-control" name="password" id="password" data-validetta="required">
@@ -38,48 +42,44 @@
               data-validetta="required,equalTo[password]">
             </div>
           }
+          @if(edit){
+              <div class="form-group">
+                <a class="btn btn-info" href="@routes.SWTUserController.updatePassword()">Change password</a>
+              </div>
+          }
           <div class="form-group">
             <label for="email">Email</label>
             <input type="text" class="form-control" name="email" id="email"
             data-validetta="required,email,remote[check_email]"
-              @if(oauth){value="@profileInConstruction.user.email"}>
+              @if(oauth || edit){value="@user.email"}>
           </div>
           <div class="row">
               <div class="col-md-6">
                   <div class="form-group">
                       <label for="firstName">First name</label>
                       <input type="text" class="form-control" name="firstName" id="firstName" data-validetta=""
-                          @if(oauth){value="@profileInConstruction.user.firstName"}>
+                          @if(oauth || edit){value="@user.firstName"}>
                   </div>
               </div>
               <div class="col-md-6">
                   <div class="form-group">
                       <label for="lastName">Last name</label>
                       <input type="text" class="form-control" name="lastName" id="lastName" data-validetta=""
-                          @if(oauth){value="@profileInConstruction.user.lastName"}>
+                          @if(oauth || edit){value="@user.lastName"}>
                   </div>
               </div>
           </div>
           <div class="form-group">
-            <label for="contact">
-                Contact website URL
-                @snippets.questionTooltip("Preferred way of connecting with other participants")
-            </label>
-            <input type="text" class="form-control" name="contact" id="contact" data-validetta=""
-                placeholder="Facebook, Twitter, LinkedIn ..."
-            @if(oauth){value="@profileInConstruction.user.contacts.get(0)"}>
-          </div>
-          <div class="form-group">
                   @* should be changed to fill out radio buttons *@
               <label><input type="radio" name="gender" value="male"
-                  @if(oauth) {
-                    @if(profileInConstruction.user.gender == SWTGender.MALE){checked="checked"}
+                  @if(oauth || edit) {
+                    @if(user.gender == SWTGender.MALE){checked="checked"}
                   } else {checked="checked"} >
                   Male</label>
 
               <label><input type="radio" name="gender" value="female"
-                  @if(oauth) {
-                      @if(profileInConstruction.user.gender == SWTGender.FEMALE){checked="checked"}
+                  @if(oauth || edit) {
+                      @if(user.gender == SWTGender.FEMALE){checked="checked"}
                   } >
                   Female</label>
           </div>
@@ -94,23 +94,26 @@
               </div>
           </div>
 
-          @if(profileInConstruction != null) {
-            <input type="hidden" name="client" id="client" value="@profileInConstruction.client.toString" >
-            <input type="hidden" name="oauthId" id="oauthId" value="@profileInConstruction.oauthId" >
-            <input type="hidden" name="avatar" id="avatar" value="@profileInConstruction.user.profilePictureUrl" >
+          @if(client != null && oauthId != null) {
+            <input type="hidden" name="client" id="client" value="@client.toString" >
+            <input type="hidden" name="oauthId" id="oauthId" value="@oauthId" >
           }
-          @if(oauth) {
-            <div class="pictureWrap">
-              <img class="avatarImg" src="@profileInConstruction.user.profilePictureUrl" alt="Profile picture">
-              <button type="button" class="btn btn-default" id="changeAvatarButton">Use default</button>
-            </div>
+          @if(oauth || edit) {
+              <input type="hidden" name="avatar" id="avatar" value="@user.profilePictureUrl" >
+              <div class="pictureWrap">
+                  <img class="avatarImg" src="@user.profilePictureUrl" alt="Profile picture">
+                  <button type="button" class="btn btn-default" id="changeAvatarButton">Use default</button>
+              </div>
           }
-          <button type="submit" class="btn btn-primary separate">Submit</button>
+          @if(edit) {
+              <button type="submit" class="btn btn-primary separate">Save</button>
+              <a type="button" class="btn btn-default separate"  href="@request.getHeader("referer")">Cancel</a>
+          } else {
+              <button type="submit" class="btn btn-primary separate">Submit</button>
+          }
+          </form>
       </div>
-
     </div>
-
-        </form>
   </div>
 
 

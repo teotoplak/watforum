@@ -32,7 +32,7 @@ public class SecurityModule extends AbstractModule {
     }
 
     private final String fbId = "561277450662838";
-    private final String fbSecret = "e461422527aeedb32ee6c10834d3e19e";
+    private final String fbSecret = "493ad6a381d85c1a845a31f691873cda";
 
 
     @Override

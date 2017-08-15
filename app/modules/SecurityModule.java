@@ -44,6 +44,7 @@ public class SecurityModule extends AbstractModule {
 
         // OAuth
         final FacebookClient facebookClient = new FacebookClient(fbId, fbSecret);
+        facebookClient.setFields("id,name,first_name,middle_name,last_name,gender,email,location");
 
         final Clients clients = new Clients(configuration.getString("baseUrl")
                 + "/callback", facebookClient

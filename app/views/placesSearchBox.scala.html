@@ -1,0 +1,33 @@
+@()
+
+<link rel="stylesheet" type="text/css" href="@routes.Assets.at("stylesheets/search.css")">
+
+<div class="window">
+  <div class="row">
+    <div class="input-group col-md-8 col-md-offset-2">
+      <input type="text" id="search-box" class="form-control input-lg"
+      placeholder="Search for any employer or housing ..." />
+      <span class="input-group-btn">
+        <button class="btn btn-primary btn-lg" type="button">
+          <i class="glyphicon glyphicon-search"></i>
+        </button>
+      </span>
+    </div>
+  </div>
+</div>
+
+<script>
+        $('#search-box').keypress(function (e) {
+          if (e.which == 13) {
+            let text = $('#search-box').val();
+            $.ajax({url: "/getBaseUrl",
+              success: function(result){
+                window.location.href = result + "/search-for?text=" + text;
+              },
+              error: function(){
+                console.log('not cool');
+              }
+            });
+          }
+        });
+</script>

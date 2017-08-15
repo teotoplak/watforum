@@ -25,7 +25,12 @@ public class SWTPlace extends Model {
     public String googleId;
 
     public SWTGooglePlace getGooglePlace() throws IllegalArgumentException {
-        return new SWTGooglePlace(googleId);
+        SWTGooglePlace place = SWTGooglePlace.getSWTGooglePlaceById(googleId);
+        if (place == null) {
+            throw new IllegalArgumentException("Something went wrong while getting google place" +
+                    "object for id: " + googleId);
+        }
+        return place;
     }
 
     @OneToMany(mappedBy = "swtPlace")

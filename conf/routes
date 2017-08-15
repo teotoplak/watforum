@@ -40,10 +40,9 @@ POST    /deleteYear          controllers.SWTYearController.deleteSWTYear()
 
 #### PLACE
 GET     /search             controllers.SWTPlaceController.searchBox()
-#be careful with url, js depends on it!!
-GET     /places           controllers.SWTPlaceController.places(ids: String)
-#be careful with url, js depends on it!!
 GET     /place             controllers.SWTPlaceController.place(id: String)
+#be careful with url, js depends on it!!
+GET      /search-for       controllers.SWTPlaceController.searchFor(text: String)
 
 #### RATING
 GET     /rating               controllers.SWTRatingController.ratingForm(placeId: String, ratingId: String)

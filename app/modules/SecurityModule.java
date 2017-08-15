@@ -31,7 +31,7 @@ public class SecurityModule extends AbstractModule {
         this.configuration = configuration;
     }
 
-    private final String fbId = "132736803558924";
+    private final String fbId = "561277450662838";
     private final String fbSecret = "e461422527aeedb32ee6c10834d3e19e";
 
 

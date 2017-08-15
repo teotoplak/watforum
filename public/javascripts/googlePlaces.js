@@ -34,10 +34,6 @@ function initAutocomplete() {
     searchBox.addListener('places_changed', function () {
         var places = searchBox.getPlaces();
         // window.location.replace("http://localhost:9000");
-        $.ajax({
-            type: "GET",
-            url: "/register"
-        });
         if (places.length == 0) {
             return;
         }
@@ -48,12 +44,26 @@ function initAutocomplete() {
             }
             //removing last comma
             arguments.substring(0, arguments.length - 1);
-            window.location.href = "http://localhost:9000/places" + arguments;
+            $.ajax({url: "/getBaseUrl",
+                success: function(result){
+                    window.location.href = result + "/places" + arguments;
+                },
+                error: function(){
+                    alert("Internal error - cannot redirect");
+                }
+            });
+
             return;
         } else {
             var place = places[0];
-            window.location.href = "http://localhost:9000/place?id=" + place.place_id;
+            $.ajax({url: "/getBaseUrl",
+                success: function(result){
+                    window.location.href = result + "/place?id=" + place.place_id;
+                },
+                error: function(){
+                    alert("Internal error - cannot redirect");
+                }
+            });
         }
-
     });
 }

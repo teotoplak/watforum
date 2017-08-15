@@ -19,7 +19,7 @@ GET     /assets/*file      controllers.Assets.at(path="/public", file)
 GET     /webjars/*file     controllers.WebJarAssets.at(file)
 GET     /                   controllers.Public.landing()
 
-#user
+#### USER
 GET     /listing            controllers.SWTUserController.listAllUsers()
 GET     /profile-edit            controllers.SWTUserController.editProfile()
 POST    /register           controllers.SWTUserController.register(hash: String ?= "")
@@ -34,21 +34,27 @@ POST    /checkEmail          controllers.SWTUserController.checkEmail()
 #shouldnt be get?
 GET    /placesPanel        controllers.SWTUserController.placesPanel()
 
-#year
+#### YEAR
 POST    /saveYear          controllers.SWTYearController.saveSWTYear()
 POST    /deleteYear          controllers.SWTYearController.deleteSWTYear()
 
-#place
+#### PLACE
 GET     /search             controllers.SWTPlaceController.searchBox()
+#be careful with url, js depends on it!!
 GET     /places           controllers.SWTPlaceController.places(ids: String)
+#be careful with url, js depends on it!!
 GET     /place             controllers.SWTPlaceController.place(id: String)
 
-#rating
+#### RATING
 GET     /rating               controllers.SWTRatingController.ratingForm(placeId: String, ratingId: String)
 POST     /rate                  controllers.SWTRatingController.rate(id: String)
 
-#oauth
+#### OAUTH
 GET      /fblogin           controllers.SWTUserController.fblogin()
 
-#connecting with people
+#### CONNECTING WITH PEOPLE
 GET      /connect           controllers.SWTConnectController.connect()
+
+#### SHARED
+#be careful with url, js depends on it!!
+GET     /getBaseUrl         controllers.SWTSharedController.getBaseUrl()

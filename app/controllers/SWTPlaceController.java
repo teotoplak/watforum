@@ -56,8 +56,11 @@ public class SWTPlaceController extends Controller {
                     places.add(new SWTGooglePlace(googlePlaceNode));
                 }
                 return ok(views.html.swtPlaces.render(places));
-            } else {
+            } else if(resultsNode.size() == 1) {
                 return redirect(routes.SWTPlaceController.place(resultsNode.findPath("place_id").textValue()));
+            } else {
+                flash("info", "No establishment found for that search!");
+                return redirect(request().getHeader("referer"));
             }
         } else {
             return ok("error");

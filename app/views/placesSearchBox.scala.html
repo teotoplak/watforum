@@ -1,6 +1,6 @@
 @()
 
-<link rel="stylesheet" type="text/css" href="@routes.Assets.at("stylesheets/search.css")">
+<link rel="stylesheet" type="text/css" href="@routes.Assets.at("../../../public/stylesheets/search.css")">
 
 <div class="window">
   <div class="row">
@@ -8,7 +8,7 @@
       <input type="text" id="search-box" class="form-control input-lg"
       placeholder="Search for any employer or housing ..." />
       <span class="input-group-btn">
-        <button class="btn btn-primary btn-lg" type="button">
+        <button class="btn btn-primary btn-lg" id="search-btn-box" type="button">
           <i class="glyphicon glyphicon-search"></i>
         </button>
       </span>
@@ -17,17 +17,11 @@
 </div>
 
 <script>
-        $('#search-box').keypress(function (e) {
+        let searchBoxId = '#search-box';
+        $(searchBoxId).keypress((e) => {
           if (e.which == 13) {
-            let text = $('#search-box').val();
-            $.ajax({url: "/getBaseUrl",
-              success: function(result){
-                window.location.href = result + "/search-for?text=" + text;
-              },
-              error: function(){
-                console.log('not cool');
-              }
-            });
+            placeSearchLogic(searchBoxId);
           }
         });
+        $('#search-btn-box').click(()=>placeSearchLogic(searchBoxId))
 </script>

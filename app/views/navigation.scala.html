@@ -29,10 +29,7 @@
             <ul class="nav navbar-nav navbar-left">
             @if(controllers.SWTUserController.currentUser() != null) {
                 <li><a href="@routes.SWTPlaceController.searchBox()">Search</a></li>
-            } else {
-                <li><a href="@routes.SWTUserController.loginForm()">Login</a></li>
             }
-
             </ul>
             <ul class="nav navbar-nav navbar-right">
             @if(controllers.SWTUserController.currentUser() != null) {
@@ -55,6 +52,8 @@
                         <li><a href="@routes.SWTUserController.logout()"> Logout</a></li>
                     </ul>
                 </li>
+            } else {
+                <li><a href="@routes.SWTUserController.loginForm()">Login</a></li>
             }
             </ul>
         </div>

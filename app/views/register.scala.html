@@ -31,17 +31,17 @@
               </label>
               <input type="checkbox" name="anonymous" id="anonymous" @if(edit){value="@user.anonymous"}/>
           </div>
-          @if(!oauth) {
-            <div class="form-group">
-              <label for="password">Password</label>
-              <input type="password" class="form-control" name="password" id="password"
-                  @if(edit){value="@user.password"} data-validetta="required">
-            </div>
-            <div class="form-group">
-              <label for="rpassword">Repeat password</label>
-              <input type="password" class="form-control" name="rpassword" id="rpassword"
-                  @if(edit){value="@user.password"} data-validetta="required,equalTo[password]">
-            </div>
+          @if(!oauth && user.password != null) {
+              <div class="form-group">
+                  <label for="password">Password</label>
+                  <input type="password" class="form-control" name="password" id="password"
+                      @if(edit){value="@user.password"} data-validetta="required">
+              </div>
+              <div class="form-group">
+                  <label for="rpassword">Repeat password</label>
+                  <input type="password" class="form-control" name="rpassword" id="rpassword"
+                      @if(edit){value="@user.password"} data-validetta="required,equalTo[password]">
+              </div>
           }
           <div class="form-group">
             <label for="email">Email</label>

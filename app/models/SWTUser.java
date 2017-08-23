@@ -1,14 +1,10 @@
 package models;
 
 import com.avaje.ebean.Model;
-import models.enumerations.SWTGender;
 import play.data.validation.Constraints;
 import play.libs.F;
 
 import javax.persistence.*;
-import java.awt.*;
-import java.net.URI;
-import java.time.Year;
 import java.util.*;
 import java.util.List;
 
@@ -40,8 +36,7 @@ public class SWTUser extends Model {
     public String profilePictureUrl;
     //iso2 format
     public Locale country;
-    @Constraints.Required
-    public SWTGender gender;
+
     //be anonymous to public with your data
     @Constraints.Required
     public boolean anonymous;
@@ -123,7 +118,6 @@ public class SWTUser extends Model {
 
     public SWTUser() {
        swtYears = new LinkedList<>();
-       profilePictureUrl = "http://localhost:9000/assets/images/profiles/user-default.png";
     }
 
     @Override

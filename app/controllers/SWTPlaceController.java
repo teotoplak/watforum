@@ -3,6 +3,7 @@ package controllers;
 import akka.io.Inet;
 import com.fasterxml.jackson.databind.JsonNode;
 import models.SWTPlace;
+import models.SWTRating;
 import play.Logger;
 import play.libs.ws.WSClient;
 import play.libs.ws.WSRequest;
@@ -22,7 +23,7 @@ public class SWTPlaceController extends Controller {
 
 
     private static final Logger.ALogger logger = Logger.of(SWTPlaceController.class);
-    @Inject WSClient ws;
+    private @Inject WSClient ws;
 
     public Result place(String id) {
 
@@ -42,7 +43,8 @@ public class SWTPlaceController extends Controller {
     }
 
     public Result searchBox() {
-        return ok(views.html.search.render());
+        final int latestRatingsScope = 3;
+        return ok(views.html.search.render(new LinkedHashSet<>(SWTRating.latestRatings(latestRatingsScope))));
     }
 
     public Result searchFor(String text) {

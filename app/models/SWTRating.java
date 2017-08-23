@@ -6,6 +6,7 @@ import utilities.PrettyTimeUtility;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -70,6 +71,9 @@ public class SWTRating extends Model {
     public static Finder<Long, SWTRating> find = new Finder<>(SWTRating.class);
     public static SWTRating findRatingById(Long id) {
         return find.where().eq("id", id).findUnique();
+    }
+    public static List<SWTRating> latestRatings(Integer scope) {
+        return find.orderBy("created_at").setMaxRows(scope).findList();
     }
 
 }

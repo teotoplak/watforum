@@ -1,10 +1,11 @@
-@import models.enumerations.SWTGender
 @import models.enumerations.OAuthClient
-@(user: SWTUser, client: OAuthClient, oauthId: String)
+@import models.enumerations.ProfileFormType
+@(user: SWTUser, client: OAuthClient, oauthId: String, formType: ProfileFormType)
 @*oauth login made*@
-@oauth = @{oauthId!=null}
-@*editing profile*@
-@edit = @{oauthId==null && user!=null}
+@oauth = @{formType.equals(ProfileFormType.EDIT_OAUTH) || formType.equals(ProfileFormType.REG_OAUTH)}
+@edit = @{formType.equals(ProfileFormType.EDIT_NORMAL) || formType.equals(ProfileFormType.EDIT_OAUTH)}
+
+
 
 @main("Student form") {
 
@@ -21,7 +22,7 @@
           <form action="@routes.SWTUserController.saveUser()" method="post" id="register_form">
           <div class="form-group">
             <label for="username">Username</label>
-            <input type="text" class="form-control" name="username" id="username" @if(edit){value="@user.username"}
+            <input type="text" class="form-control" name="username" id="username" value="@user.username"
             data-validetta="required,remote[check_username],regExp[check_username],minLength[3],maxLength[15]">
           </div>
           <div class="form-group">
@@ -29,55 +30,41 @@
                   Anonymous
                   @snippets.questionTooltip("Hide my personal information to public")
               </label>
-              <input type="checkbox" name="anonymous" id="anonymous" @if(edit){value="@user.anonymous"}/>
+              <input type="checkbox" name="anonymous" id="anonymous" value="@user.anonymous"/>
           </div>
-          @if(!oauth && user.password != null) {
+          @if(!oauth) {
               <div class="form-group">
                   <label for="password">Password</label>
                   <input type="password" class="form-control" name="password" id="password"
-                      @if(edit){value="@user.password"} data-validetta="required">
+                      value="@user.password" data-validetta="required">
               </div>
               <div class="form-group">
                   <label for="rpassword">Repeat password</label>
                   <input type="password" class="form-control" name="rpassword" id="rpassword"
-                      @if(edit){value="@user.password"} data-validetta="required,equalTo[password]">
+                      value="@user.password" data-validetta="required,equalTo[password]">
               </div>
           }
           <div class="form-group">
             <label for="email">Email</label>
             <input type="text" class="form-control" name="email" id="email"
             data-validetta="required,email,remote[check_email]"
-              @if(oauth || edit){value="@user.email"}>
+              value="@user.email">
           </div>
           <div class="row">
               <div class="col-md-6">
                   <div class="form-group">
                       <label for="firstName">First name</label>
                       <input type="text" class="form-control" name="firstName" id="firstName" data-validetta=""
-                          @if(oauth || edit){value="@user.firstName"}>
+                          value="@user.firstName">
                   </div>
               </div>
               <div class="col-md-6">
                   <div class="form-group">
                       <label for="lastName">Last name</label>
                       <input type="text" class="form-control" name="lastName" id="lastName" data-validetta=""
-                          @if(oauth || edit){value="@user.lastName"}>
+                          value="@user.lastName">
                   </div>
               </div>
-          </div>
-          <div class="form-group">
-                  @* should be changed to fill out radio buttons *@
-              <label><input type="radio" name="gender" value="male"
-                  @if(oauth || edit) {
-                    @if(user.gender == SWTGender.MALE){checked="checked"}
-                  } else {checked="checked"} >
-                  Male</label>
-
-              <label><input type="radio" name="gender" value="female"
-                  @if(oauth || edit) {
-                      @if(user.gender == SWTGender.FEMALE){checked="checked"}
-                  } >
-                  Female</label>
           </div>
           <div class="form-group">
               <label for="country">Nationality</label>
@@ -90,15 +77,15 @@
               </div>
           </div>
 
-          @if(client != null && oauthId != null) {
+          @if(formType.equals(ProfileFormType.REG_OAUTH)) {
             <input type="hidden" name="client" id="client" value="@client.toString" >
             <input type="hidden" name="oauthId" id="oauthId" value="@oauthId" >
           }
-          @if(oauth || edit) {
+          @if(formType.equals(ProfileFormType.REG_OAUTH)) {
               <input type="hidden" name="avatar" id="avatar" value="@user.profilePictureUrl" >
               <div class="pictureWrap">
                   <img class="avatarImg" src="@user.profilePictureUrl" alt="Profile picture">
-                  <button type="button" class="btn btn-default" id="changeAvatarButton">Use default</button>
+                  <button type="button" class="btn btn-default" id="changeAvatarButton">Nah, use default</button>
               </div>
           }
           @if(edit) {

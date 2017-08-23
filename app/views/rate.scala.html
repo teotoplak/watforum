@@ -54,6 +54,34 @@
           </div>
 
           <div class="form-group">
+            <label for="payment">Salary</label>
+            <div class="row">
+              <div class="col-md-3">
+                <div class="input-group spinner spinHours">
+                  <span class="input-group-addon left-addon">
+                    <i class="fa fa-usd"></i>
+                  </span>
+                  <input type="text" class="form-control" name="payment"
+                  id="payment"
+                    @if(edit){value="@rating.payment" }else{value="10"}>
+                  <div class="input-group-btn-vertical">
+                    <button class="btn btn-default" type="button"><i class="fa fa-caret-up"></i></button>
+                    <button class="btn btn-default" type="button"><i class="fa fa-caret-down"></i></button>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-9">
+                <i class="text-muted">Avg. per week (tips included)</i>
+              </div>
+            </div>
+            <div class="checkbox">
+              <label><input id="paymentVisible" type="checkbox">
+                Don't want to talk about salary
+              </label>
+            </div>
+          </div>
+
+          <div class="form-group">
             <label for="workload">Workload</label>
             <div class="input-group spinner spinDollars">
               <span class="input-group-addon left-addon">
@@ -62,21 +90,6 @@
               <input type="text" class="form-control" name="workload"
                 id="workload" data-validetta="required"
                 @if(edit){value="@rating.workLoad" }else{value="30"}>
-              <div class="input-group-btn-vertical">
-                <button class="btn btn-default" type="button"><i class="fa fa-caret-up"></i></button>
-                <button class="btn btn-default" type="button"><i class="fa fa-caret-down"></i></button>
-              </div>
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="payment">Payment</label>
-            <div class="input-group spinner spinHours">
-              <span class="input-group-addon left-addon">
-                <i class="fa fa-usd"></i>
-              </span>
-              <input type="text" class="form-control" name="payment"
-                id="payment" data-validetta="required"
-                @if(edit){value="@rating.payment" }else{value="10"}>
               <div class="input-group-btn-vertical">
                 <button class="btn btn-default" type="button"><i class="fa fa-caret-up"></i></button>
                 <button class="btn btn-default" type="button"><i class="fa fa-caret-down"></i></button>

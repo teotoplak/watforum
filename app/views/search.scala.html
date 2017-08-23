@@ -1,6 +1,15 @@
+@(latestRatings: Set[SWTRating])
 @main("Search") {
 
-    <h1 class="text-center">Work. Travel. Experience.</h1>
-    @placesSearchBox()
+    <div class="window">
+        <h1 class="text-center">Work. Travel. Experience.</h1>
+        @placesSearchBox()
 
+        <div class="row separate separate">
+            <div class="col-md-10 col-md-offset-1">
+                <h3 style="margin-left: 10px">Latest rated</h3>
+                @ratingsList(latestRatings, true)
+            </div>
+        </div>
+    </div>
 }

@@ -8,7 +8,6 @@ import javax.validation.constraints.NotNull;
 
 /**
  * Created by teo on 4/30/17.
- * TODO check if this is used
  *
  */
 @Entity
@@ -34,6 +33,10 @@ public class SWTOAuthUser extends Model {
 
     public static SWTOAuthUser findSWTUserByOAuthIdAndClient(String oauthId, OAuthClient client) {
         return find.where().eq("oauthId", oauthId).and().eq("client",client).findUnique();
+    }
+
+    public static boolean checkIfUserIsOauth(Long userId) {
+        return find.where().eq("user_id", userId).findUnique() != null;
     }
 
     public static SWTUser getSWTUser(String oauthId, OAuthClient client) {

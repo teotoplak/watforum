@@ -8,10 +8,11 @@
         <li class="list-group-item">
             <div class="row cardInfoHeader">
                     @rating.swtYear.user.getName
-                    <img src="@rating.swtYear.user.profilePictureUrl" class="profile-image">
+                    @snippets.profilePicture(rating.swtYear.user.profilePictureUrl)
                 <span class="cardInfoItem">@reviewStars(rating.rating)</span>
                 <span class="pull-right">
-                    @if(SWTUserController.currentUser().id.equals(rating.swtYear.user.id)) {
+                    @if(SWTUserController.currentUser() != null &&
+                            SWTUserController.currentUser().id.equals(rating.swtYear.user.id)) {
                         <a class="ratingAction"
                         href="@routes.SWTRatingController.ratingForm(rating.swtPlace.googleId,rating.id+"")">
                             <i class="fa fa-pencil"></i> Edit</a>

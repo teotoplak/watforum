@@ -17,6 +17,7 @@ import java.util.Optional;
 /**
  * Created by TeoLenovo on 4/13/2017.
  * Class representing Google place
+ * Mostly used as a swtPlace class wrapper for view
  */
 public class SWTGooglePlace extends Controller{
 

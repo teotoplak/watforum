@@ -43,11 +43,9 @@ create table swtuser (
   last_name                     varchar(255),
   profile_picture_url           varchar(255),
   country                       varchar(20),
-  gender                        integer,
   anonymous                     boolean,
   birth                         timestamp,
   living_location               varchar(255),
-  constraint ck_swtuser_gender check (gender in (0,1)),
   constraint uq_swtuser_username unique (username),
   constraint uq_swtuser_email unique (email),
   constraint pk_swtuser primary key (id)

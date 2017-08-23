@@ -5,23 +5,17 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import models.ProfileInConstruction;
 import models.SWTOAuthUser;
 import models.enumerations.OAuthClient;
-import models.enumerations.SWTGender;
+import models.enumerations.ProfileFormType;
 import org.pac4j.play.java.Secure;
 import models.SWTUser;
-import models.SWTYear;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import play.api.cache.Cache;
 import play.data.DynamicForm;
 import play.data.Form;
 import play.data.FormFactory;
 import play.libs.Json;
-import play.mvc.BodyParser;
 import play.mvc.Controller;
 import play.mvc.Result;
-import play.mvc.Security;
-import scala.util.parsing.json.JSONObject;
-import views.html.register;
 import views.html.*;
 import play.cache.*;
 
@@ -31,16 +25,7 @@ import org.pac4j.play.PlayWebContext;
 import org.pac4j.play.store.PlaySessionStore;
 
 import javax.inject.Inject;
-import javax.sound.sampled.Control;
-
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.*;
-
-import static play.mvc.Controller.flash;
-import static play.mvc.Results.badRequest;
-import static play.mvc.Results.redirect;
 
 /**
  * Created by TeoLenovo on 4/10/2017.
@@ -126,7 +111,6 @@ public class SWTUserController extends Controller{
         user.lastName = form.get("lastName");
         user.anonymous = Boolean.parseBoolean(form.get("anonymous"));
         user.country = new Locale(form.get("country_selector_code"));
-        user.gender = SWTGender.toValue(form.get("gender"));
         if(form.get("avatar")!=null) {
             user.profilePictureUrl = form.get("avatar");
         }
@@ -137,9 +121,10 @@ public class SWTUserController extends Controller{
         } else {
             user.save();
             logger.debug("saved swt user: " + user.toString());
-            logInUser(user);
             logger.debug("logged in user: " + user.username);
         }
+        // needs to refresh new username if necessary
+        logInUser(user);
 
         //if it was oauth login
         String oauthId = form.get("oauthId");
@@ -163,10 +148,14 @@ public class SWTUserController extends Controller{
         ProfileInConstruction profileInConstruction = cache.get(profileInConstructionHash);
         if (profileInConstruction != null) {
             return ok(views.html.register.render(
-                    profileInConstruction.user, profileInConstruction.client, profileInConstruction.oauthId));
+                    profileInConstruction.user,
+                    profileInConstruction.client,
+                    profileInConstruction.oauthId,
+                    ProfileFormType.REG_OAUTH));
         }
         // it was not oauth register
-        return ok(views.html.register.render(null,null,null));
+        return ok(views.html.register.render(
+                new SWTUser(),null,null, ProfileFormType.REG_NORMAL));
     }
 
     private Result oAuthLogin(CommonProfile commonProfile, OAuthClient client) {
@@ -183,8 +172,7 @@ public class SWTUserController extends Controller{
                     new ProfileInConstruction(user, client, oauthId);
             String hashIdentifier = UUID.randomUUID().toString();
             cache.set(hashIdentifier,profileInConstruction,60);
-            flash("info", "We filled in some data for you, please" +
-                    " ensure that everything is correct and fill the rest!");
+            flash("info", "Check if imported data is correct and fill the rest!");
             return register(hashIdentifier);
         }
     }
@@ -211,7 +199,6 @@ public class SWTUserController extends Controller{
         user.email = commonProfile.getEmail();
         user.livingLocation = commonProfile.getLocation();
         user.profilePictureUrl = (String)commonProfile.getAttribute(PROFILE_PIC_KEY);
-        user.gender = SWTGender.toValue(commonProfile.getGender().toString());
         return user;
     }
 
@@ -224,26 +211,17 @@ public class SWTUserController extends Controller{
         return SWTUser.findUserByUsername(ctx().session().get("username"));
     }
 
-
-        public static CommonProfile currentPACUser() {
-            PlayWebContext webContext = new PlayWebContext(ctx(), playSessionStore);
-            ProfileManager<CommonProfile> profileManager = new ProfileManager(webContext);
-            Optional<CommonProfile> profile = profileManager.get(true);
-            if (profile.isPresent()) {
-                return profile.get();
-            }
-            return null;
-        }
-
-
     public Result profile() {
         SWTUser user = currentUser();
-        return ok(profile.render(user, currentPACUser()));
+        return ok(profile.render(user));
     }
 
     public Result editProfile() {
         SWTUser user = currentUser();
-        return ok(views.html.register.render(user,null,null));
+        ProfileFormType type =
+                SWTOAuthUser.checkIfUserIsOauth(user.id)?
+                        ProfileFormType.EDIT_OAUTH:ProfileFormType.EDIT_NORMAL;
+        return ok(views.html.register.render(user,null,null, type));
     }
 
     /**
@@ -276,11 +254,9 @@ public class SWTUserController extends Controller{
         String email = form.get("email");
         SWTUser currentUser = currentUser();
         ObjectNode result = Json.newObject();
-        if(currentUser !=null) {
-            if(currentUser.email.equals(email)) {
-                result.put("valid", true);
-                return ok(result);
-            }
+        if(currentUser !=null && currentUser.email.equals(email)) {
+            result.put("valid", true);
+            return ok(result);
         }
         if (SWTUser.findUserByEmail(email) != null) {
             result.put("valid", false);

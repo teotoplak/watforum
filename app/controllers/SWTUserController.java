@@ -59,6 +59,9 @@ public class SWTUserController extends Controller{
     }
 
     public Result loginForm() {
+        if (SWTUserController.currentUser() != null) {
+            return redirect(routes.Public.landing());
+        }
         return ok(login.render(formFactory.form(SWTUser.class)));
     }
 
@@ -73,8 +76,8 @@ public class SWTUserController extends Controller{
         String password = form.get("password");
         SWTUser user = SWTUser.verifyCredentials(usernameOrEmail, password);
         if (user == null) {
-            flash("error", "Invalid login or password. Please try again.");
-            return redirect(routes.SWTUserController.login());
+            flash("error", "Rejected, make sure you clicked reCAPTCHA!");
+            return redirect(routes.SWTUserController.loginForm());
         }
         logInUser(user);
         return redirect(routes.Public.landing());
@@ -97,23 +100,20 @@ public class SWTUserController extends Controller{
     }
 
     public Result saveUser() {
-
+        DynamicForm form = formFactory.form().bindFromRequest();
         SWTUser user;
         boolean editing = currentUser() != null;
         if (editing) {
             user = currentUser();
         } else {
+            // recaptcha
+            String recaptchaResponse = form.get("g-recaptcha-response");
+            if (!recaptchaSaysOk(recaptchaResponse, "")) {
+                flash("error", "Recaptcha rejected you!");
+                return redirect(routes.SWTUserController.login());
+            }
             user = new SWTUser();
         }
-        DynamicForm form = formFactory.form().bindFromRequest();
-
-        // recaptcha
-        String recaptchaResponse = form.get("g-recaptcha-response");
-        if (!recaptchaSaysOk(recaptchaResponse, "")) {
-            flash("error", "Recaptcha rejected! You spam bro?");
-            return redirect(routes.SWTUserController.loginForm());
-        }
-
         user.username = form.get("username");
         user.password = form.get("password");
         user.email = form.get("email");
@@ -155,6 +155,10 @@ public class SWTUserController extends Controller{
     }
 
     public Result register(String profileInConstructionHash) {
+        if (SWTUserController.currentUser() != null) {
+            return redirect(routes.Public.landing());
+        }
+
         ProfileInConstruction profileInConstruction = cache.get(profileInConstructionHash);
         if (profileInConstruction != null) {
             return ok(views.html.register.render(
@@ -228,6 +232,9 @@ public class SWTUserController extends Controller{
 
     public Result editProfile() {
         SWTUser user = currentUser();
+        if (user == null) {
+            return redirect(routes.Public.landing());
+        }
         ProfileFormType type =
                 SWTOAuthUser.checkIfUserIsOauth(user.id)?
                         ProfileFormType.EDIT_OAUTH:ProfileFormType.EDIT_NORMAL;

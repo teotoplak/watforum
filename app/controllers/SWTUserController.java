@@ -10,10 +10,13 @@ import org.pac4j.play.java.Secure;
 import models.SWTUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import play.Configuration;
 import play.data.DynamicForm;
 import play.data.Form;
 import play.data.FormFactory;
 import play.libs.Json;
+import play.libs.ws.WSClient;
+import play.libs.ws.WSResponse;
 import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.*;
@@ -36,7 +39,12 @@ public class SWTUserController extends Controller{
     private CacheApi cache;
 
     @Inject
+    private Configuration configuration;
+
+    @Inject
     private FormFactory formFactory;
+
+    private @Inject WSClient ws;
 
     @Inject
     protected static PlaySessionStore playSessionStore;
@@ -54,11 +62,6 @@ public class SWTUserController extends Controller{
         return ok(login.render(formFactory.form(SWTUser.class)));
     }
 
-
-    public Result notAuthLoginForm() {
-        flash("error", "Login first to access that page!");
-        return redirect(routes.SWTUserController.loginForm());
-    }
 
     /**
      * Normal form login
@@ -102,8 +105,15 @@ public class SWTUserController extends Controller{
         } else {
             user = new SWTUser();
         }
-
         DynamicForm form = formFactory.form().bindFromRequest();
+
+        // recaptcha
+        String recaptchaResponse = form.get("g-recaptcha-response");
+        if (!recaptchaSaysOk(recaptchaResponse, "")) {
+            flash("error", "Recaptcha rejected! You spam bro?");
+            return redirect(routes.SWTUserController.loginForm());
+        }
+
         user.username = form.get("username");
         user.password = form.get("password");
         user.email = form.get("email");
@@ -270,6 +280,25 @@ public class SWTUserController extends Controller{
     public Result placesPanel() {
         SWTUser user = controllers.SWTUserController.currentUser();
         return ok(placesPanel.render(user));
+    }
+
+    private boolean recaptchaSaysOk(String recaptchaFormResponse, String userIP) {
+
+        if (ws == null) {
+            ws  = play.api.Play.current().injector().instanceOf(WSClient.class);
+        }
+        String url = "https://www.google.com/recaptcha/api/siteverify";
+        String secret =  configuration.getString("recaptcha");
+        String parameters = "secret="+secret+"&response="+recaptchaFormResponse;
+        try {
+            JsonNode response = ws.url(url).setContentType("application/x-www-form-urlencoded")
+                    .post(parameters).thenApply(WSResponse::asJson).toCompletableFuture().get();
+             return response.path("success").asText().equals("true");
+        } catch (Exception ex) {
+            logger.error("Recaptcha request failed: " + ex.toString());
+            ex.printStackTrace();
+            return false;
+        }
     }
 
 }

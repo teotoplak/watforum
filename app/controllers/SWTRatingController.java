@@ -75,8 +75,15 @@ public class SWTRatingController extends Controller {
 
 
     public Result ratingForm(String placeId, String ratingIdString) {
+        SWTUser user = SWTUserController.currentUser();
+
+        if (user == null) {
+            flash("info", "Login first to rate the place!");
+            return redirect(routes.SWTUserController.loginForm());
+        }
+
         //check if user created some swt year
-        if (SWTUserController.currentUser().swtYears.isEmpty()) {
+        if (user.swtYears.isEmpty()) {
             flash("error","You have to add some SWT experience to rate places!");
             return ok(placesPanel.render(SWTUserController.currentUser()));
         }
@@ -89,7 +96,6 @@ public class SWTRatingController extends Controller {
             logger.error("Error while fetching json for google place");
             return redirect(routes.SWTPlaceController.searchBox());
         }
-        SWTUser user = SWTUserController.currentUser();
         SWTRating rating;
         try {
             Long ratingId = Long.parseLong(ratingIdString);

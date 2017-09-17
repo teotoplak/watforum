@@ -36,6 +36,8 @@ public class SWTUser extends Model {
     public String profilePictureUrl;
     //iso2 format
     public Locale country;
+    public Date createdAt;
+
 
     //be anonymous to public with your data
     @Constraints.Required
@@ -51,6 +53,10 @@ public class SWTUser extends Model {
     //should be other then string
     public String livingLocation;
 
+    @PrePersist
+    public void createdAt() {
+        this.createdAt = new Date();
+    }
 
     public List<SWTYear> getSortedYears() {
         List<SWTYear> list = this.swtYears;

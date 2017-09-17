@@ -5,9 +5,23 @@
 
 .main-container {
     background: white;
-    padding: 0;
     box-shadow: 0 0 8px rgba(0,0,0,0.3);
     min-height: 100vh;
+    padding: 0 0 50px;
+    position: relative;
+}
+.footer-container {
+    color: #9d9d9d;
+    background-color: rgba(0, 0, 0, 0.76);
+    bottom: 0;
+    height: 50px;
+    left: 0;
+    position: absolute;
+    width: 100%;
+}
+
+.footer-wrapper {
+    padding: 1em 2em;
 }
 
 body {

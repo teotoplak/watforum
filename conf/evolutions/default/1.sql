@@ -44,6 +44,7 @@ create table swtuser (
   last_name                     varchar(255),
   profile_picture_url           varchar(255),
   country                       varchar(20),
+  created_at                    timestamp,
   anonymous                     boolean,
   birth                         timestamp,
   living_location               varchar(255),

@@ -1,21 +1,64 @@
 @import org.pac4j.core.profile.CommonProfile
 @import helper._
 @(user: SWTUser)
+@edit = @{user.equals(SWTUserController.currentUser())}
+
 
 @main("WatUser profile") {
     <div class="window">
-        <dl class="dl-horizontal">
-            <h2><dd>Profile</dd></h2>
+        <div class="row separate">
+            <div class="col-md-offset-1 col-md-3 text-center">
+                @snippets.profilePictureBig(user.profilePictureUrl)
+                <h2>@user.username</h2>
+            </div>
+            <div class="col-md-3">
+                <dl class="dl-horizontal">
+                    @if(user.username != null) { <dt>Username</dt> <dd>@(user.username)</dd> }
+                    @if(user.firstName != null) { <dt>First name</dt> <dd>@(user.firstName)</dd> }
+                    @if(user.lastName != null) { <dt>Last name</dt> <dd>@(user.lastName)</dd> }
+                    @if(user.email != null) { <dt>Email</dt> <dd>@(user.email)</dd> }
+                    @if(user.country != null) { <dt>Nationality</dt> <dd>@snippets.nationality(user.country)</dd> }
+                    @if(user.birth != null) { <dt>Birth date</dt> <dd>@(user.birth.format("dd/MM/yyyy"))</dd> }
+                </dl>
+                @if(edit) {
+                    <a type="button" class="btn btn-primary" href="@routes.SWTUserController.editProfile()">
+                        Edit profile
+                    </a>
+                }
+            </div>
+            <div class="col-md-3">
+                <h3>SWT years</h3>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Year</th>
+                            <th>Agency</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    @for(swtYear <- user.swtYears) {
+                        <tr>
+                            <td>@swtYear.year</td>
+                            <td>@swtYear.agency</td>
+                        </tr>
+                    }
+                    </tbody>
+                </table>
+                @if(edit) {
+                    <a type="button" class="btn btn-primary" href="@routes.SWTUserController.placesPanel()">
+                        Edit years
+                    </a>
+                }
+            </div>
+        </div>
+        @if(!user.getAllRatings.isEmpty) {
+            <div class="window separate">
+                <h2>Rated places:</h2>
+                <div class="row">
+                @ratingsList(user.getAllRatings, true)
+                </div>
+            </div>
+        }
 
-            @if(user.username != null) { <dt>Username</dt> <dd>@(user.username)</dd> }
-            @if(user.firstName != null) { <dt>Name</dt> <dd>@(user.firstName)</dd> }
-            @if(user.password != null) { <dt>Password</dt> <dd>@(user.password)</dd> }
-            @if(user.lastName != null) { <dt>Surname</dt> <dd>@(user.lastName)</dd> }
-            @if(user.birth != null) { <dt>Birth date</dt> <dd>@(user.birth.format("dd/MM/yyyy"))</dd> }
-        </dl>
-
-        <a type="button" class="btn btn-primary" href="@routes.SWTUserController.editProfile()">
-            Edit profile
-        </a>
     </div>
 }

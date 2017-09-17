@@ -43,6 +43,7 @@ public class SWTRatingController extends Controller {
         Integer workload = Integer.parseInt(form.get("workload"));
         Integer payment = Integer.parseInt(form.get("payment"));
         boolean providingHousing = form.get("providingHousing")==null ? false : true;
+        boolean providingMeal = form.get("providingMeal")==null ? false : true;
         SWTYear swtYear = user.findYearByYearNumber(Integer.parseInt(form.get("swtYear")));
         String existingRatingIdString = form.get("existingRatingId");
 
@@ -64,6 +65,7 @@ public class SWTRatingController extends Controller {
         swtRating.rating = rating;
         swtRating.comment = comment;
         swtRating.providingHousing = providingHousing;
+        swtRating.providingMeal = providingMeal;
         swtRating.workLoad = workload;
         swtRating.payment = payment;
         swtRating.workPosition = position;

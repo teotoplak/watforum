@@ -25,6 +25,7 @@ create table swtrating (
   rating                        integer,
   comment                       varchar(255),
   providing_housing             boolean,
+  providing_meal                boolean,
   work_load                     integer,
   payment                       integer,
   work_position                 varchar(255),

@@ -32,13 +32,23 @@
             <div class="row text-muted cardAdditionalInfo">
                 @rating.workPosition
                 <span class="leftMargin" data-toggle="tooltip" title="dollars per hour">
-            <i class="fa fa-dollar"></i>
+                    <i class="fa fa-dollar"></i>
                     @rating.payment
                 </span>
                 <span class="leftMargin" data-toggle="tooltip" title="hours per week">
                     <i class="fa fa-clock-o"></i>
-                        @rating.workLoad
+                    @rating.workLoad
                 </span>
+                @if(rating.providingMeal) {
+                    <span class="leftMargin" data-toggle="tooltip" title="had meal included">
+                        <i class="fa fa-cutlery"></i>
+                    </span>
+                }
+                @if(rating.providingHousing) {
+                    <span class="leftMargin" data-toggle="tooltip" title="had housing at this employer">
+                        <i class="fa fa-home"></i>
+                    </span>
+                }
             <span class="pull-right">
                 (@rating.swtYear.agency) @rating.swtYear.year
             </span>

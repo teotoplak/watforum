@@ -30,7 +30,7 @@
                   Anonymous
                   @snippets.questionTooltip("Hide my personal information to public")
               </label>
-              <input type="checkbox" name="anonymous" id="anonymous" value="@user.anonymous"/>
+              <input type="checkbox" name="anonymous" id="anonymous" @if(user.anonymous){checked}/>
           </div>
           @if(!oauth) {
               <div class="form-group">

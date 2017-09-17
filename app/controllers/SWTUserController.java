@@ -76,7 +76,7 @@ public class SWTUserController extends Controller{
         String password = form.get("password");
         SWTUser user = SWTUser.verifyCredentials(usernameOrEmail, password);
         if (user == null) {
-            flash("error", "Rejected, make sure you clicked reCAPTCHA!");
+            flash("error", "Login failed!");
             return redirect(routes.SWTUserController.loginForm());
         }
         logInUser(user);
@@ -119,7 +119,7 @@ public class SWTUserController extends Controller{
         user.email = form.get("email");
         user.firstName = form.get("firstName");
         user.lastName = form.get("lastName");
-        user.anonymous = Boolean.parseBoolean(form.get("anonymous"));
+        user.anonymous = form.get("anonymous")==null ? false : true;
         user.country = new Locale(form.get("country_selector_code"));
         if(form.get("avatar")!=null) {
             user.profilePictureUrl = form.get("avatar");

@@ -41,6 +41,7 @@ public class SWTRating extends Model {
     public Integer rating;
     public String comment;
     public boolean providingHousing;
+    public boolean providingMeal;
     public Integer workLoad;
     public Integer payment;
     public String workPosition;

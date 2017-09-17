@@ -47,9 +47,26 @@
               @if(edit){value="@rating.workPosition"}>
           </div>
 
+          <div class="checkbox">
+            <label><input name="providingMeal" type="checkbox"
+              @if(edit){ @if(rating.providingMeal){checked}}>
+              Provided meal
+              @snippets.questionTooltip("Check if employer provided you meal during working shift")
+            </label>
+          </div>
+
+          <div class="checkbox">
+            <label><input name="providingHousing" type="checkbox"
+              @if(edit){ @if(rating.providingHousing){checked}}>
+              Provided housing
+              @snippets.questionTooltip("Check if the employer provided you housing during employment")
+            </label>
+          </div>
+
           <div class="form-group">
             <label for="comment">Comment</label>
             <textarea type="text" class="form-control" name="comment" rows="4"
+              placeholder="Write about general experience..."
             id="comment" data-validetta="required,minLength[30],maxLength[500]">@if(edit){@rating.comment}</textarea>
           </div>
 
@@ -74,34 +91,30 @@
                 <i class="text-muted">Avg. per week (tips included)</i>
               </div>
             </div>
-            <div class="checkbox">
-              <label><input id="paymentVisible" type="checkbox">
-                Don't want to talk about salary
-              </label>
-            </div>
           </div>
 
           <div class="form-group">
             <label for="workload">Workload</label>
-            <div class="input-group spinner spinDollars">
-              <span class="input-group-addon left-addon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-              <input type="text" class="form-control" name="workload"
-                id="workload" data-validetta="required"
-                @if(edit){value="@rating.workLoad" }else{value="30"}>
-              <div class="input-group-btn-vertical">
-                <button class="btn btn-default" type="button"><i class="fa fa-caret-up"></i></button>
-                <button class="btn btn-default" type="button"><i class="fa fa-caret-down"></i></button>
+            <div class="row">
+              <div class="col-md-3">
+                <div class="input-group spinner spinDollars">
+                  <span class="input-group-addon left-addon">
+                    <i class="fa fa-clock-o"></i>
+                  </span>
+                  <input type="text" class="form-control" name="workload"
+                  id="workload" data-validetta="required"
+                    @if(edit){value="@rating.workLoad" }else{value="30"}>
+                  <div class="input-group-btn-vertical">
+                    <button class="btn btn-default" type="button"><i class="fa fa-caret-up"></i></button>
+                    <button class="btn btn-default" type="button"><i class="fa fa-caret-down"></i></button>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-9">
+                <i class="text-muted">Avg. working hours per week</i>
               </div>
             </div>
-          </div>
-          <div class="checkbox">
-            <label><input name="providingHousing" type="checkbox"
-              @if(edit){value="@rating.providingHousing" }else{value="false"}>
-              Providing housing
-              @snippets.questionTooltip("Check if the employer provided you housing during work")
-            </label>
+
           </div>
           <button class="btn btn-primary" name="action" type="submit" value="save">Save</button>
           @if(edit) {

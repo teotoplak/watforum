@@ -17,7 +17,10 @@ GET     /logoutoauth           @org.pac4j.play.LogoutController.logout()
 
 GET     /assets/*file      controllers.Assets.at(path="/public", file)
 GET     /webjars/*file     controllers.WebJarAssets.at(file)
+
+#### PUBLIC
 GET     /                   controllers.Public.landing()
+GET     /terms              controllers.Public.termsAndConditions()
 
 #### USER
 GET     /listing            controllers.SWTUserController.listAllUsers()

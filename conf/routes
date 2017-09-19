@@ -30,7 +30,7 @@ GET     /register           controllers.SWTUserController.register(hash: String 
 GET     /login              controllers.SWTUserController.loginForm()
 POST    /login              controllers.SWTUserController.login()
 GET     /logout             controllers.SWTUserController.logout()
-GET     /profile            controllers.SWTUserController.profile()
+GET     /profile            controllers.SWTUserController.profile(userId: Long)
 POST    /saveUser           controllers.SWTUserController.saveUser()
 POST    /checkUsername          controllers.SWTUserController.checkUsername()
 POST    /checkEmail          controllers.SWTUserController.checkEmail()

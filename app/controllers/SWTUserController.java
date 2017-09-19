@@ -146,7 +146,7 @@ public class SWTUserController extends Controller{
 
         if (editing) {
             flash("success", "Successfully updated!");
-            return redirect(routes.SWTUserController.profile());
+            return redirect(routes.SWTUserController.profile(user.id));
         } else {
             flash("success", "Great! Now add your SWT years!");
             return redirect(routes.SWTUserController.placesPanel());
@@ -225,8 +225,8 @@ public class SWTUserController extends Controller{
         return SWTUser.findUserByUsername(ctx().session().get("username"));
     }
 
-    public Result profile() {
-        SWTUser user = currentUser();
+    public Result profile(Long userId) {
+        SWTUser user = SWTUser.findUserById(userId);
         return ok(profile.render(user));
     }
 

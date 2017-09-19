@@ -142,7 +142,7 @@ public class SWTUser extends Model {
      * anonymous
      * @return name
      */
-    public String getName() {
+    public String getIdentity() {
         if (anonymous)
             return username;
         return firstName + " " + lastName;

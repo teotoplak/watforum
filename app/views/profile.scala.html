@@ -9,14 +9,16 @@
         <div class="row separate">
             <div class="col-md-offset-1 col-md-3 text-center">
                 @snippets.profilePictureBig(user.profilePictureUrl)
-                <h2>@user.username</h2>
+                <h2>@user.getIdentity</h2>
             </div>
             <div class="col-md-3">
                 <dl class="dl-horizontal">
                     @if(user.username != null) { <dt>Username</dt> <dd>@(user.username)</dd> }
-                    @if(user.firstName != null) { <dt>First name</dt> <dd>@(user.firstName)</dd> }
-                    @if(user.lastName != null) { <dt>Last name</dt> <dd>@(user.lastName)</dd> }
-                    @if(user.email != null) { <dt>Email</dt> <dd>@(user.email)</dd> }
+                    @if(!user.anonymous || edit) {
+                        @if(user.firstName != null) { <dt>First name</dt> <dd>@(user.firstName)</dd> }
+                        @if(user.lastName != null) { <dt>Last name</dt> <dd>@(user.lastName)</dd> }
+                        @if(user.email != null) { <dt>Email</dt> <dd>@(user.email)</dd> }
+                    }
                     @if(user.country != null) { <dt>Nationality</dt> <dd>@snippets.nationality(user.country)</dd> }
                     @if(user.birth != null) { <dt>Birth date</dt> <dd>@(user.birth.format("dd/MM/yyyy"))</dd> }
                 </dl>

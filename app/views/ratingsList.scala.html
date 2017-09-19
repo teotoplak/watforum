@@ -7,7 +7,9 @@
     @for(rating <- ratings) {
         <li class="list-group-item">
             <div class="row cardInfoHeader">
-                    @rating.swtYear.user.getName
+                <a href="@routes.SWTUserController.profile(rating.swtYear.user.id)">
+                    @rating.swtYear.user.getIdentity
+                </a>
                     @snippets.profilePicture(rating.swtYear.user.profilePictureUrl)
                 <span class="cardInfoItem">@reviewStars(rating.rating)</span>
                 <span class="pull-right">

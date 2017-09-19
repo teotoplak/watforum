@@ -3,14 +3,13 @@
 @main("WatUser profile") {
 
   @*validetta*@
-  <script src="@routes.Assets.at("validetta/validetta.min.js")" type="text/javascript"></script>
-  <link rel="stylesheet" type="text/css" href="@routes.Assets.at("validetta/validetta.min.css")">
+  <script src="@routes.Assets.at("autocomplete/jquery.autocomplete.min.js")" type="text/javascript"></script>
 
   <link rel="stylesheet" type="text/css" href="@routes.Assets.at("stylesheets/placesPanel.css")"/>
 
   <div class="window">
   <div class="row separate">
-    <div class="col-md-6 col-md-offset-3">
+    <div class="col-md-8 col-md-offset-2">
         <form class="form-inline">
           <div class="form-group marginOnRight">
             <label for="addAgency" class="marginOnRight">Agency</label>
@@ -84,10 +83,19 @@
   <script src="@routes.Assets.at("javascripts/SWTYearSetup.js")" data-userId="@user.id" type="text/javascript"></script>
 
   <script>
-          $("#addForm").validetta({
-            realTime: true,
-            display : 'inline',
-            errorTemplateClass : 'validetta-inline',
+          let currencies = [
+            { value: 'ACES (A Cultural Exchange Service)', data: 'ACES' },
+            { value: 'Alliance Abroad', data: 'Alliance Abroad' },
+            { value: 'InterExchange', data: 'InterExchange' },
+            { value: 'CCUSA (Camp Counselors USA)', data: 'CCUSA' },
+          ];
+
+          $('#addAgency').autocomplete({
+            lookup: currencies,
+            lookupLimit: 3,
+            onSelect: function (suggestion) {
+              // some function here
+            }
           });
   </script>
 }

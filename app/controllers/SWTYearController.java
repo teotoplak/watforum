@@ -3,6 +3,7 @@ package controllers;
 import com.avaje.ebean.Model;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import models.SWTRating;
 import models.SWTUser;
 import models.SWTYear;
 import play.Logger;
@@ -10,6 +11,8 @@ import play.cache.CacheApi;
 import play.mvc.Result;
 
 import javax.inject.Inject;
+
+import java.util.List;
 
 import static play.mvc.Controller.flash;
 import static play.mvc.Controller.request;
@@ -67,6 +70,11 @@ public class SWTYearController extends Model {
         } else {
             if (swtYear == null) {
                 return badRequest("Want to delete swtYear but there is none like it");
+            }
+            // first delete all ratings of year
+            List<SWTRating> ratings = SWTRating.findRatingsBySWTyear(swtYear.id);
+            for(SWTRating rating : ratings) {
+                rating.delete();
             }
             swtYear.delete();
         }

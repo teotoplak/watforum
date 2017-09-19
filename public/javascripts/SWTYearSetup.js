@@ -105,6 +105,10 @@ function createDeleteBtnFunction(deleteButton) {
 
 function deleteBtnFunction(deleteButton) {
 
+    if(!confirm("All ratings you made with this SWT year will be deleted, still proceed?")) {
+        return
+    }
+
     var rowToDelete = deleteButton.parentNode.parentNode;
 
     var yearText = rowToDelete.cells[0].innerHTML;
@@ -112,7 +116,7 @@ function deleteBtnFunction(deleteButton) {
 
     //trimming string
     yearText = yearText.replace(/\s/g,'')
-    agencyText = agencyText.replace(/\s/g,'')
+    agencyText = $.trim(agencyText)
 
     rowToDelete.parentNode.removeChild(rowToDelete);
 

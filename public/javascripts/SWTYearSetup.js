@@ -15,7 +15,7 @@ for(var i = 0; i < deleteButtons.length; i++)
 
 //year selector
 currentYear = new Date().getFullYear();
-for (var i = 0; i <= 15; i++) {
+for (var i = 0; i <= 12; i++) {
     var option = document.createElement('option');
     option.value = currentYear - i;
     option.innerHTML = currentYear - i;

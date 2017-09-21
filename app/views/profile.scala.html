@@ -5,9 +5,12 @@
 
 
 @main("WatUser profile") {
+
+    <link rel="stylesheet" type="text/css" href="@routes.Assets.at("stylesheets/profile.css")" >
+
     <div class="window">
         <div class="row separate">
-            <div class="col-md-offset-1 col-md-3 text-center">
+            <div class="col-md-offset-1 col-md-2 text-center">
                 @snippets.profilePictureBig(user.profilePictureUrl)
                 <h2>@user.getIdentity</h2>
             </div>
@@ -28,13 +31,14 @@
                     </a>
                 }
             </div>
-            <div class="col-md-3">
+            <div class="col-md-5 ">
                 <h3>SWT years</h3>
                 <table class="table">
                     <thead>
                         <tr>
                             <th>Year</th>
                             <th>Agency</th>
+                            <th>Rated</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -42,6 +46,17 @@
                         <tr>
                             <td>@swtYear.year</td>
                             <td>@swtYear.agency</td>
+                            <td>
+                            @if(edit && swtYear.ratings.size()==0 && swtYear.year!=2018) {
+                                <a class="empty_year" href="@routes.SWTPlaceController.searchBox()">
+                                    <span data-toggle="tooltip" title="Rate some places for this year!">
+                                        @swtYear.ratings.size() <i class="fa fa-map-marker"></i>
+                                    </span>
+                                </a>
+                            } else {
+                            @swtYear.ratings.size() <i class="fa fa-map-marker"></i>
+                            }
+                            </td>
                         </tr>
                     }
                     </tbody>
@@ -53,14 +68,27 @@
                 }
             </div>
         </div>
-        @if(!user.getAllRatings.isEmpty) {
-            <div class="window separate">
+        <div class="window separate">
+            <div class="col-md-offset-1 col-md-10">
                 <h2>Rated places:</h2>
-                <div class="row">
-                @ratingsList(user.getAllRatings, true)
-                </div>
+                @if(!user.getAllRatings.isEmpty) {
+                    <div class="row">
+                    @ratingsList(user.getAllRatings, true)
+                    </div>
+                } else {
+                    <span class="text-muted">
+                        None rated yet.
+                    </span>
+                }
             </div>
-        }
+        </div>
 
     </div>
+
+    @*activate all tooltips*@
+    <script>
+            $(document).ready(function(){
+                $('[data-toggle="tooltip"]').tooltip();
+            });
+    </script>
 }

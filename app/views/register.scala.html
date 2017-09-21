@@ -88,6 +88,13 @@
                   <button type="button" class="btn btn-default" id="changeAvatarButton">Nah, use default</button>
               </div>
           }
+              @if(!edit){
+                  <div class="form-group">
+                      <input type="checkbox" name="confirm_swt" id="confirm_swt" @if(user.anonymous){checked}
+                      data-validetta="required"/>
+                      <span class="agree_text">I am current or was past SWT program participant</span>
+                  </div>
+              }
               @if(!edit) {
                   <div class="form-group">
                       <div class="g-recaptcha" data-sitekey="6Lc0Fy4UAAAAAGxZrj1Dp59j_eYH2FujzExWVTU-"></div>

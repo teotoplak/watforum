@@ -82,17 +82,18 @@
             <input type="hidden" name="oauthId" id="oauthId" value="@oauthId" >
           }
           @if(formType.equals(ProfileFormType.REG_OAUTH)) {
-              <input type="hidden" name="avatar" id="avatar" value="@user.profilePictureUrl" >
-              <div class="pictureWrap">
-                  <img class="avatarImg" src="@user.profilePictureUrl" alt="Profile picture">
-                  <button type="button" class="btn btn-default" id="changeAvatarButton">Nah, use default</button>
+              <div class="form-group">
+                  <label class="profile-pic-label">Profile picture</label>
+                  <input type="hidden" name="avatar" id="avatar" value="@user.profilePictureUrl" >
+                      <img class="avatarImg" src="@user.profilePictureUrl" alt="Profile picture">
+                      <button type="button" class="btn btn-default" id="changeAvatarButton">Nah, use default</button>
               </div>
           }
               @if(!edit){
                   <div class="form-group">
                       <input type="checkbox" name="confirm_swt" id="confirm_swt" @if(user.anonymous){checked}
                       data-validetta="required"/>
-                      <span class="agree_text">I am current or was past SWT program participant</span>
+                      <span class="agree_text">I am current or was past participant of SWT program</span>
                   </div>
               }
               @if(!edit) {

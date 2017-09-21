@@ -3,12 +3,12 @@
     width: 150px;
     height: 150px;
 }
-.pictureWrap {
-    margin-top: 25px;
-}
 #changeAvatarButton {
     margin-left: 15px;
 }
 .agree_text {
     font-size: 0.9em;
+}
+.profile-pic-label {
+    display: block;
 }

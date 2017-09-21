@@ -7,9 +7,16 @@
     margin-top: 15px;
     border-top: solid darkgray 1px;
 }
-.oauth-label {
+.desc-label {
     margin: 10px 0;
 }
 .oauth-options {
     padding: 0px 30px;
+}
+.top-label {
+    margin-bottom: 10px;
+}
+.recommended-text {
+    font-style: italic;
+    color: #ba302e;
 }

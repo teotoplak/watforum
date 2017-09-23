@@ -1,0 +1,22 @@
+@(year: SWTYear)
+@import helper._
+
+@main(year.agency + " year") {
+  <div class="window">
+    <div class="row">
+      <h2>SWTyear</h2>
+      <div class="col-md-4">
+        <div>User: <a href="@routes.SWTUserController.profile(year.user.id)">@year.user.getIdentity</a></div>
+        <div>Agency: @year.agency</div>
+        <div>Year: @year.year</div>
+        <div>Num of places: @year.ratings.size()</div>
+      </div>
+      <div class="col-md-8">
+        @if(year.ratings.size() == 0) {
+          <span class="text-muted">Nothing rated yet</span>
+        }
+        @ratingsList(year.ratings,true)
+      </div>
+    </div>
+  </div>
+}

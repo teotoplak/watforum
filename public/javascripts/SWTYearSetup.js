@@ -105,7 +105,7 @@ function createDeleteBtnFunction(deleteButton) {
 
 function deleteBtnFunction(deleteButton) {
 
-    if(!confirm("All ratings you made with this SWT year will be deleted, still proceed?")) {
+    if(!confirm("All ratings you made with this SWT year will be deleted, proceed?")) {
         return
     }
 

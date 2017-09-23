@@ -33,7 +33,7 @@
             </div>
             <div class="col-md-5 ">
                 <h3>SWT years</h3>
-                <table class="table">
+                <table class="table table-hover">
                     <thead>
                         <tr>
                             <th>Year</th>
@@ -43,7 +43,7 @@
                     </thead>
                     <tbody>
                     @for(swtYear <- user.swtYears) {
-                        <tr>
+                        <tr class='clickable-row' data-href='@routes.SWTYearController.swtYear(swtYear.id)'>
                             <td>@swtYear.year</td>
                             <td>@swtYear.agency</td>
                             <td>
@@ -85,10 +85,18 @@
 
     </div>
 
-    @*activate all tooltips*@
+
     <script>
+            @*activate all tooltips*@
             $(document).ready(function(){
                 $('[data-toggle="tooltip"]').tooltip();
+            });
+
+            @* make row clickable *@
+            jQuery(document).ready(function($) {
+                $(".clickable-row").click(function() {
+                    window.location = $(this).data("href");
+                });
             });
     </script>
 }

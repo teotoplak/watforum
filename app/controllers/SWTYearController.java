@@ -30,6 +30,11 @@ public class SWTYearController extends Model {
 
     private static final Logger.ALogger logger = Logger.of(SWTYearController.class);
 
+    public Result swtYear(Long id) {
+        SWTYear year = SWTYear.findYear(id);
+        return ok(views.html.swtYear.render(year));
+    }
+
     /* Right now used only for ajax calls*/
     public Result saveSWTYear() {
         return SUDrequest(true, request().body().asJson());

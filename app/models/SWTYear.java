@@ -46,6 +46,10 @@ public class SWTYear extends Model implements Comparable{
                 .findUnique();
     }
 
+    public static SWTYear findYear(Long id) {
+        return find.where().eq("id", id).findUnique();
+    }
+
     @Override
     public int compareTo(@NotNull Object o) {
         SWTYear comparingYear = (SWTYear) o;

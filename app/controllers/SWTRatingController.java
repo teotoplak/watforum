@@ -87,7 +87,7 @@ public class SWTRatingController extends Controller {
         //check if user created some swt year
         if (user.swtYears.isEmpty()) {
             flash("error","You have to add some SWT experience to rate places!");
-            return ok(placesPanel.render(SWTUserController.currentUser()));
+            return redirect(routes.SWTUserController.placesPanel());
         }
         SWTPlace place = new SWTPlace(placeId);
         SWTGooglePlace gplace;

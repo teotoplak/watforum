@@ -286,7 +286,8 @@ public class SWTUserController extends Controller{
 
     public Result placesPanel() {
         SWTUser user = controllers.SWTUserController.currentUser();
-        return ok(placesPanel.render(user));
+        boolean noYears = user.swtYears.size() == 0;
+        return ok(placesPanel.render(user, noYears));
     }
 
     private boolean recaptchaSaysOk(String recaptchaFormResponse, String userIP) {

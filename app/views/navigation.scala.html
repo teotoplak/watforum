@@ -40,11 +40,14 @@
                         <b class="caret"></b>
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a href="@routes.SWTUserController.profile(user.id)"> Profile</a></li>
+                        <li><a href="@routes.SWTUserController.profile(user.id)">
+                            <i class="fa fa-user"></i> Profile</a></li>
                         <li class="divider"></li>
-                        <li><a href="@routes.SWTUserController.placesPanel()"> My places</a></li>
+                        <li><a href="@routes.SWTUserController.placesPanel()">
+                            <i class="fa fa-th-list"></i> SWT years</a></li>
                         <li class="divider"></li>
-                        <li><a href="@routes.SWTUserController.logout()"> Logout</a></li>
+                        <li><a href="@routes.SWTUserController.logout()">
+                            <i class="fa fa-sign-out"></i> Logout</a></li>
                     </ul>
                 </li>
             } else {

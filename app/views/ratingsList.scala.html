@@ -6,33 +6,34 @@
     <ul class="list-group">
     @for(rating <- ratings) {
         <li class="list-group-item">
-            <div class="row cardInfoHeader">
-                <a href="@routes.SWTUserController.profile(rating.swtYear.user.id)">
+            <div class="cardWrapper">
+                <div class="row cardInfoHeader">
+                    <a href="@routes.SWTUserController.profile(rating.swtYear.user.id)">
                     @rating.swtYear.user.getIdentity
-                </a>
+                    </a>
                     @snippets.profilePicture(rating.swtYear.user.profilePictureUrl)
-                <span class="cardInfoItem">@reviewStars(rating.rating)</span>
-                <span class="pull-right">
+                    <span class="cardInfoItem">@reviewStars(rating.rating)</span>
+                    <span class="pull-right">
                     @if(SWTUserController.currentUser() != null &&
                             SWTUserController.currentUser().id.equals(rating.swtYear.user.id)) {
                         <a class="ratingAction"
                         href="@routes.SWTRatingController.ratingForm(rating.swtPlace.googleId,rating.id+"")">
                             <i class="fa fa-pencil"></i> Edit</a>
                     }
-                </span>
-            </div>
-            <div class="row ratingComment">
-            @rating.comment
-            </div>
-            @if(showPlaceName) {
-                <div class="row text-muted cardAdditionalInfo">
-                    <a href="@routes.SWTPlaceController.place(rating.swtPlace.googleId)">
-                        @rating.swtPlace.getGooglePlace().name
-                    </a>
+                    </span>
                 </div>
-            }
-            <div class="row text-muted cardAdditionalInfo">
-                @rating.workPosition
+                <div class="row ratingComment">
+                @rating.comment
+                </div>
+                @if(showPlaceName) {
+                    <div class="row text-muted cardAdditionalInfo">
+                        <a href="@routes.SWTPlaceController.place(rating.swtPlace.googleId)">
+                        @rating.swtPlace.getGooglePlace().name
+                        </a>
+                    </div>
+                }
+                <div class="row text-muted cardAdditionalInfo">
+                    @rating.workPosition
                 <span class="leftMargin" data-toggle="tooltip" title="dollars per hour">
                     <i class="fa fa-dollar"></i>
                     @rating.payment
@@ -41,19 +42,20 @@
                     <i class="fa fa-clock-o"></i>
                     @rating.workLoad
                 </span>
-                @if(rating.providingMeal) {
-                    <span class="leftMargin" data-toggle="tooltip" title="had meal included">
-                        <i class="fa fa-cutlery"></i>
-                    </span>
-                }
-                @if(rating.providingHousing) {
-                    <span class="leftMargin" data-toggle="tooltip" title="employer provided housing">
-                        <i class="fa fa-home"></i>
-                    </span>
-                }
-            <span class="pull-right">
+                    @if(rating.providingMeal) {
+                        <span class="leftMargin" data-toggle="tooltip" title="had meal included">
+                            <i class="fa fa-cutlery"></i>
+                        </span>
+                    }
+                    @if(rating.providingHousing) {
+                        <span class="leftMargin" data-toggle="tooltip" title="employer provided housing">
+                            <i class="fa fa-home"></i>
+                        </span>
+                    }
+                <span class="pull-right">
                 (@rating.swtYear.agency) @rating.swtYear.year
             </span>
+                </div>
             </div>
         </li>
     }

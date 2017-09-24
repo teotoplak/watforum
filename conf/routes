@@ -43,8 +43,11 @@ POST    /saveYear          controllers.SWTYearController.saveSWTYear()
 POST    /deleteYear          controllers.SWTYearController.deleteSWTYear()
 
 #### PLACE
-GET     /search             controllers.SWTPlaceController.searchBox()
+GET     /rate-search             controllers.SWTPlaceController.searchBox()
+GET     /search             controllers.SWTPlaceController.findSearch()
+GET     /search-dash             controllers.SWTPlaceController.findSearchDashBoard(text: String)
 GET     /place             controllers.SWTPlaceController.place(id: String)
+POST      /get-places       controllers.SWTPlaceController.getSWTPlaces
 #be careful with url, js depends on it!!
 GET      /search-for       controllers.SWTPlaceController.searchFor(text: String)
 

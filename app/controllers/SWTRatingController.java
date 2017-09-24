@@ -131,7 +131,12 @@ public class SWTRatingController extends Controller {
     private Result deleteRating(String ratingId, String previousUrl) {
         try {
             SWTRating rating = SWTRating.findRatingById(Long.parseLong(ratingId));
+            SWTPlace place = rating.swtPlace;
             rating.delete();
+            // also delete place if there is no more ratings
+            if (place.ratings.size() == 0) {
+                place.delete();
+            }
             flash("success", "Rating deleted!");
         } catch (Exception ex) {
             flash("error", "Error deleting rating");

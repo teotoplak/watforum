@@ -12,6 +12,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.sound.sampled.Control;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -34,13 +36,6 @@ public class SWTGooglePlace extends Controller{
 
     public String address;
 
-    public String icon;
-
-    /*
-    text about working hours
-     */
-    public String weekdayText;
-
     public String website;
 
     /*
@@ -51,6 +46,10 @@ public class SWTGooglePlace extends Controller{
     public Double lat;
 
     public Double lng;
+
+    public String state;
+    public String county;
+    public String city;
 
 
     /**
@@ -63,12 +62,26 @@ public class SWTGooglePlace extends Controller{
             this.name = node.findPath("name").textValue();
             this.phoneNumber = node.findPath("international_phone_number").textValue();
             this.address = node.findPath("formatted_address").textValue();
-            this.icon = node.findPath("icon").textValue();
-            this.weekdayText = node.findPath("weekday_text").textValue();
             this.website = node.findPath("website").textValue();
             this.googleMaps = node.findPath("url").textValue();
 
-            //location
+            Iterator<JsonNode> address_components = node.findPath("address_components").elements();
+        while (address_components.hasNext()) {
+            JsonNode component = address_components.next();
+            String typesString = component.findPath("types").toString();
+            if (typesString.contains("administrative_area_level_1")) {
+                this.state = component.findPath("long_name").asText();
+            }
+            if (typesString.contains("administrative_area_level_2")) {
+                this.county = component.findPath("long_name").asText();
+            }
+            if (typesString.contains("locality")) {
+                this.city = component.findPath("long_name").asText();
+            }
+        }
+
+
+        //location
             JsonNode aField = node.findPath("location");
             JsonNode bField = aField.findPath("lat");
             JsonNode cField = aField.findPath("lng");

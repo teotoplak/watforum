@@ -1,0 +1,9 @@
+.filter-item {
+
+}
+.filter-item:hover{
+    background-color: lightgray;
+}
+.filter-item-selected {
+    border-bottom: solid 1px #ba302e;
+}

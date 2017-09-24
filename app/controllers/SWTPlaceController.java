@@ -2,9 +2,15 @@ package controllers;
 
 import akka.io.Inet;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import models.SWTPlace;
 import models.SWTRating;
+import models.SWTUser;
 import play.Logger;
+import play.data.DynamicForm;
+import play.data.FormFactory;
+import play.libs.Json;
 import play.libs.ws.WSClient;
 import play.libs.ws.WSRequest;
 import play.libs.ws.WSResponse;
@@ -12,6 +18,8 @@ import play.mvc.Controller;
 import play.mvc.Result;
 
 import javax.inject.Inject;
+import java.io.ByteArrayOutputStream;
+import java.io.OutputStream;
 import java.lang.reflect.Array;
 import java.util.*;
 import java.util.concurrent.CompletionStage;
@@ -24,6 +32,9 @@ public class SWTPlaceController extends Controller {
 
     private static final Logger.ALogger logger = Logger.of(SWTPlaceController.class);
     private @Inject WSClient ws;
+
+    @Inject
+    private FormFactory formFactory;
 
     public Result place(String id) {
 
@@ -44,7 +55,33 @@ public class SWTPlaceController extends Controller {
 
     public Result searchBox() {
         final int latestRatingsScope = 3;
-        return ok(views.html.search.render(new LinkedHashSet<>(SWTRating.latestRatings(latestRatingsScope))));
+        return ok(views.html.rateSearch.render(new LinkedHashSet<>(SWTRating.latestRatings(latestRatingsScope))));
+    }
+
+    public Result findSearch() {
+        return ok(views.html.findSearch.render());
+    }
+
+    /**
+     * Used for ajax calls from user register form
+     */
+    public Result getSWTPlaces() {
+        DynamicForm form = formFactory.form().bindFromRequest();
+        String text = form.get("text").toLowerCase();
+        String type = form.get("type");
+        List<SWTPlace> places = new LinkedList<>();
+        if (type.equals("city")) {
+            places = SWTPlace.findPlaceByCity(text);
+        }
+        for (SWTPlace place : places) {
+            place.calculateRating();
+        }
+        return ok(Json.toJson(places));
+    }
+
+    public Result findSearchDashBoard(String text) {
+
+        return ok(views.html.findSearchDash.render());
     }
 
     public Result searchFor(String text) {

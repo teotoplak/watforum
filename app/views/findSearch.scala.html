@@ -1,0 +1,86 @@
+@()
+@main("Search") {
+
+  <link href="@routes.Assets.at("stylesheets/findSearch.css")" rel="stylesheet" media="screen">
+
+  <div class="window">
+    <div class="row">
+      <div class="text-center filter-item col-md-2 col-md-offset-2">State</div>
+      <div class="text-center filter-item col-md-2">County</div>
+      <div id="first-selected" class="text-center filter-item col-md-2 filter-item-selected">City</div>
+    </div>
+    <div class="row">
+      <div class="input-group col-md-8 col-md-offset-2">
+        <input type="text" id="find-search-box" class="form-control input-lg"
+        placeholder="Search by city, state or county" />
+        <span class="input-group-btn">
+          <button class="btn btn-primary btn-lg" id="find-search-btn-box" type="button">
+            <i class="glyphicon glyphicon-search"></i>
+          </button>
+        </span>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <li id="appender" class="list-group-item">
+
+        </li>
+      </div>
+    </div>
+  </div>
+
+  <script>
+          let appender = document.getElementById("appender");
+          let findSearchAction = () => {
+            let text = $(`${searchBoxId}`).val();
+            appender.innerHTML = "<i class='fa fa-circle-o-notch fa-spin fa-1x'></i> Loading";
+            $.ajax({
+              url: "/getBaseUrl",
+              success: function (baseUrl) {
+                $.ajax({
+                  type: "POST",
+                  url: baseUrl + "/get-places",
+                  data: {type:"city",text:text},
+                  success: (places) => {
+                    appender.innerHTML = "";
+                      places.forEach((place) => {
+                        appender.innerHTML =
+                                `
+                                <div>${place.name}</div>
+                                <div>${place.avgRating}</div>
+                                <div>${place.numRatings}</div>
+                                `;
+                      })
+                  },
+                  error: (error) => {
+                    appender.innerHTML = "";
+                  }
+                });
+              }
+            });
+          };
+            let searchBoxId = '#find-search-box';
+            $(searchBoxId).keypress((e) => {
+              if (e.which == 13) {
+                findSearchAction();
+              }
+            });
+          $('#find-search-btn-box').click(()=>findSearchAction())
+
+          // select items
+          let filter_items = document.getElementsByClassName('filter-item');
+          let selected_item = document.getElementById('first-selected');
+          function clickFunction(element) {
+            selected_item.classList.remove("filter-item-selected");
+            element.classList.add('filter-item-selected');
+            selected_item = element;
+          }
+          for(let item in filter_items){
+            filter_items[item].onclick = clickFunction(document.getElementById('first-selected'));
+          }
+
+          $("").click(function(event) {
+            var text = $(event.target).text();
+          });
+  </script>
+}

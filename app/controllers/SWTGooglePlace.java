@@ -119,4 +119,25 @@ public class SWTGooglePlace extends Controller{
                 + Play.application().configuration().getString("googleAPIkey");
     }
 
+    @Override
+    public String toString() {
+        return "SWTGooglePlace{" +
+                "id=" + id +
+                ", googleID='" + googleID + '\'' +
+                ", name='" + name + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", address='" + address + '\'' +
+                ", website='" + website + '\'' +
+                ", googleMaps='" + googleMaps + '\'' +
+                ", lat=" + lat +
+                ", lng=" + lng +
+                ", state='" + state + '\'' +
+                ", county='" + county + '\'' +
+                ", city='" + city + '\'' +
+                '}';
+    }
+
+    public boolean isInUSA() {
+        return this.address.contains("United States") || this.address.contains("USA");
+    }
 }

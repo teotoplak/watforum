@@ -92,18 +92,35 @@ public class SWTPlaceController extends Controller {
             if (resultsNode.size() > 1) {
                 List<SWTGooglePlace> places = new LinkedList<>();
                 for (JsonNode googlePlaceNode : resultsNode) {
-                    places.add(new SWTGooglePlace(googlePlaceNode));
+                    SWTGooglePlace gplace = new SWTGooglePlace(googlePlaceNode);
+                    // must be in USA
+                    if(gplace.isInUSA()) {
+                        places.add(new SWTGooglePlace(googlePlaceNode));
+                    }
+                }
+                if (places.isEmpty()) {
+                    noSearchMatch();
                 }
                 return ok(views.html.swtPlaces.render(places));
             } else if(resultsNode.size() == 1) {
-                return redirect(routes.SWTPlaceController.place(resultsNode.findPath("place_id").textValue()));
+                SWTGooglePlace gplace = new SWTGooglePlace(resultsNode);
+                if (gplace.isInUSA()) {
+                    return redirect(routes.SWTPlaceController.place(
+                            resultsNode.findPath("place_id").textValue()));
+                } else {
+                    return noSearchMatch();
+                }
             } else {
-                flash("info", "No establishment found for that search!");
-                return redirect(request().getHeader("referer"));
+                return noSearchMatch();
             }
         } else {
             return ok("error");
         }
+    }
+
+    private Result noSearchMatch() {
+        flash("info", "No establishment found for that search!");
+        return redirect(request().getHeader("referer"));
     }
 
     private Optional<JsonNode> makeGooglePlacesRequest(String searchText) {

@@ -99,7 +99,7 @@ public class SWTPlaceController extends Controller {
                     }
                 }
                 if (places.isEmpty()) {
-                    noSearchMatch();
+                    return noSearchMatch();
                 }
                 return ok(views.html.swtPlaces.render(places));
             } else if(resultsNode.size() == 1) {

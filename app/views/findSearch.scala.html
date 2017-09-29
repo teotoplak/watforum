@@ -5,11 +5,6 @@
 
   <div class="window">
     <div class="row">
-      <div class="text-center filter-item col-md-2 col-md-offset-2">State</div>
-      <div class="text-center filter-item col-md-2">County</div>
-      <div id="first-selected" class="text-center filter-item col-md-2 filter-item-selected">City</div>
-    </div>
-    <div class="row">
       <div class="input-group col-md-8 col-md-offset-2">
         <input type="text" id="find-search-box" class="form-control input-lg"
         placeholder="Search by city, state or county" />
@@ -21,10 +16,10 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-md-6">
-        <li id="appender" class="list-group-item">
+      <div class="col-md-4 separate">
+        <div id="appender" class="list-group">
 
-        </li>
+        </div>
       </div>
     </div>
   </div>
@@ -33,24 +28,33 @@
           let appender = document.getElementById("appender");
           let findSearchAction = () => {
             let text = $(`${searchBoxId}`).val();
-            appender.innerHTML = "<i class='fa fa-circle-o-notch fa-spin fa-1x'></i> Loading";
+            appender.innerHTML = "<span class='text-muted'></span> Loading...";
             $.ajax({
               url: "/getBaseUrl",
               success: function (baseUrl) {
                 $.ajax({
-                  type: "POST",
+                  type: "GET",
                   url: baseUrl + "/get-places",
-                  data: {type:"city",text:text},
+                  data: {text:text},
                   success: (places) => {
-                    appender.innerHTML = "";
+                    let appender = document.getElementById("appender");
+                    if(places.length == 0) {
+                      appender.innerHTML = "No results.";
+                    } else {
+                      appender.innerHTML = ""
                       places.forEach((place) => {
-                        appender.innerHTML =
-                                `
+                        let starsHtml = "";
+                        for(let i=0;i<place.avgRating;i++) {
+                          starsHtml += "<span class='glyphicon glyphicon-star' style='color: orange'></span>"
+                        }
+                        appender.innerHTML +=
+                                `<a href="${baseUrl}/place?id=${place.googleId}" class="list-group-item">
                                 <div>${place.name}</div>
-                                <div>${place.avgRating}</div>
-                                <div>${place.numRatings}</div>
-                                `;
+                                <div class='text-muted'>${place.state}, ${place.city}</div>
+                                <div>${starsHtml} (${place.numRatings})</div>
+                                </a>`;
                       })
+                    }
                   },
                   error: (error) => {
                     appender.innerHTML = "";
@@ -59,28 +63,12 @@
               }
             });
           };
-            let searchBoxId = '#find-search-box';
-            $(searchBoxId).keypress((e) => {
-              if (e.which == 13) {
-                findSearchAction();
-              }
-            });
-          $('#find-search-btn-box').click(()=>findSearchAction())
-
-          // select items
-          let filter_items = document.getElementsByClassName('filter-item');
-          let selected_item = document.getElementById('first-selected');
-          function clickFunction(element) {
-            selected_item.classList.remove("filter-item-selected");
-            element.classList.add('filter-item-selected');
-            selected_item = element;
-          }
-          for(let item in filter_items){
-            filter_items[item].onclick = clickFunction(document.getElementById('first-selected'));
-          }
-
-          $("").click(function(event) {
-            var text = $(event.target).text();
+          let searchBoxId = '#find-search-box';
+          $(searchBoxId).keypress((e) => {
+            if (e.which == 13) {
+              findSearchAction();
+            }
           });
+          $('#find-search-btn-box').click(()=>findSearchAction())
   </script>
 }

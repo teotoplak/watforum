@@ -63,20 +63,20 @@ public class SWTPlaceController extends Controller {
     }
 
     /**
-     * Used for ajax calls from user register form
+     * Used for ajax calls from search box
      */
     public Result getSWTPlaces() {
         DynamicForm form = formFactory.form().bindFromRequest();
         String text = form.get("text").toLowerCase();
         String type = form.get("type");
-        List<SWTPlace> places = new LinkedList<>();
-        if (type.equals("city")) {
-            places = SWTPlace.findPlaceByCity(text);
-        }
-        for (SWTPlace place : places) {
+        List<SWTPlace> placesList = SWTPlace.findPlaceByCity(text);
+        placesList.addAll(SWTPlace.findPlaceByCounty(text));
+        placesList.addAll(SWTPlace.findPlaceByState(text));
+        Set<SWTPlace> placesSet = new HashSet<>(placesList);
+        for (SWTPlace place : placesSet) {
             place.calculateRating();
         }
-        return ok(Json.toJson(places));
+        return ok(Json.toJson(placesSet));
     }
 
     public Result findSearchDashBoard(String text) {

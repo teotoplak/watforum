@@ -20,9 +20,9 @@ public class SWTPlace extends Model {
     public SWTPlace(String googleId) {
         this.googleId = googleId;
         SWTGooglePlace googlePlace = SWTGooglePlace.getSWTGooglePlaceById(googleId);
-        this.state = googlePlace.state.toLowerCase();
-        this.county = googlePlace.county.toLowerCase();
-        this.city = googlePlace.city.toLowerCase();
+        this.state = googlePlace.state;
+        this.county = googlePlace.county;
+        this.city = googlePlace.city;
         this.name = googlePlace.name;
         this.lng = googlePlace.lng;
         this.lat = googlePlace.lat;
@@ -32,7 +32,6 @@ public class SWTPlace extends Model {
     public Long id;
 
     @Column(unique = true)
-    @JsonIgnore
     public String googleId;
 
     public String state;
@@ -89,13 +88,13 @@ public class SWTPlace extends Model {
         return find.where().eq("id", id).findUnique();
     }
     public static List<SWTPlace> findPlaceByCity(String city) {
-        return find.where().eq("city", city).findList();
+        return find.where().ieq("city", city).findList();
     }
     public static List<SWTPlace> findPlaceByCounty(String county) {
-        return find.where().eq("county", county).findList();
+        return find.where().ieq("county", county).findList();
     }
     public static List<SWTPlace> findPlaceByState(String state) {
-        return find.where().eq("state", state).findList();
+        return find.where().ieq("state", state).findList();
     }
 
 }

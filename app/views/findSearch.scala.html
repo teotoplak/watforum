@@ -86,6 +86,11 @@
           if($(`${searchBoxId}`).val()) {
             findSearchAction();
           }
+          $("input[name=filter_radio]:radio").change(function () {
+            if($(`${searchBoxId}`).val()) {
+              findSearchAction();
+            }
+          });
           $(searchBoxId).keypress((e) => {
             if (e.which == 13) {
               findSearchAction();

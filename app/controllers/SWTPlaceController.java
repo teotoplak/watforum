@@ -68,10 +68,17 @@ public class SWTPlaceController extends Controller {
     public Result getSWTPlaces() {
         DynamicForm form = formFactory.form().bindFromRequest();
         String text = form.get("text").toLowerCase();
-        String type = form.get("type");
-        List<SWTPlace> placesList = SWTPlace.findPlaceByCity(text);
-        placesList.addAll(SWTPlace.findPlaceByCounty(text));
-        placesList.addAll(SWTPlace.findPlaceByState(text));
+        String filter = form.get("filter");
+        List<SWTPlace> placesList =  new LinkedList<>();
+        if (filter.equals("state")) {
+            placesList.addAll(SWTPlace.findPlaceByState(text));
+        }
+        if (filter.equals("county")) {
+            placesList.addAll(SWTPlace.findPlaceByCounty(text));
+        }
+        if (filter.equals("city")) {
+            placesList.addAll(SWTPlace.findPlaceByCity(text));
+        }
         Set<SWTPlace> placesSet = new HashSet<>(placesList);
         for (SWTPlace place : placesSet) {
             place.calculateRating();

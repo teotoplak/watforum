@@ -1,9 +1,23 @@
-.filter-item {
+.filter-items ul {
+    list-style: none;
+    margin-bottom: 0px;
+}
+.filter-items li {
+    display: inline-block;
+}
+
+.filter-items li input {
+    visibility:hidden;
+}
+
+.filter-items label {
+    cursor: pointer;
+    margin-bottom: 0;
+    font-weight: 200;
+    padding: 0 30px 10px 30px;
+    font-size: 1.2em;
 
 }
-.filter-item:hover{
-    background-color: lightgray;
-}
-.filter-item-selected {
-    border-bottom: solid 1px #ba302e;
+.filter-items li input:checked + label {
+    border-bottom: solid 2px #ff5d5b;
 }

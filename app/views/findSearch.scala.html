@@ -5,9 +5,27 @@
 
   <div class="window">
     <div class="row">
-      <div class="input-group col-md-8 col-md-offset-2">
+      <div class="input-group col-md-6 col-md-offset-3 filter-items">
+        <ul>
+          <li>
+            <input class="filter-item" type='radio' value='state' name='filter_radio' id='radio1' checked/>
+            <label for='radio1'>State</label>
+          </li>
+          <li>
+            <input class="filter-item" type='radio' value='county' name='filter_radio'  id='radio2'/>
+            <label for='radio2'>County</label>
+          </li>
+          <li>
+            <input class="filter-item" type='radio' value='city' name='filter_radio'  id='radio3'/>
+            <label for='radio3'>City</label>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="row">
+      <div class="input-group col-md-6 col-md-offset-3">
         <input type="text" id="find-search-box" class="form-control input-lg"
-        placeholder="Search by city, state or county" />
+        placeholder="" />
         <span class="input-group-btn">
           <button class="btn btn-primary btn-lg" id="find-search-btn-box" type="button">
             <i class="glyphicon glyphicon-search"></i>
@@ -25,9 +43,11 @@
   </div>
 
   <script>
+          let searchBoxId = '#find-search-box';
           let appender = document.getElementById("appender");
           let findSearchAction = () => {
             let text = $(`${searchBoxId}`).val();
+            let filter = $('input[name=filter_radio]:checked').val();
             appender.innerHTML = "<span class='text-muted'></span> Loading...";
             $.ajax({
               url: "/getBaseUrl",
@@ -35,7 +55,7 @@
                 $.ajax({
                   type: "GET",
                   url: baseUrl + "/get-places",
-                  data: {text:text},
+                  data: {text:text,filter:filter},
                   success: (places) => {
                     let appender = document.getElementById("appender");
                     if(places.length == 0) {
@@ -63,7 +83,9 @@
               }
             });
           };
-          let searchBoxId = '#find-search-box';
+          if($(`${searchBoxId}`).val()) {
+            findSearchAction();
+          }
           $(searchBoxId).keypress((e) => {
             if (e.which == 13) {
               findSearchAction();

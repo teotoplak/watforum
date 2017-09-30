@@ -21,3 +21,8 @@
 .filter-items li input:checked + label {
     border-bottom: solid 2px #ff5d5b;
 }
+
+.google-map {
+    margin: 50px;
+    height: 400px;
+}

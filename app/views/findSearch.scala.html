@@ -39,10 +39,27 @@
 
         </div>
       </div>
+      <div class="col-md-offset-2 col-md-6">
+        <div class="google-map" id="googleMap"></div>
+      </div>
     </div>
   </div>
 
   <script>
+          /* google maps */
+          var map;
+          var bounds;
+          function initMap() {
+            bounds = new google.maps.LatLngBounds();
+            map = new google.maps.Map(document.getElementById('googleMap'), {
+              center: {lat: 40, lng: -100},
+              zoom: 3
+            });
+
+          }
+
+
+          @* filter search *@
           let searchBoxId = '#find-search-box';
           let appender = document.getElementById("appender");
           let findSearchAction = () => {
@@ -63,6 +80,13 @@
                     } else {
                       appender.innerHTML = ""
                       places.forEach((place) => {
+                        var marker = new google.maps.Marker({
+                          position: {lat:place.lat,lng:place.lng},
+                          map: map,
+                          title: place.name
+                        });
+                        bounds.extend(marker.getPosition());
+                        map.fitBounds(bounds);
                         let starsHtml = "";
                         for(let i=0;i<place.avgRating;i++) {
                           starsHtml += "<span class='glyphicon glyphicon-star' style='color: orange'></span>"
@@ -96,6 +120,11 @@
               findSearchAction();
             }
           });
-          $('#find-search-btn-box').click(()=>findSearchAction())
+          $('#find-search-btn-box').click(() => findSearchAction());
+
+  </script>
+
+  <script async defer
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBOVsLLDx5MQmY4CUaD9-kt5Dqw5tPjJV4&callback=initMap">
   </script>
 }

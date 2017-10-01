@@ -34,7 +34,7 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-md-4 separate">
+      <div class="col-md-offset-1 col-md-3 separate">
         <div id="appender" class="list-group">
 
         </div>
@@ -49,6 +49,7 @@
           /* google maps */
           var map;
           var bounds;
+          var markers = [];
           function initMap() {
             bounds = new google.maps.LatLngBounds();
             map = new google.maps.Map(document.getElementById('googleMap'), {
@@ -62,6 +63,7 @@
           @* filter search *@
           let searchBoxId = '#find-search-box';
           let appender = document.getElementById("appender");
+
           let findSearchAction = () => {
             let text = $(`${searchBoxId}`).val();
             let filter = $('input[name=filter_radio]:checked').val();
@@ -75,16 +77,18 @@
                   data: {text:text,filter:filter},
                   success: (places) => {
                     let appender = document.getElementById("appender");
+                    clearMarkers();
                     if(places.length == 0) {
                       appender.innerHTML = "No results.";
                     } else {
-                      appender.innerHTML = ""
+                      appender.innerHTML = "";
                       places.forEach((place) => {
                         var marker = new google.maps.Marker({
                           position: {lat:place.lat,lng:place.lng},
                           map: map,
                           title: place.name
                         });
+                        markers.push(marker);
                         bounds.extend(marker.getPosition());
                         map.fitBounds(bounds);
                         let starsHtml = "";
@@ -97,6 +101,16 @@
                                 <div class='text-muted'>${place.state}, ${place.city}</div>
                                 <div>${starsHtml} (${place.numRatings})</div>
                                 </a>`;
+                        let infowindow = new google.maps.InfoWindow({
+                          content: `<a href="${baseUrl}/place?id=${place.googleId}">
+                                <div>${place.name}</div>
+                                <div class='text-muted'>${place.state}, ${place.city}</div>
+                                <div>${starsHtml} (${place.numRatings})</div>
+                                </a>`
+                        });
+                        marker.addListener('click', function() {
+                          infowindow.open(map, marker);
+                        });
                       })
                     }
                   },
@@ -107,6 +121,14 @@
               }
             });
           };
+          function clearMarkers() {
+              bounds = new google.maps.LatLngBounds();
+              for(let i=0; i<markers.length; i++) {
+                markers[i].setMap(null);
+              }
+
+            markers = [];
+          }
           if($(`${searchBoxId}`).val()) {
             findSearchAction();
           }

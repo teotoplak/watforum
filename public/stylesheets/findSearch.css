@@ -23,6 +23,10 @@
 }
 
 .google-map {
-    margin: 50px;
     height: 400px;
+}
+
+.appender {
+    margin: 10px 0;
+    height: 30px;
 }

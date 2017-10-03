@@ -8,16 +8,16 @@
       <div class="input-group col-md-6 col-md-offset-3 filter-items">
         <ul>
           <li>
-            <input class="filter-item" type='radio' value='state' name='filter_radio' id='radio1' checked/>
-            <label for='radio1'>State</label>
+            <input class="filter-item" type='radio' value='state' name='filter_radio' id='filter-state' checked/>
+            <label for='filter-state'>State</label>
           </li>
           <li>
-            <input class="filter-item" type='radio' value='county' name='filter_radio'  id='radio2'/>
-            <label for='radio2'>County</label>
+            <input class="filter-item" type='radio' value='county' name='filter_radio'  id='filter-county'/>
+            <label for='filter-county'>County</label>
           </li>
           <li>
-            <input class="filter-item" type='radio' value='city' name='filter_radio'  id='radio3'/>
-            <label for='radio3'>City</label>
+            <input class="filter-item" type='radio' value='city' name='filter_radio'  id='filter-city'/>
+            <label for='filter-city'>City</label>
           </li>
         </ul>
       </div>
@@ -25,7 +25,7 @@
     <div class="row">
       <div class="input-group col-md-6 col-md-offset-3">
         <input type="text" id="find-search-box" class="form-control input-lg"
-        placeholder="" />
+        placeholder="Try &quot;Massachusetts&quot;" />
         <span class="input-group-btn">
           <button class="btn btn-primary btn-lg" id="find-search-btn-box" type="button">
             <i class="glyphicon glyphicon-search"></i>
@@ -33,13 +33,11 @@
         </span>
       </div>
     </div>
+    <div class="row appender">
+      <div class="text-center" id="appender"></div>
+    </div>
     <div class="row">
-      <div class="col-md-offset-1 col-md-3 separate">
-        <div id="appender" class="list-group">
-
-        </div>
-      </div>
-      <div class="col-md-offset-2 col-md-6">
+      <div class="col-md-offset-2 col-md-8">
         <div class="google-map" id="googleMap"></div>
       </div>
     </div>
@@ -50,6 +48,7 @@
           var map;
           var bounds;
           var markers = [];
+          var openedInfoWindow;
           function initMap() {
             bounds = new google.maps.LatLngBounds();
             map = new google.maps.Map(document.getElementById('googleMap'), {
@@ -81,7 +80,7 @@
                     if(places.length == 0) {
                       appender.innerHTML = "No results.";
                     } else {
-                      appender.innerHTML = "";
+                      appender.innerHTML = " ";
                       places.forEach((place) => {
                         var marker = new google.maps.Marker({
                           position: {lat:place.lat,lng:place.lng},
@@ -95,27 +94,24 @@
                         for(let i=0;i<place.avgRating;i++) {
                           starsHtml += "<span class='glyphicon glyphicon-star' style='color: orange'></span>"
                         }
-                        appender.innerHTML +=
-                                `<a href="${baseUrl}/place?id=${place.googleId}" class="list-group-item">
-                                <div>${place.name}</div>
-                                <div class='text-muted'>${place.state}, ${place.city}</div>
-                                <div>${starsHtml} (${place.numRatings})</div>
-                                </a>`;
                         let infowindow = new google.maps.InfoWindow({
                           content: `<a href="${baseUrl}/place?id=${place.googleId}">
                                 <div>${place.name}</div>
-                                <div class='text-muted'>${place.state}, ${place.city}</div>
                                 <div>${starsHtml} (${place.numRatings})</div>
                                 </a>`
                         });
                         marker.addListener('click', function() {
+                          if(openedInfoWindow) {
+                            openedInfoWindow.close();
+                          }
+                          openedInfoWindow = infowindow;
                           infowindow.open(map, marker);
                         });
                       })
                     }
                   },
                   error: (error) => {
-                    appender.innerHTML = "";
+                    appender.innerHTML = " ";
                   }
                 });
               }
@@ -129,6 +125,8 @@
 
             markers = [];
           }
+
+          // automatic ajax if value set
           if($(`${searchBoxId}`).val()) {
             findSearchAction();
           }
@@ -144,6 +142,28 @@
           });
           $('#find-search-btn-box').click(() => findSearchAction());
 
+          // placeholders
+          function statePlaceholder() {
+            $(searchBoxId).attr("placeholder", 'Try "Massachusetts"');
+          }
+          function countyPlaceholder() {
+            $(searchBoxId).attr("placeholder", 'Try "Barnstable County"');
+          }
+          function cityPlaceholder() {
+            $(searchBoxId).attr("placeholder", 'Try "Boston"');
+          }
+          $('input:radio[name="filter_radio"]').change(
+                  function(){
+                    if ($(this).is(':checked') && $(this).val() == 'state') {
+                      statePlaceholder();
+                    }
+                    if ($(this).is(':checked') && $(this).val() == 'county') {
+                      countyPlaceholder();
+                    }
+                    if ($(this).is(':checked') && $(this).val() == 'city') {
+                      cityPlaceholder();
+                    }
+                  });
   </script>
 
   <script async defer

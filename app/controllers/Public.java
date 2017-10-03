@@ -29,6 +29,14 @@ public class Public extends Controller {
         return ok(terms.render());
     }
 
+    public Result privacyPolicy() {
+        return ok(privacy.render());
+    }
+
+    public Result aboutUs() {
+        return ok(about.render());
+    }
+
 
 //    @Secure(clients = "FacebookClient", authorizers = "custom")
 //    public Result login() {

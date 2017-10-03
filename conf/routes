@@ -21,6 +21,8 @@ GET     /webjars/*file     controllers.WebJarAssets.at(file)
 #### PUBLIC
 GET     /                   controllers.Public.landing()
 GET     /terms              controllers.Public.termsAndConditions()
+GET     /privacy              controllers.Public.privacyPolicy()
+GET     /about              controllers.Public.aboutUs()
 
 #### USER
 GET     /listing            controllers.SWTUserController.listAllUsers()

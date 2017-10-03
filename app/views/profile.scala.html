@@ -68,21 +68,6 @@
                 }
             </div>
         </div>
-        <div class="window separate">
-            <div class="col-md-offset-1 col-md-10">
-                <h2>Rated places:</h2>
-                @if(!user.getAllRatings.isEmpty) {
-                    <div class="row">
-                    @ratingsList(user.getAllRatings, true)
-                    </div>
-                } else {
-                    <span class="text-muted">
-                        None rated yet.
-                    </span>
-                }
-            </div>
-        </div>
-
     </div>
 
 

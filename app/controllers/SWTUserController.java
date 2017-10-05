@@ -19,6 +19,8 @@ import play.libs.ws.WSClient;
 import play.libs.ws.WSResponse;
 import play.mvc.Controller;
 import play.mvc.Result;
+import play.mvc.Security;
+import security.Secured;
 import views.html.*;
 import play.cache.*;
 
@@ -52,11 +54,6 @@ public class SWTUserController extends Controller{
     private static final String PROFILE_PIC_KEY = "profilePicKey";
 
     private Logger logger = LoggerFactory.getLogger(getClass());
-
-    public Result listAllUsers() {
-        List<SWTUser> list = SWTUser.findAll();
-        return ok(listing.render(list));
-    }
 
     public Result loginForm() {
         if (SWTUserController.currentUser() != null) {
@@ -225,11 +222,13 @@ public class SWTUserController extends Controller{
         return SWTUser.findUserByUsername(ctx().session().get("username"));
     }
 
+    @Security.Authenticated(Secured.class)
     public Result profile(Long userId) {
         SWTUser user = SWTUser.findUserById(userId);
         return ok(profile.render(user));
     }
 
+    @Security.Authenticated(Secured.class)
     public Result editProfile() {
         SWTUser user = currentUser();
         if (user == null) {
@@ -284,6 +283,7 @@ public class SWTUserController extends Controller{
         return ok(result);
     }
 
+    @Security.Authenticated(Secured.class)
     public Result placesPanel() {
         SWTUser user = controllers.SWTUserController.currentUser();
         boolean noYears = user.swtYears.size() == 0;

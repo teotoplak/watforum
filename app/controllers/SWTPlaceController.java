@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import models.SWTPlace;
 import models.SWTRating;
 import models.SWTUser;
+import org.pac4j.play.java.Secure;
 import play.Logger;
 import play.data.DynamicForm;
 import play.data.FormFactory;
@@ -16,6 +17,8 @@ import play.libs.ws.WSRequest;
 import play.libs.ws.WSResponse;
 import play.mvc.Controller;
 import play.mvc.Result;
+import play.mvc.Security;
+import security.Secured;
 
 import javax.inject.Inject;
 import java.io.ByteArrayOutputStream;
@@ -36,6 +39,7 @@ public class SWTPlaceController extends Controller {
     @Inject
     private FormFactory formFactory;
 
+    @Security.Authenticated(Secured.class)
     public Result place(String id) {
 
         SWTPlace place = SWTPlace.findPlaceByGoogleId(id);
@@ -53,11 +57,13 @@ public class SWTPlaceController extends Controller {
         return ok(views.html.swtPlace.render(place,gplace));
     }
 
+    @Security.Authenticated(Secured.class)
     public Result searchBox() {
         final int latestRatingsScope = 3;
         return ok(views.html.rateSearch.render(new LinkedHashSet<>(SWTRating.latestRatings(latestRatingsScope))));
     }
 
+    @Security.Authenticated(Secured.class)
     public Result findSearch() {
         return ok(views.html.findSearch.render());
     }
@@ -86,11 +92,7 @@ public class SWTPlaceController extends Controller {
         return ok(Json.toJson(placesSet));
     }
 
-    public Result findSearchDashBoard(String text) {
-
-        return ok(views.html.findSearchDash.render());
-    }
-
+    /* ajax requests */
     public Result searchFor(String text) {
         Optional<JsonNode> jsonResponse = makeGooglePlacesRequest(text);
         if (jsonResponse.isPresent()) {

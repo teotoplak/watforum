@@ -76,14 +76,6 @@
       <a type="button" class="btn btn-primary" href="@routes.SWTPlaceController.searchBox()">Save</a>
     </div>
     </div>
-    @if(!user.getAllRatings.isEmpty) {
-      <div class="window separate">
-        <h2>Rated places:</h2>
-        <div class="row">
-          @ratingsList(user.getAllRatings, true)
-        </div>
-      </div>
-    }
   </div>
 
 

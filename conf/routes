@@ -25,7 +25,6 @@ GET     /privacy              controllers.Public.privacyPolicy()
 GET     /about              controllers.Public.aboutUs()
 
 #### USER
-GET     /listing            controllers.SWTUserController.listAllUsers()
 GET     /profile-edit            controllers.SWTUserController.editProfile()
 POST    /register           controllers.SWTUserController.register(hash: String ?= "")
 GET     /register           controllers.SWTUserController.register(hash: String ?= "")
@@ -47,7 +46,6 @@ POST    /deleteYear          controllers.SWTYearController.deleteSWTYear()
 #### PLACE
 GET     /rate-search             controllers.SWTPlaceController.searchBox()
 GET     /search             controllers.SWTPlaceController.findSearch()
-GET     /search-dash             controllers.SWTPlaceController.findSearchDashBoard(text: String)
 GET     /place             controllers.SWTPlaceController.place(id: String)
 GET      /get-places       controllers.SWTPlaceController.getSWTPlaces
 #be careful with url, js depends on it!!

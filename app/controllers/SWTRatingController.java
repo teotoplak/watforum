@@ -4,12 +4,15 @@ import models.SWTPlace;
 import models.SWTRating;
 import models.SWTUser;
 import models.SWTYear;
+import org.pac4j.play.java.Secure;
 import play.Logger;
 import play.data.DynamicForm;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
+import play.mvc.Security;
 import scala.Int;
+import security.Secured;
 import sun.reflect.annotation.ExceptionProxy;
 import views.html.*;
 
@@ -23,7 +26,6 @@ import java.util.Set;
 public class SWTRatingController extends Controller {
 
     private static final Logger.ALogger logger = Logger.of(SWTRatingController.class);
-
 
     public Result rate(String id) {
 
@@ -75,7 +77,7 @@ public class SWTRatingController extends Controller {
         return redirect(previousUrl);
     }
 
-
+    @Security.Authenticated(Secured.class)
     public Result ratingForm(String placeId, String ratingIdString) {
         SWTUser user = SWTUserController.currentUser();
 

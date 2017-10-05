@@ -6,9 +6,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import models.SWTRating;
 import models.SWTUser;
 import models.SWTYear;
+import org.pac4j.play.java.Secure;
 import play.Logger;
 import play.cache.CacheApi;
 import play.mvc.Result;
+import play.mvc.Security;
+import security.Secured;
 
 import javax.inject.Inject;
 
@@ -30,6 +33,7 @@ public class SWTYearController extends Model {
 
     private static final Logger.ALogger logger = Logger.of(SWTYearController.class);
 
+    @Security.Authenticated(Secured.class)
     public Result swtYear(Long id) {
         SWTYear year = SWTYear.findYear(id);
         return ok(views.html.swtYear.render(year));

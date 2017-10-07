@@ -1,8 +1,9 @@
 var userId = document.currentScript.getAttribute('data-userId');
-var table = document.getElementById("SWTYearTable")
-var addYear = document.getElementById("addYear")
+var table = document.getElementById("SWTYearTable");
+var addYear = document.getElementById("addYear");
+var addSponsorId = document.getElementById("sponsorId");
 var addButton = document.getElementById("addButton");
-var addAgency = document.getElementById("addAgency");
+var addSponsor = document.getElementById("addSponsor");
 var deleteButtons = document.getElementsByClassName("deleteButton");
 var currentYear;
 
@@ -14,7 +15,7 @@ for(var i = 0; i < deleteButtons.length; i++)
 }
 
 //year selector
-currentYear = 2018;
+currentYear = 2017;
 for (var i = -1; i <= 11; i++) {
     var option = document.createElement('option');
     option.value = currentYear - i;
@@ -25,18 +26,18 @@ addYear.value = currentYear;
 
 //add button listener
 addButton.addEventListener("click", function () {
-    var addingYear = addYear.options[addYear.selectedIndex].value;
+    let addingYear = addYear.options[addYear.selectedIndex].value;
     //if there is no years
     if (table.rows.length == 1) {
         addYearToRow(1);
         return;
     }
-    var lastYear;
+    let lastYear;
     for (var i = 1; i < table.rows.length; i++) {
         var row = table.rows[i];
         lastYear = row.cells[0].innerHTML;
         //trimming
-        lastYear = lastYear.replace(/\s/g,'')
+        lastYear = lastYear.replace(/\s/g, '');
 
         if (lastYear == addingYear) {
             alert("You already added that year!");
@@ -53,32 +54,20 @@ addButton.addEventListener("click", function () {
 
 function addYearToRow(i) {
 
-    if(table.rows.length == 1) {
-        $(table).show();
-    }
+    let addingYear = addYear.options[addYear.selectedIndex].value;
+    let addingSponsor = addSponsor.value;
+    let sponsorId = addSponsorId.value;
 
-    var row = table.insertRow(i);
-    var cell1 = row.insertCell(-1);
-    var cell2 = row.insertCell(-1);
-    var cell3 = row.insertCell(-1);
-    var addingYear = addYear.options[addYear.selectedIndex].value;
-    var addingAgency = addAgency.value;
-    cell1.innerHTML = addingYear;
-    cell2.innerHTML = addAgency.value;
-    var deleteButton = document.createElement("button");
-    deleteButton.className = "btn btn-danger";
-    deleteButton.innerHTML = "<span class=' glyphicon glyphicon-minus'></span>";
-    cell3.appendChild(deleteButton);
-    deleteButton.addEventListener("click", function() { deleteBtnFunction(deleteButton, userId)});
-
-    addAgency.value = "";
-
-
-    var obj = {
+    let obj = {
         year: addingYear,
-        agency: addingAgency,
         userId: userId
     };
+
+    if(sponsorId) {
+        obj.sponsorId = sponsorId;
+    } else {
+        obj.newSponsorName = addingSponsor;
+    }
 
     $.ajax({
         type: 'POST',
@@ -86,13 +75,39 @@ function addYearToRow(i) {
         data: JSON.stringify(obj),
         headers: {
             'Content-Type': 'application/json'
+        },
+        success: function (msg, status, jqXHR) {
+            var swtYear = msg;
+
+            if(table.rows.length == 1) {
+                $(table).show();
+            }
+
+            var row = table.insertRow(i);
+            row.setAttribute('data-year-id', `${swtYear.id}`);
+            var cell1 = row.insertCell(-1);
+            var cell2 = row.insertCell(-1);
+            var cell3 = row.insertCell(-1);
+
+            cell1.innerHTML = addingYear;
+            cell2.innerHTML = swtYear.sponsor.fullName;
+            var deleteButton = document.createElement("button");
+            deleteButton.className = "btn btn-danger";
+            deleteButton.innerHTML = "<span class=' glyphicon glyphicon-minus'></span>";
+            cell3.appendChild(deleteButton);
+            deleteButton.addEventListener("click", function() { deleteBtnFunction(deleteButton, userId)});
+            addAgency.value = "";
+            addSponsorId.value = "";
+            sponsorId = null;
+            if(currentYear == addingYear) {
+                $('.currentParticipantInfo').slideDown();
+            }
+
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            // TODO
         }
     });
-
-    if(currentYear == addingYear) {
-        $('.currentParticipantInfo').slideDown();
-    }
-
 
 }
 
@@ -109,21 +124,13 @@ function deleteBtnFunction(deleteButton) {
         return
     }
 
-    var rowToDelete = deleteButton.parentNode.parentNode;
-
-    var yearText = rowToDelete.cells[0].innerHTML;
-    var agencyText = rowToDelete.cells[1].innerHTML;
-
-    //trimming string
-    yearText = yearText.replace(/\s/g,'')
-    agencyText = $.trim(agencyText)
+    let rowToDelete = deleteButton.parentNode.parentNode;
+    let yearId = rowToDelete.dataset.yearId;
 
     rowToDelete.parentNode.removeChild(rowToDelete);
 
-    var obj = {
-        year: yearText,
-        agency: agencyText,
-        userId: userId
+    let obj = {
+        yearId: yearId
     };
     $.ajax({
         type: 'POST',

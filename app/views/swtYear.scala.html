@@ -1,13 +1,13 @@
 @(year: SWTYear)
 @import helper._
 
-@main(year.agency + " year") {
+@main(year.sponsor.toString + " year") {
   <div class="window">
     <div class="row">
       <h2>SWTyear</h2>
       <div class="col-md-4">
         <div>User: <a href="@routes.SWTUserController.profile(year.user.id)">@year.user.getIdentity</a></div>
-        <div>Agency: @year.agency</div>
+        <div>Agency: @year.sponsor.toString</div>
         <div>Year: @year.year</div>
         <div>Num of places: @year.ratings.size()</div>
       </div>

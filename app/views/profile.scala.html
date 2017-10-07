@@ -45,7 +45,7 @@
                     @for(swtYear <- user.swtYears) {
                         <tr class='clickable-row' data-href='@routes.SWTYearController.swtYear(swtYear.id)'>
                             <td>@swtYear.year</td>
-                            <td>@swtYear.agency</td>
+                            <td>@swtYear.sponsor.toString</td>
                             <td>
                             @if(edit && swtYear.ratings.size()==0 && swtYear.year!=2018) {
                                 <a class="empty_year" href="@routes.SWTPlaceController.searchBox()">

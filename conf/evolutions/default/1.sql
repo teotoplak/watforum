@@ -41,6 +41,16 @@ create table swtrating (
   constraint pk_swtrating primary key (id)
 );
 
+create table swtsponsor (
+  id                            bigserial not null,
+  full_name                     varchar(255),
+  short_name                    varchar(255),
+  website_url                   varchar(255),
+  constraint uq_swtsponsor_full_name unique (full_name),
+  constraint uq_swtsponsor_short_name unique (short_name),
+  constraint pk_swtsponsor primary key (id)
+);
+
 create table swtuser (
   id                            bigserial not null,
   username                      varchar(255),
@@ -62,7 +72,7 @@ create table swtuser (
 create table swtyear (
   id                            bigserial not null,
   year                          integer,
-  agency                        varchar(255),
+  sponsor_id                    bigint,
   user_id                       bigint,
   constraint pk_swtyear primary key (id)
 );
@@ -75,6 +85,9 @@ create index ix_swtrating_swtplace on swtrating (swtplace);
 
 alter table swtrating add constraint fk_swtrating_swtyear_id foreign key (swtyear_id) references swtyear (id) on delete restrict on update restrict;
 create index ix_swtrating_swtyear_id on swtrating (swtyear_id);
+
+alter table swtyear add constraint fk_swtyear_sponsor_id foreign key (sponsor_id) references swtsponsor (id) on delete restrict on update restrict;
+create index ix_swtyear_sponsor_id on swtyear (sponsor_id);
 
 alter table swtyear add constraint fk_swtyear_user_id foreign key (user_id) references swtuser (id) on delete restrict on update restrict;
 create index ix_swtyear_user_id on swtyear (user_id);
@@ -91,6 +104,9 @@ drop index if exists ix_swtrating_swtplace;
 alter table if exists swtrating drop constraint if exists fk_swtrating_swtyear_id;
 drop index if exists ix_swtrating_swtyear_id;
 
+alter table if exists swtyear drop constraint if exists fk_swtyear_sponsor_id;
+drop index if exists ix_swtyear_sponsor_id;
+
 alter table if exists swtyear drop constraint if exists fk_swtyear_user_id;
 drop index if exists ix_swtyear_user_id;
 
@@ -99,6 +115,8 @@ drop table if exists swtoauth_user cascade;
 drop table if exists swtplace cascade;
 
 drop table if exists swtrating cascade;
+
+drop table if exists swtsponsor cascade;
 
 drop table if exists swtuser cascade;
 

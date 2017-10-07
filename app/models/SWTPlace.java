@@ -52,6 +52,10 @@ public class SWTPlace extends Model {
 
     public Double lng;
 
+    @OneToMany(mappedBy = "swtPlace")
+    @JsonIgnore
+    public Set<SWTRating> ratings;
+
     @JsonIgnore
     public SWTGooglePlace getGooglePlace() throws IllegalArgumentException {
         SWTGooglePlace place = SWTGooglePlace.getSWTGooglePlaceById(googleId);
@@ -74,10 +78,6 @@ public class SWTPlace extends Model {
         this.avgRating = Double.parseDouble(oneDigit.format(sumOfRatings / numOfRatings));
         this.numRatings = numOfRatings;
     }
-
-    @OneToMany(mappedBy = "swtPlace")
-    @JsonIgnore
-    public Set<SWTRating> ratings;
 
     //DAO
     public static Finder<Long, SWTPlace> find = new Finder<>(SWTPlace.class);

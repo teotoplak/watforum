@@ -4,11 +4,13 @@ import com.avaje.ebean.Model;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import models.SWTRating;
+import models.SWTSponsor;
 import models.SWTUser;
 import models.SWTYear;
 import org.pac4j.play.java.Secure;
 import play.Logger;
 import play.cache.CacheApi;
+import play.libs.Json;
 import play.mvc.Result;
 import play.mvc.Security;
 import security.Secured;
@@ -50,10 +52,14 @@ public class SWTYearController extends Model {
     }
 
     private Result SUDrequest(boolean save, JsonNode node) {
-        String agency;
+        Long sponsorId = null;
+        String newSponsorName = null;
+        SWTSponsor sponsor = null;
+        Long swtYearId = null;
         Integer year;
         Long userId;
         String nodeString;
+        SWTYear swtYear;
         try {
          nodeString = new ObjectMapper().writerWithDefaultPrettyPrinter().writeValueAsString(node);
         } catch (Exception ex) {
@@ -62,21 +68,38 @@ public class SWTYearController extends Model {
         }
         logger.debug("Got request to do year (save:" + save + "): " + nodeString);
 
-        try {
-            agency = node.get("agency").asText();
-            year = Integer.parseInt(node.get("year").asText());
-            userId = Long.parseLong(node.get("userId").asText());
-        } catch (Exception e) {
-            return badRequest(e.getMessage());
-        }
-        SWTYear swtYear = SWTYear.findYear(agency, year, userId);
         if (save) {
+            try {
+                if (node.get("newSponsorName") != null) {
+                    newSponsorName = node.get("newSponsorName").asText();
+                }
+                if (node.get("sponsorId") != null) {
+                    sponsorId = Long.parseLong(node.get("sponsorId").asText());
+                }
+                year = Integer.parseInt(node.get("year").asText());
+                userId = Long.parseLong(node.get("userId").asText());
+            } catch (Exception e) {
+                return badRequest(e.getMessage());
+            }
+            if (newSponsorName != null) {
+                sponsor = SWTSponsor.getSponsorByName(newSponsorName);
+                if (sponsor == null) {
+                    sponsor = new SWTSponsor(newSponsorName);
+                    sponsor.save();
+                }
+            } else {
+                sponsor = SWTSponsor.findSponsorById(sponsorId);
+            }
+            swtYear = SWTYear.findYear(sponsor.id, year, userId);
             if (swtYear != null) {
                 return badRequest("Want to save swtYear but there is already one");
             }
-            swtYear = new SWTYear(year, agency, SWTUser.findUserById(userId));
+            swtYear = new SWTYear(year, sponsor, SWTUser.findUserById(userId));
             swtYear.save();
+            return ok(Json.toJson(swtYear));
         } else {
+            swtYearId = Long.parseLong(node.get("yearId").asText());
+            swtYear = SWTYear.findYearById(swtYearId);
             if (swtYear == null) {
                 return badRequest("Want to delete swtYear but there is none like it");
             }
@@ -86,8 +109,8 @@ public class SWTYearController extends Model {
                 rating.delete();
             }
             swtYear.delete();
+            return ok();
         }
-        return ok();
     }
 
 

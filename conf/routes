@@ -55,6 +55,9 @@ GET      /search-for       controllers.SWTPlaceController.searchFor(text: String
 GET     /rating               controllers.SWTRatingController.ratingForm(placeId: String, ratingId: String)
 POST     /rate                  controllers.SWTRatingController.rate(id: String)
 
+#### SPONSOR
+GET     /all-sponsors         controllers.SWTYearController.getAllSponsors()
+
 #### OAUTH
 GET      /fblogin           controllers.SWTUserController.fblogin()
 

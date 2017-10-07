@@ -3,13 +3,12 @@ package controllers;
 import com.avaje.ebean.Model;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import models.SWTRating;
-import models.SWTSponsor;
-import models.SWTUser;
-import models.SWTYear;
+import models.*;
 import org.pac4j.play.java.Secure;
 import play.Logger;
 import play.cache.CacheApi;
+import play.data.DynamicForm;
+import play.data.FormFactory;
 import play.libs.Json;
 import play.mvc.Result;
 import play.mvc.Security;
@@ -17,7 +16,10 @@ import security.Secured;
 
 import javax.inject.Inject;
 
+import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 import static play.mvc.Controller.flash;
 import static play.mvc.Controller.request;
@@ -32,6 +34,9 @@ public class SWTYearController extends Model {
 
     @Inject
     private CacheApi cache;
+
+    @Inject
+    private FormFactory formFactory;
 
     private static final Logger.ALogger logger = Logger.of(SWTYearController.class);
 
@@ -111,6 +116,14 @@ public class SWTYearController extends Model {
             swtYear.delete();
             return ok();
         }
+    }
+
+    /**
+     * Used for ajax calls from autocomplete agency
+     */
+    public Result getAllSponsors() {
+        List<SWTSponsor> sponsors = SWTSponsor.getAllSponsors();
+        return ok(Json.toJson(sponsors));
     }
 
 

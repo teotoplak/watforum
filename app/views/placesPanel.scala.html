@@ -83,18 +83,29 @@
   <script src="@routes.Assets.at("javascripts/SWTYearSetup.js")" data-userId="@user.id" type="text/javascript"></script>
 
   <script>
-          let currencies = [
-            { value: 'ACES (A Cultural Exchange Service)', data: 'ACES', id: 33 },
-            { value: 'Alliance Abroad', data: 'Alliance Abroad', id: 34 },
-            { value: 'InterExchange', data: 'InterExchange', id: 35 },
-            { value: 'CCUSA (Camp Counselors USA)', data: 'CCUSA', id: 36 },
-          ];
 
-          $('#addSponsor').autocomplete({
-            lookup: currencies,
-            lookupLimit: 3,
-            onSelect: function (suggestion) {
-              document.getElementById("sponsorId").value = suggestion.id;
+          $.ajax({
+            type: 'GET',
+            url: '/all-sponsors',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            success: function (msg, status, jqXHR) {
+                let sponsors = msg;
+                sponsors = sponsors.map((sponsor) => {
+                    return {
+                      id:sponsor.id,
+                      value: sponsor.fullName===sponsor.shortName?
+                              sponsor.fullName:`${sponsor.fullName} (${sponsor.shortName})`
+                    }
+                });
+              $('#addSponsor').autocomplete({
+                lookup: sponsors,
+                lookupLimit: 6,
+                onSelect: function (suggestion) {
+                  document.getElementById("sponsorId").value = suggestion.id;
+                }
+              });
             }
           });
   </script>

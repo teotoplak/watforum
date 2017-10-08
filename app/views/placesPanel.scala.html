@@ -83,7 +83,7 @@
   <script src="@routes.Assets.at("javascripts/SWTYearSetup.js")" data-userId="@user.id" type="text/javascript"></script>
 
   <script>
-
+          let autocompleteSponsor;
           $.ajax({
             type: 'GET',
             url: '/all-sponsors',
@@ -104,9 +104,18 @@
                 lookupLimit: 6,
                 onSelect: function (suggestion) {
                   document.getElementById("sponsorId").value = suggestion.id;
+                  autocompleteSponsor = {
+                      name: suggestion.value,
+                      id: suggestion.id
+                  }
                 }
               });
             }
           });
+          $("#addSponsor").on('input',()=>{
+            document.getElementById("sponsorId").value =
+                    $("#addSponsor").val() === autocompleteSponsor.name ?
+                            autocompleteSponsor.id : "";
+          })
   </script>
 }

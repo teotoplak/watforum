@@ -53,7 +53,8 @@
             bounds = new google.maps.LatLngBounds();
             map = new google.maps.Map(document.getElementById('googleMap'), {
               center: {lat: 40, lng: -100},
-              zoom: 3
+              zoom: 3,
+                clickableIcons: false
             });
 
           }
@@ -90,14 +91,12 @@
                         markers.push(marker);
                         bounds.extend(marker.getPosition());
                         map.fitBounds(bounds);
-                        let starsHtml = "";
-                        for(let i=0;i<place.avgRating;i++) {
-                          starsHtml += "<span class='glyphicon glyphicon-star' style='color: orange'></span>"
-                        }
                         let infowindow = new google.maps.InfoWindow({
                           content: `<a href="${baseUrl}/place?id=${place.googleId}">
                                 <div>${place.name}</div>
-                                <div>${starsHtml} (${place.numRatings})</div>
+                                <span class='glyphicon glyphicon-star' style='color: orange'></span>
+                                ${place.avgRating}
+                                <div>(${place.numRatings} ratings)</div>
                                 </a>`
                         });
                         marker.addListener('click', function() {

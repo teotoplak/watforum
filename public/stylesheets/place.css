@@ -4,3 +4,18 @@
 .dl-custom {
     font-size: 1.1em !important;
 }
+.avg-rating-star {
+    display: block;
+    color: orange;
+    display: inline;
+    font-size: 1.8em;
+}
+.avg-rating-value {
+    font-size: 2em;
+    display: inline;
+    padding-bottom: 2px;
+}
+.avg-rating-total {
+    display: inline;
+    color: darkgrey;
+}

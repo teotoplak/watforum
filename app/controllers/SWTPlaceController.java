@@ -54,6 +54,7 @@ public class SWTPlaceController extends Controller {
             logger.error("Error while fetching json for google place");
             return redirect(routes.SWTPlaceController.searchBox());
         }
+        place.calculateRating();
         return ok(views.html.swtPlace.render(place,gplace));
     }
 

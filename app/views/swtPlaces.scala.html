@@ -1,11 +1,13 @@
 @(places: List[SWTGooglePlace])
 @main("Places") {
 
+    <link rel="stylesheet" type="text/css" href="@routes.Assets.at("stylesheets/places.css")">
+
     <div class="window">
         <div class="row">
             <div class="col-md-10 col-md-offset-1">
                 <h2>Search:</h2>
-                <div class="col-md-8">
+                <div class="col-md-8 places-table">
                     <table class="table table-hover">
                         <thead>
                             <tr><th>Name</th><th>Address</th></tr>

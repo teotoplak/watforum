@@ -40,8 +40,8 @@
             for (var i = 0; i < maxRating; i++) {
                 var star = document.createElement('span');
                 star.classList.add('c-rating__item');
-                star.classList.add('glyphicon');
-                star.classList.add('glyphicon-star');
+                star.classList.add('fa');
+                star.classList.add('fa-star');
                 star.setAttribute('data-index', i);
                 if (i < currentRating) { star.classList.add('is-active'); }
                 el.appendChild(star);

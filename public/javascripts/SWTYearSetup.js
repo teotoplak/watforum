@@ -93,7 +93,7 @@ function addYearToRow(i) {
             cell2.innerHTML = swtYear.sponsor.fullName;
             var deleteButton = document.createElement("button");
             deleteButton.className = "btn btn-danger";
-            deleteButton.innerHTML = "<span class=' glyphicon glyphicon-minus'></span>";
+            deleteButton.innerHTML = "<span class=' fa fa-minus'></span>";
             cell3.appendChild(deleteButton);
             deleteButton.addEventListener("click", function() { deleteBtnFunction(deleteButton, userId)});
             addAgency.value = "";

@@ -4,8 +4,8 @@
 }
 
 .main-container {
+    margin-top: 50px;
     background: white;
-    box-shadow: 0 0 8px rgba(0,0,0,0.3);
     min-height: 100vh;
     padding: 0 0 50px;
     position: relative;
@@ -20,13 +20,12 @@
     width: 100%;
 }
 
-.footer-wrapper {
-    padding: 1em 2em;
+.flash-container {
+    margin-top: 50px;
 }
 
-
-body {
-    background: #edf0f2;
+.footer-wrapper {
+    padding: 1em 2em;
 }
 
 .separate {
@@ -35,10 +34,6 @@ body {
 
 .window {
     padding: 2em;
-}
-
-.container-fluid {
-    padding: 0;
 }
 
 .profile-image {

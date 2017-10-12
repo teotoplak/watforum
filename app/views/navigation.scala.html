@@ -1,8 +1,8 @@
 @()
 @user = @{controllers.SWTUserController.currentUser()}
 
-<div class="navbar navbar-inverse" id="mynavbar">
-    <div class="containter">
+<div class="navbar navbar-inverse navbar-fixed-top" id="mynavbar">
+    <div class="container">
         @*defines button which appears when device is small*@
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -19,7 +19,7 @@
                     <input type="text" id="nav-search-box" class="form-control" placeholder="Workplace search">
                     <div class="input-group-btn">
                         <button id="nav-btn-search" type="submit" class="btn btn-default">
-                            <span class="glyphicon glyphicon-search"></span>
+                            <span class="fa fa-search"></span>
                         </button>
                     </div>
                 </div>

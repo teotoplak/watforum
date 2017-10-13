@@ -75,7 +75,10 @@ public class SWTPlace extends Model {
             numOfRatings++;
             sumOfRatings += rating.rating;
         }
-        this.avgRating = Double.parseDouble(oneDigit.format(sumOfRatings / numOfRatings));
+        this.avgRating = -1.0;
+        if (numOfRatings > 0) {
+            this.avgRating = Double.parseDouble(oneDigit.format(sumOfRatings / numOfRatings));
+        }
         this.numRatings = numOfRatings;
     }
 

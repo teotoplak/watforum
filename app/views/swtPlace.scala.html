@@ -41,17 +41,18 @@
             }
     </script>
 
-    <div class="window">
         <div class="row">
             <div class="col-md-7">
                 <h2>@gplace.name</h2>
                 <dl class="dl-horizontal dl-custom">
                     <dt></dt>
-                    <dd>
-                        <div class="fa fa-star avg-rating-star"></div>
-                        <div class="avg-rating-value">@place.avgRating</div>
-                        <div class="avg-rating-total">/ 5</div>
-                    </dd>
+                    @if(place.avgRating >= 0.0) {
+                        <dd>
+                            <div class="fa fa-star avg-rating-star"></div>
+                            <div class="avg-rating-value">@place.avgRating</div>
+                            <div class="avg-rating-total">/ 5</div>
+                        </dd>
+                    }
                     @if(gplace.address != null) {
                         <dt>Address</dt>
                         <dd>@gplace.address</dd>
@@ -79,7 +80,6 @@
         <div class="row separate">
             @ratingsList(place.ratings, false)
         </div>
-    </div>
 
 
 

@@ -2,24 +2,8 @@
     margin: 30px 0;
 }
 
-.first-h {
-}
-
-.international-h {
-}
-
-.online-h {
-
-}
-
-.words {
-    /*text-decoration: underline;*/
-    /*font-style: italic;*/
-}
-
-
-#headingWindow {
-
+.landing-text-row {
+    margin-top: 2em;
 }
 
 #news {
@@ -35,6 +19,7 @@
 }
 
 #aboutWindow {
+
 }
 
 #aboutWindow p {

@@ -34,6 +34,8 @@
     </head>
     <body>
 
+        <div class="main-wrapper">
+
         @navigation()
 
         <div class="container flash-container">
@@ -49,19 +51,19 @@
             @if(flash.containsKey("error")) {
                 <div class="alert alert-danger text-center">@flash.get("error")</div>
             }
-        </div>dd
-
-        <div class="container main-container">
-
-
-        @content
-
-            <div class="footer-container">
-                @footer()
-            </div>
         </div>
 
+        <div class="container main-container">
+            @content
+        </div>
 
+            <div class="footer-container">
+                <div class="container">
+                @footer()
+                </div>
+            </div>
+
+        </div>
 
     </body>
 </html>

@@ -9,6 +9,11 @@
     min-height: 100vh;
 }
 
+.logo-img {
+    height: 36px;
+    margin-top: 7px;
+}
+
 .main-container {
     background: white;
 }
@@ -72,24 +77,31 @@
 /*this is used for responsive text
 important: classes used here should not have font-size defined cause it will
 be overwritten */
+@media all and (max-width: 5000px) {
+    /* screen size until 1200px */
+    .descHeading {
+        font-size: 3.3em ;
+        /* 1.5x default size */
+    }
+}
 @media all and (max-width: 1200px) {
     /* screen size until 1200px */
     .descHeading {
-        font-size: 2.5em ;
+        font-size: 3em ;
         /* 1.5x default size */
     }
 }
 @media all and (max-width: 992px) {
     /* screen size until 1000px */
     .descHeading {
-        font-size: 2.1em ;
+        font-size: 2.8em ;
         /* 1.2x default size */
     }
 }
 @media all and (max-width: 768px) {
     /* screen size until 500px */
     .descHeading {
-        font-size: 1.7em;
+        font-size: 2.3em;
         /* 0.8x default size */
     }
 }

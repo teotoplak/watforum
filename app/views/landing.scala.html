@@ -1,6 +1,6 @@
 @main("Watplaces") {
 
-  <link rel="stylesheet" type="text/css" href="@routes.Assets.at("stylesheets/landing.css")">
+  <link rel="stylesheet" type="text/css" href="@routes.Assets.versioned("stylesheets/landing.css")">
 
 
   <div id="headingWindow">
@@ -31,7 +31,7 @@
 
   </div>
 
-  <img src="@routes.Assets.at("images/skyline.jpg")" class="img-responsive" alt="skyline">
+  <img src="@routes.Assets.versioned("images/skyline.jpg")" class="img-responsive" alt="skyline">
 
 
   <div class="landing-text-row" id="missionWindow">
@@ -79,8 +79,8 @@
   </div>
 
 
-  <script src="@routes.Assets.at("javascripts/abbreviText.js")" type="text/javascript"></script>
-  <link rel="stylesheet" type="text/css" href="@routes.Assets.at("stylesheets/abbreviText.css")"/>
+  <script src="@routes.Assets.versioned("javascripts/abbreviText.js")" type="text/javascript"></script>
+  <link rel="stylesheet" type="text/css" href="@routes.Assets.versioned("stylesheets/abbreviText.css")"/>
   <script>
           abbreviText("abbrvText", ["ummer", "ork", "ravel"]);
   </script>

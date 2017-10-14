@@ -2,11 +2,11 @@
 @edit = @{rating!=null}
 @main(gplace.name + " rating") {
 
-  <link rel="stylesheet" type="text/css" href="@routes.Assets.at("stylesheets/rating.css")">
+  <link rel="stylesheet" type="text/css" href="@routes.Assets.versioned("stylesheets/rating.css")">
 
   @*validetta*@
-  <script src="@routes.Assets.at("validetta/validetta.min.js")" type="text/javascript"></script>
-  <link rel="stylesheet" type="text/css" href="@routes.Assets.at("validetta/validetta.min.css")">
+  <script src="@routes.Assets.versioned("validetta/validetta.min.js")" type="text/javascript"></script>
+  <link rel="stylesheet" type="text/css" href="@routes.Assets.versioned("validetta/validetta.min.css")">
 
 
     <div class="row">
@@ -125,7 +125,7 @@
     </div>
 
   @*for star rating*@
-  <script src="@routes.Assets.at("javascripts/starRating.js")" type="text/javascript"></script>
+  <script src="@routes.Assets.versioned("javascripts/starRating.js")" type="text/javascript"></script>
   <script>
           var el = document.querySelector('#starsRating');
           var currentRating = 0;
@@ -179,6 +179,6 @@
     setOnlyNumbersToForm("#payment");
   </script>
 
-  <script src="@routes.Assets.at("javascripts/spinner.js")" type="text/javascript"></script>
+  <script src="@routes.Assets.versioned("javascripts/spinner.js")" type="text/javascript"></script>
 
   })

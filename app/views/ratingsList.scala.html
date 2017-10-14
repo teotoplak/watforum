@@ -1,7 +1,7 @@
 @(ratings: Set[SWTRating], showPlaceName: Boolean)
     @()
 
-    <link rel="stylesheet" type="text/css" href="@routes.Assets.at("stylesheets/ratingCard.css")"/>
+    <link rel="stylesheet" type="text/css" href="@routes.Assets.versioned("stylesheets/ratingCard.css")"/>
 
     <ul class="list-group">
     @for(rating <- ratings) {

@@ -3,9 +3,9 @@
 @main("WatUser profile") {
 
   @*validetta*@
-  <script src="@routes.Assets.at("autocomplete/jquery.autocomplete.min.js")" type="text/javascript"></script>
+  <script src="@routes.Assets.versioned("autocomplete/jquery.autocomplete.min.js")" type="text/javascript"></script>
 
-  <link rel="stylesheet" type="text/css" href="@routes.Assets.at("stylesheets/placesPanel.css")"/>
+  <link rel="stylesheet" type="text/css" href="@routes.Assets.versioned("stylesheets/placesPanel.css")"/>
 
   <div class="row separate">
     <div class="col-md-8 col-md-offset-2">
@@ -78,7 +78,7 @@
     </div>
 
 
-  <script src="@routes.Assets.at("javascripts/SWTYearSetup.js")" data-userId="@user.id" type="text/javascript"></script>
+  <script src="@routes.Assets.versioned("javascripts/SWTYearSetup.js")" data-userId="@user.id" type="text/javascript"></script>
 
   <script>
           let autocompleteSponsor;

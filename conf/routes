@@ -14,8 +14,9 @@
 GET     /callback             @org.pac4j.play.CallbackController.callback()
 POST    /callback             @org.pac4j.play.CallbackController.callback()
 GET     /logoutoauth           @org.pac4j.play.LogoutController.logout()
+GET     /favicon.ico        controllers.Assets.at(path="/public/images", file="favicon.ico")
 
-GET     /assets/*file      controllers.Assets.at(path="/public", file)
+GET     /assets/*file      controllers.Assets.versioned(path="/public", file)
 GET     /webjars/*file     controllers.WebJarAssets.at(file)
 
 #### PUBLIC

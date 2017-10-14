@@ -1,6 +1,6 @@
 @(nationality: Locale)
 @* should be removed because of duplicates when in loop *@
-<link rel="stylesheet" type="text/css" href="@routes.Assets.at("stylesheets/countrySelect.css")">
+<link rel="stylesheet" type="text/css" href="@routes.Assets.versioned("stylesheets/countrySelect.css")">
 <span>
   @nationality.getDisplayLanguage
 </span>

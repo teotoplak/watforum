@@ -9,10 +9,10 @@
 
 @main("Student form") {
 
-  <link rel="stylesheet" type="text/css" href="@routes.Assets.at("stylesheets/register.css")" >
+  <link rel="stylesheet" type="text/css" href="@routes.Assets.versioned("stylesheets/register.css")" >
   @*validetta*@
-  <script src="@routes.Assets.at("validetta/validetta.min.js")" type="text/javascript"></script>
-  <link rel="stylesheet" type="text/css" href="@routes.Assets.at("validetta/validetta.min.css")">
+  <script src="@routes.Assets.versioned("validetta/validetta.min.js")" type="text/javascript"></script>
+  <link rel="stylesheet" type="text/css" href="@routes.Assets.versioned("validetta/validetta.min.css")">
 
 
 
@@ -138,8 +138,8 @@
   </script>
 
     @*country-select lib*@
-    <link rel="stylesheet" type="text/css" href="@routes.Assets.at("stylesheets/countrySelect.css")">
-    <script src="@routes.Assets.at("javascripts/countrySelect.js")" type="text/javascript"></script>
+    <link rel="stylesheet" type="text/css" href="@routes.Assets.versioned("stylesheets/countrySelect.css")">
+    <script src="@routes.Assets.versioned("javascripts/countrySelect.js")" type="text/javascript"></script>
     <script>
             $("#country_selector").countrySelect({
                 defaultCountry: "hr"
@@ -165,7 +165,7 @@
                     changed = false;
                 } else {
                     $(this).text("Undo");
-                    $('.avatarImg').attr("src", "@routes.Assets.at("images/profiles/user-default.png")");
+                    $('.avatarImg').attr("src", "@routes.Assets.versioned("images/profiles/user-default.png")");
                     changed = true;
                 }
             })

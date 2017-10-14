@@ -1,6 +1,6 @@
 @(profilePictureUrl: String)
 @if(profilePictureUrl == null || profilePictureUrl.isEmpty) {
-  <img src="@routes.Assets.at("images/profiles/user-default.png")" class="profile-image-big">
+  <img src="@routes.Assets.versioned("images/profiles/user-default.png")" class="profile-image-big">
 } else {
   <img src="@profilePictureUrl" class="profile-image-big">
 }

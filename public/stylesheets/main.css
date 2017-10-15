@@ -9,7 +9,6 @@
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-
 }
 
 .logo-img {
@@ -76,6 +75,10 @@
     table-layout: fixed;
     word-wrap: break-word;
 }
+.table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
+    background-color: rgba(255, 70, 67, 0.10);
+}
+
 
 /*this is used for responsive text
 important: classes used here should not have font-size defined cause it will

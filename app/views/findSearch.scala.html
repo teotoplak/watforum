@@ -1,169 +1,174 @@
 @()
-@main("Search") {
+@content = {
+    @* empty *@
+}
+@otherContent = {
 
-  <link href="@routes.Assets.versioned("stylesheets/findSearch.css")" rel="stylesheet" media="screen">
+    <link href="@routes.Assets.versioned("stylesheets/findSearch.css")" rel="stylesheet" media="screen">
 
-    <div class="row">
-      <div class="input-group col-md-6 col-md-offset-3 filter-items">
-        <ul>
-          <li>
-            <input class="filter-item" type='radio' value='state' name='filter_radio' id='filter-state' checked/>
-            <label for='filter-state'>State</label>
-          </li>
-          <li>
-            <input class="filter-item" type='radio' value='county' name='filter_radio'  id='filter-county'/>
-            <label for='filter-county'>County</label>
-          </li>
-          <li>
-            <input class="filter-item" type='radio' value='city' name='filter_radio'  id='filter-city'/>
-            <label for='filter-city'>City</label>
-          </li>
-        </ul>
-      </div>
+    <div class="container find-filter-container">
+        <div class="row">
+            <div class="input-group col-md-offset-3 col-md-6 filter-items">
+                <ul class="filter-items-list">
+                    <li>
+                        <input class="filter-item" type='radio' value='state' name='filter_radio' id='filter-state' checked/>
+                        <label for='filter-state'>State</label>
+                    </li>
+                    <li>
+                        <input class="filter-item" type='radio' value='county' name='filter_radio'  id='filter-county'/>
+                        <label for='filter-county'>County</label>
+                    </li>
+                    <li>
+                        <input class="filter-item" type='radio' value='city' name='filter_radio'  id='filter-city'/>
+                        <label for='filter-city'>City</label>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-group col-md-offset-3 col-md-6">
+                <input type="text" id="find-search-box" class="form-control input-lg"
+                placeholder="Try &quot;Massachusetts&quot;" />
+                <span class="input-group-btn">
+                    <button class="btn btn-primary btn-lg" id="find-search-btn-box" type="button">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </span>
+            </div>
+        </div>
+        <div class="row appender">
+            <div class="text-center text-muted" id="appender"></div>
+        </div>
     </div>
-    <div class="row">
-      <div class="input-group col-md-6 col-md-offset-3">
-        <input type="text" id="find-search-box" class="form-control input-lg"
-        placeholder="Try &quot;Massachusetts&quot;" />
-        <span class="input-group-btn">
-          <button class="btn btn-primary btn-lg" id="find-search-btn-box" type="button">
-            <i class="fa fa-search"></i>
-          </button>
-        </span>
-      </div>
-    </div>
-    <div class="row appender">
-      <div class="text-center" id="appender"></div>
-    </div>
-    <div class="row">
-      <div class="col-md-offset-2 col-md-8">
-        <div class="google-map" id="googleMap"></div>
-      </div>
-    </div>
 
-  <script>
-          /* google maps */
-          var map;
-          var bounds;
-          var markers = [];
-          var openedInfoWindow;
-          function initMap() {
-            bounds = new google.maps.LatLngBounds();
-            map = new google.maps.Map(document.getElementById('googleMap'), {
-              center: {lat: 40, lng: -100},
-              zoom: 3,
-                clickableIcons: false
-            });
+    @*<div class="google-map" id="googleMap"></div>*@
+    <div id="googleMap" class="google-map"></div>
+    <script>
+            /* google maps */
+            var map;
+            var bounds;
+            var markers = [];
+            var openedInfoWindow;
+            function initMap() {
+                bounds = new google.maps.LatLngBounds();
+                map = new google.maps.Map(document.getElementById('googleMap'), {
+                    center: {lat: 40, lng: -100},
+                    zoom: 4,
+                    clickableIcons: false
+                });
 
-          }
+            }
 
 
-          @* filter search *@
-          let searchBoxId = '#find-search-box';
-          let appender = document.getElementById("appender");
+            @* filter search *@
+            let searchBoxId = '#find-search-box';
+            let appender = document.getElementById("appender");
 
-          let findSearchAction = () => {
-            let text = $(`${searchBoxId}`).val();
-            let filter = $('input[name=filter_radio]:checked').val();
-            appender.innerHTML = "<span class='text-muted'></span> Loading...";
-            $.ajax({
-              url: "/getBaseUrl",
-              success: function (baseUrl) {
+            let findSearchAction = () => {
+                let text = $(`${searchBoxId}`).val();
+                let filter = $('input[name=filter_radio]:checked').val();
+                appender.innerHTML = "<span class='text-muted'></span> Loading...";
                 $.ajax({
-                  type: "GET",
-                  url: baseUrl + "/get-places",
-                  data: {text:text,filter:filter},
-                  success: (places) => {
-                    let appender = document.getElementById("appender");
-                    clearMarkers();
-                    if(places.length == 0) {
-                      appender.innerHTML = "No results.";
-                    } else {
-                      appender.innerHTML = " ";
-                      places.forEach((place) => {
-                        var marker = new google.maps.Marker({
-                          position: {lat:place.lat,lng:place.lng},
-                          map: map,
-                          title: place.name
-                        });
-                        markers.push(marker);
-                        bounds.extend(marker.getPosition());
-                        map.fitBounds(bounds);
-                        let infowindow = new google.maps.InfoWindow({
-                          content: `<a href="${baseUrl}/place?id=${place.googleId}">
+                    url: "/getBaseUrl",
+                    success: function (baseUrl) {
+                        $.ajax({
+                            type: "GET",
+                            url: baseUrl + "/get-places",
+                            data: {text:text,filter:filter},
+                            success: (places) => {
+                                let appender = document.getElementById("appender");
+                                clearMarkers();
+                                if(places.length == 0) {
+                                    appender.innerHTML = "No results.";
+                                } else {
+                                    appender.innerHTML = `Found ${places.length} places.`;
+                                    places.forEach((place) => {
+                                        var marker = new google.maps.Marker({
+                                            position: {lat:place.lat,lng:place.lng},
+                                            map: map,
+                                            icon: baseUrl + "@routes.Assets.versioned("images/marker.png")",
+                                            title: place.name
+                                        });
+                                        markers.push(marker);
+                                        bounds.extend(marker.getPosition());
+                                        map.fitBounds(bounds);
+                                        let infowindow = new google.maps.InfoWindow({
+                                            content: `<a href="${baseUrl}/place?id=${place.googleId}">
                                 <div>${place.name}</div>
                                 <span class='glyphicon glyphicon-star' style='color: orange'></span>
                                 ${place.avgRating}
                                 <div>(${place.numRatings} ratings)</div>
                                 </a>`
+                                        });
+                                        marker.addListener('click', function() {
+                                            if(openedInfoWindow) {
+                                                openedInfoWindow.close();
+                                            }
+                                            openedInfoWindow = infowindow;
+                                            infowindow.open(map, marker);
+                                        });
+                                    })
+                                }
+                            },
+                            error: (error) => {
+                                appender.innerHTML = " ";
+                            }
                         });
-                        marker.addListener('click', function() {
-                          if(openedInfoWindow) {
-                            openedInfoWindow.close();
-                          }
-                          openedInfoWindow = infowindow;
-                          infowindow.open(map, marker);
-                        });
-                      })
                     }
-                  },
-                  error: (error) => {
-                    appender.innerHTML = " ";
-                  }
                 });
-              }
-            });
-          };
-          function clearMarkers() {
-              bounds = new google.maps.LatLngBounds();
-              for(let i=0; i<markers.length; i++) {
-                markers[i].setMap(null);
-              }
+            };
+            function clearMarkers() {
+                bounds = new google.maps.LatLngBounds();
+                for(let i=0; i<markers.length; i++) {
+                    markers[i].setMap(null);
+                }
 
-            markers = [];
-          }
+                markers = [];
+            }
 
-          // automatic ajax if value set
-          if($(`${searchBoxId}`).val()) {
-            findSearchAction();
-          }
-          $("input[name=filter_radio]:radio").change(function () {
+            // automatic ajax if value set
             if($(`${searchBoxId}`).val()) {
-              findSearchAction();
+                findSearchAction();
             }
-          });
-          $(searchBoxId).keypress((e) => {
-            if (e.which == 13) {
-              findSearchAction();
+            $("input[name=filter_radio]:radio").change(function () {
+                if($(`${searchBoxId}`).val()) {
+                    findSearchAction();
+                }
+            });
+            $(searchBoxId).keypress((e) => {
+                if (e.which == 13) {
+                    findSearchAction();
+                }
+            });
+            $('#find-search-btn-box').click(() => findSearchAction());
+
+            // placeholders
+            function statePlaceholder() {
+                $(searchBoxId).attr("placeholder", 'Try "Massachusetts"');
             }
-          });
-          $('#find-search-btn-box').click(() => findSearchAction());
+            function countyPlaceholder() {
+                $(searchBoxId).attr("placeholder", 'Try "Barnstable County"');
+            }
+            function cityPlaceholder() {
+                $(searchBoxId).attr("placeholder", 'Try "Boston"');
+            }
+            $('input:radio[name="filter_radio"]').change(
+                    function(){
+                        if ($(this).is(':checked') && $(this).val() == 'state') {
+                            statePlaceholder();
+                        }
+                        if ($(this).is(':checked') && $(this).val() == 'county') {
+                            countyPlaceholder();
+                        }
+                        if ($(this).is(':checked') && $(this).val() == 'city') {
+                            cityPlaceholder();
+                        }
+                    });
+    </script>
 
-          // placeholders
-          function statePlaceholder() {
-            $(searchBoxId).attr("placeholder", 'Try "Massachusetts"');
-          }
-          function countyPlaceholder() {
-            $(searchBoxId).attr("placeholder", 'Try "Barnstable County"');
-          }
-          function cityPlaceholder() {
-            $(searchBoxId).attr("placeholder", 'Try "Boston"');
-          }
-          $('input:radio[name="filter_radio"]').change(
-                  function(){
-                    if ($(this).is(':checked') && $(this).val() == 'state') {
-                      statePlaceholder();
-                    }
-                    if ($(this).is(':checked') && $(this).val() == 'county') {
-                      countyPlaceholder();
-                    }
-                    if ($(this).is(':checked') && $(this).val() == 'city') {
-                      cityPlaceholder();
-                    }
-                  });
-  </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBOVsLLDx5MQmY4CUaD9-kt5Dqw5tPjJV4&callback=initMap">
+    </script>
 
-  <script async defer
-  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBOVsLLDx5MQmY4CUaD9-kt5Dqw5tPjJV4&callback=initMap">
-  </script>
 }
+@main("Search")(content,otherContent)

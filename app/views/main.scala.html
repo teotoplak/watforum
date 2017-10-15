@@ -1,4 +1,4 @@
-@(title: String)(content: Html)
+@(title: String)(content: Html, otherContent: Html = null)
 
 <!DOCTYPE html>
 <html lang="en">
@@ -56,13 +56,17 @@
 
         <div class="container main-container">
             @content
+
         </div>
+
+            @otherContent
 
             <div class="footer-container">
                 <div class="container">
                 @footer()
                 </div>
             </div>
+
 
         </div>
 

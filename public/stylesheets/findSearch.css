@@ -1,5 +1,6 @@
 .filter-items ul {
     list-style: none;
+    margin: 0;
     border-radius: 5px;
 }
 .filter-items li {
@@ -14,25 +15,44 @@
     cursor: pointer;
     margin-bottom: 0;
     font-weight: 200;
-    padding: 0 30px 10px 30px;
-    font-size: 1.2em;
+    padding: 0px 80px 10px 80px;
+    font-size: 1.8em;
 
 }
 .filter-items li input:checked + label {
-    border-bottom: solid 2px #ff5d5b;
+    border-bottom: solid 4px #ff5d5b;
 }
 
 .google-map {
     flex-grow: 1;
     overflow: hidden;
 }
-
-.appender {
-    margin: 10px 0;
-    height: 30px;
+.map-wrapper {
+    flex-grow: 1;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
 }
 
-.find-filter-container {
-    padding: 20px;
+.search-box-row {
+    position: absolute;
+    top: 10px;
+    z-index: 99;
+}
+
+.appender-row {
+    margin: 10px 0;
+    height: 50px;
+    padding-bottom: 10px;
+}
+
+.filter-row {
+    margin-top: 25px;
+}
+
+#appender {
+    font-size: 2em;
+    border-bottom: 1px solid rgba(128, 128, 128, 0.41);
 }
 

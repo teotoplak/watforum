@@ -6,10 +6,17 @@
 
     <link href="@routes.Assets.versioned("stylesheets/findSearch.css")" rel="stylesheet" media="screen">
 
-    <div class="container find-filter-container">
-        <div class="row">
-            <div class="input-group col-md-offset-3 col-md-6 filter-items">
-                <ul class="filter-items-list">
+    <div class="container">
+        <div class="row appender-row">
+            <div class="col-md-offset-4 col-md-4">
+                <div class="text-center text-muted text-center" id="appender">
+                    Search by:
+                </div>
+            </div>
+        </div>
+        <div class="row filter-row">
+            <div class="input-group col-md-offset-1 col-md-10 filter-items">
+                <ul class="filter-items-list text-center">
                     <li>
                         <input class="filter-item" type='radio' value='state' name='filter_radio' id='filter-state' checked/>
                         <label for='filter-state'>State</label>
@@ -25,7 +32,12 @@
                 </ul>
             </div>
         </div>
-        <div class="row">
+    </div>
+
+    @*<div class="google-map" id="googleMap"></div>*@
+    <div class="map-wrapper">
+        <div id="googleMap" class="google-map"></div>
+        <div class="row search-box-row">
             <div class="input-group col-md-offset-3 col-md-6">
                 <input type="text" id="find-search-box" class="form-control input-lg"
                 placeholder="Try &quot;Massachusetts&quot;" />
@@ -36,13 +48,8 @@
                 </span>
             </div>
         </div>
-        <div class="row appender">
-            <div class="text-center text-muted" id="appender"></div>
-        </div>
     </div>
 
-    @*<div class="google-map" id="googleMap"></div>*@
-    <div id="googleMap" class="google-map"></div>
     <script>
             /* google maps */
             var map;
@@ -93,7 +100,7 @@
                                         bounds.extend(marker.getPosition());
                                         map.fitBounds(bounds);
                                         let infowindow = new google.maps.InfoWindow({
-                                            content: `<a href="${baseUrl}/place?id=${place.googleId}">
+                                            content: `<a target="_blank" href="${baseUrl}/place?id=${place.googleId}">
                                 <div>${place.name}</div>
                                 <span class='glyphicon glyphicon-star' style='color: orange'></span>
                                 ${place.avgRating}

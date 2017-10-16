@@ -40,7 +40,7 @@ POST    /checkEmail          controllers.SWTUserController.checkEmail()
 GET    /placesPanel        controllers.SWTUserController.placesPanel()
 
 #### YEAR
-GET     /year          controllers.SWTYearController.swtYear(yearId: Long)
+GET     /year          controllers.SWTYearController.swtYear(id: Long)
 POST    /saveYear          controllers.SWTYearController.saveSWTYear()
 POST    /deleteYear          controllers.SWTYearController.deleteSWTYear()
 

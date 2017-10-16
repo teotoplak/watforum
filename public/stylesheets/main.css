@@ -3,6 +3,11 @@
     /*padding: 0 50px 0px 50px;*/
 }
 
+.wat-title {
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 10px;
+}
+
 .main-wrapper {
     position: relative;
     padding: 0 0 50px;

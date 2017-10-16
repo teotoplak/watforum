@@ -3,18 +3,23 @@
 
 @main(year.sponsor.toString + " year") {
     <div class="row">
-      <h2>SWTyear</h2>
-      <div class="col-md-4">
-        <div>User: <a href="@routes.SWTUserController.profile(year.user.id)">@year.user.getIdentity</a></div>
-        <div>Agency: @year.sponsor.toString</div>
-        <div>Year: @year.year</div>
-        <div>Num of places: @year.ratings.size()</div>
-      </div>
-      <div class="col-md-8">
-        @if(year.ratings.size() == 0) {
-          <span class="text-muted">Nothing rated yet</span>
-        }
-        @ratingsList(year.ratings,true)
+      <div class="col-md-offset-1 col-md-6">
+      <h2 class="wat-title">WAT year</h2>
+        <dl class="dl-horizontal separate">
+          <dt><i class="fa fa-user"></i> User</dt>
+          <dd><a href="@routes.SWTUserController.profile(year.user.id)">@year.user.getIdentity</a></dd>
+          <dt><i class="fa fa-building"></i> Agency</dt><dd>@year.sponsor.toString</dd>
+          <dt><i class="fa fa-calendar"></i> Year</dt><dd>@year.year</dd>
+          <dt><i class="fa fa-map-marker"></i> Num of places </dt><dd>@year.ratings.size()</dd>
+        </dl>
       </div>
     </div>
+  <div class="row separate">
+    <div class="col-md-10 col-md-offset-1">
+      @if(year.ratings.size() == 0) {
+        <span class="text-muted">Nothing rated yet</span>
+      }
+      @ratingsList(year.ratings,true)
+    </div>
+  </div>
 }

@@ -42,8 +42,8 @@
     </script>
 
         <div class="row">
-            <div class="col-md-7">
-                <h2>@gplace.name</h2>
+            <div class="col-md-6">
+                <h2 class="wat-title">@gplace.name</h2>
                 <dl class="dl-horizontal dl-custom">
                     <dt></dt>
                     @if(place.avgRating >= 0.0) {
@@ -72,7 +72,8 @@
                 </dl>
 
             </div>
-            <div class="col-md-5">
+            <div class="col-md-5 col-md-offset-1">
+                <h2></h2>
                 <div id="googleMap"></div>
             </div>
         </div>

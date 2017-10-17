@@ -5,7 +5,7 @@
     <div class="container">
         @*defines button which appears when device is small*@
         <div class="navbar-header">
-            <a class="navbar-left" href="#">
+            <a class="navbar-left hidden-xs" href="#">
                 <img class="logo-img" alt="Brand" src="@routes.Assets.versioned("images/logo.png")">
             </a>
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -15,8 +15,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand hidden-md" href="@routes.Public.landing()"> WATpointer </a>
-            <a class="navbar-brand visible-md" href="@routes.Public.landing()"> J1 </a>
+            <a class="navbar-brand" href="@routes.Public.landing()"> WATpointer </a>
         </div>
         <div id="navbar" class="collapse navbar-collapse">
             <div class="navbar-form navbar-left" role="search">

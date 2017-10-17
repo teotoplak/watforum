@@ -84,6 +84,10 @@
     background-color: rgba(255, 70, 67, 0.10);
 }
 
+.footer-text {
+    margin: 3px 0;
+}
+
 
 /*this is used for responsive text
 important: classes used here should not have font-size defined cause it will
@@ -92,7 +96,6 @@ be overwritten */
     /* screen size until 1200px */
     .descHeading {
         font-size: 3.3em ;
-        /* 1.5x default size */
     }
 }
 @media all and (max-width: 1200px) {
@@ -108,12 +111,18 @@ be overwritten */
         font-size: 2.8em ;
         /* 1.2x default size */
     }
+    .footer-text{
+        font-size: 0.9em;
+    }
 }
 @media all and (max-width: 768px) {
     /* screen size until 500px */
     .descHeading {
         font-size: 2.3em;
         /* 0.8x default size */
+    }
+    .footer-text{
+        font-size: 0.7em;
     }
 }
 

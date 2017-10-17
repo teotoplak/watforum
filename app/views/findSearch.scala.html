@@ -6,46 +6,27 @@
 
     <link href="@routes.Assets.versioned("stylesheets/findSearch.css")" rel="stylesheet" media="screen">
 
-    <div class="container">
-        <div class="row appender-row">
-            <div class="col-md-offset-4 col-md-4">
-                <div class="text-center text-muted text-center" id="appender">
-                    Search by:
-                </div>
-            </div>
-        </div>
-        <div class="row filter-row">
-            <div class="input-group col-md-offset-1 col-md-10 filter-items">
-                <ul class="filter-items-list text-center">
-                    <li>
-                        <input class="filter-item" type='radio' value='state' name='filter_radio' id='filter-state' checked/>
-                        <label for='filter-state'>State</label>
-                    </li>
-                    <li>
-                        <input class="filter-item" type='radio' value='county' name='filter_radio'  id='filter-county'/>
-                        <label for='filter-county'>County</label>
-                    </li>
-                    <li>
-                        <input class="filter-item" type='radio' value='city' name='filter_radio'  id='filter-city'/>
-                        <label for='filter-city'>City</label>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
-
     @*<div class="google-map" id="googleMap"></div>*@
     <div class="map-wrapper">
-        <div id="googleMap" class="google-map"></div>
+        <div id="googleMap" class="google-map" style="visibility: visible"></div>
         <div class="row search-box-row">
-            <div class="input-group col-md-offset-3 col-md-6">
-                <input type="text" id="find-search-box" class="form-control input-lg"
-                placeholder="Try &quot;Massachusetts&quot;" />
-                <span class="input-group-btn">
-                    <button class="btn btn-primary btn-lg" id="find-search-btn-box" type="button">
-                        <i class="fa fa-search"></i>
-                    </button>
-                </span>
+            <div class="form-group col-md-offset-3 col-md-6">
+                <div class="input-group">
+                    <span class="input-group-btn">
+                        <select class="btn btn-lg btn-default" id="filter-select" onchange="filterSelected()">
+                            <option value="state">State</option>
+                            <option value="city">City</option>
+                            <option value="county">County</option>
+                        </select>
+                    </span>
+                    <input type="text" id="find-search-box" class="form-control input-lg"
+                    placeholder="Try &quot;Massachusetts&quot;" />
+                    <span class="input-group-btn">
+                        <button class="btn btn-primary btn-lg" id="find-search-btn-box" type="button">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </span>
+                </div>
             </div>
         </div>
     </div>
@@ -69,12 +50,13 @@
 
             @* filter search *@
             let searchBoxId = '#find-search-box';
-            let appender = document.getElementById("appender");
+            let notSearchedYet = true;
 
             let findSearchAction = () => {
+                let filterSelect = document.getElementById("filter-select");
+                let filter = filterSelect.options[filterSelect.selectedIndex].value;
                 let text = $(`${searchBoxId}`).val();
-                let filter = $('input[name=filter_radio]:checked').val();
-                appender.innerHTML = "<span class='text-muted'></span> Loading...";
+                /* TODO loading gif here */
                 $.ajax({
                     url: "/getBaseUrl",
                     success: function (baseUrl) {
@@ -83,12 +65,11 @@
                             url: baseUrl + "/get-places",
                             data: {text:text,filter:filter},
                             success: (places) => {
-                                let appender = document.getElementById("appender");
                                 clearMarkers();
                                 if(places.length == 0) {
-                                    appender.innerHTML = "No results.";
+                                   /* TODO no places found*/
                                 } else {
-                                    appender.innerHTML = `Found ${places.length} places.`;
+                                    /* TODO how many places found */
                                     places.forEach((place) => {
                                         var marker = new google.maps.Marker({
                                             position: {lat:place.lat,lng:place.lng},
@@ -114,11 +95,17 @@
                                             openedInfoWindow = infowindow;
                                             infowindow.open(map, marker);
                                         });
+                                        if(place === places[0]) {
+                                            infowindow.open(map, marker)
+                                        }
                                     })
+                                }
+                                if(notSearchedYet) {
+                                    document.getElementById("googleMap").style.visibility = "visible";
+                                    notSearchedYet = false;
                                 }
                             },
                             error: (error) => {
-                                appender.innerHTML = " ";
                             }
                         });
                     }
@@ -137,11 +124,6 @@
             if($(`${searchBoxId}`).val()) {
                 findSearchAction();
             }
-            $("input[name=filter_radio]:radio").change(function () {
-                if($(`${searchBoxId}`).val()) {
-                    findSearchAction();
-                }
-            });
             $(searchBoxId).keypress((e) => {
                 if (e.which == 13) {
                     findSearchAction();
@@ -159,18 +141,20 @@
             function cityPlaceholder() {
                 $(searchBoxId).attr("placeholder", 'Try "Boston"');
             }
-            $('input:radio[name="filter_radio"]').change(
-                    function(){
-                        if ($(this).is(':checked') && $(this).val() == 'state') {
-                            statePlaceholder();
-                        }
-                        if ($(this).is(':checked') && $(this).val() == 'county') {
-                            countyPlaceholder();
-                        }
-                        if ($(this).is(':checked') && $(this).val() == 'city') {
-                            cityPlaceholder();
-                        }
-                    });
+
+            function filterSelected() {
+                let filterSelect = document.getElementById("filter-select");
+                let filter = filterSelect.options[filterSelect.selectedIndex].value;
+                if($(`${searchBoxId}`).val()) {
+                    findSearchAction();
+                }
+                switch (filter) {
+                    case "city": cityPlaceholder(); break;
+                    case "state": statePlaceholder(); break;
+                    case "county": countyPlaceholder(); break;
+                }
+            }
+
     </script>
 
     <script async defer

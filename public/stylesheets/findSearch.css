@@ -35,9 +35,13 @@
     flex-direction: column;
 }
 
+.dropdown-menu {
+    font-size: 18px;
+}
+
 .search-box-row {
     position: absolute;
-    top: 10px;
+    top: 25px;
     z-index: 99;
 }
 

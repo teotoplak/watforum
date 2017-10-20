@@ -11,15 +11,8 @@
         <div id="googleMap" class="google-map" style="visibility: visible"></div>
         <div class="search-box-row search-box-dynamic">
             <div class="form-group">
-                <div class="input-group">
-                    <input type="text" id="find-search-box" class="form-control input-lg"
+                    <input type="text" id="find-search-box" class="form-control input-lg text-center"
                     placeholder="Try &quot;Massachusetts&quot;">
-                    <span class="input-group-btn">
-                        <button class="btn btn-primary btn-lg" id="find-search-btn-box" type="button">
-                            <i id="status-icon" class="fa fa-search"></i>
-                        </button>
-                    </span>
-                </div>
             </div>
         </div>
     </div>
@@ -59,16 +52,11 @@
 
             }
 
-            function changeStatusIcon(classString){
-                document.getElementById("status-icon").className = classString;
-            }
-
             @* filter search *@
             let searchBoxId = '#find-search-box';
             let notSearchedYet = true;
 
             let findSearchAction = (viewport) => {
-                changeStatusIcon("fa fa-circle-o-notch fa-spin fa-fw");
                 $.ajax({
                     url: "/getBaseUrl",
                     success: function (baseUrl) {
@@ -83,7 +71,6 @@
                                     lngFrom: viewport.b.f
                             },
                             success: (places) => {
-                                changeStatusIcon("fa fa-search");
                                 clearMarkers();
                                 if(places.length == 0) {
                                    /* TODO no places found*/
@@ -115,6 +102,8 @@
                                             infowindow.open(map, marker);
                                         });
                                         if(place === places[0]) {
+                                            // open one marker
+                                            openedInfoWindow = infowindow;
                                             infowindow.open(map, marker)
                                         }
                                     })
@@ -125,30 +114,22 @@
                                 }
                             },
                             error: (error) => {
-                                changeStatusIcon("fa fa-exclamation-triangle")
+                                /* todo error*/
+                                console.log("internal error happened while searching")
                             }
                         });
                     }
                 });
             };
-            function clearMarkers() {
-                bounds = new google.maps.LatLngBounds();
-                for(let i=0; i<markers.length; i++) {
-                    markers[i].setMap(null);
-                }
-                markers = [];
-            }
+                function clearMarkers() {
+                    bounds = new google.maps.LatLngBounds();
+                    for(let i=0; i<markers.length; i++) {
+                        markers[i].setMap(null);
+                    }
+                    markers = [];
+     }
 
-            // automatic ajax if value set
-            if($(`${searchBoxId}`).val()) {
-                findSearchAction();
-            }
-            $(searchBoxId).keypress((e) => {
-                if (e.which == 13) {
-                    findSearchAction();
-                }
-            });
-            $('#find-search-btn-box').click(() => findSearchAction());
+
 
     </script>
 

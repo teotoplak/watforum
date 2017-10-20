@@ -9,16 +9,9 @@
     @*<div class="google-map" id="googleMap"></div>*@
     <div class="map-wrapper">
         <div id="googleMap" class="google-map" style="visibility: visible"></div>
-        <div class="row search-box-row">
-            <div class="form-group col-md-offset-3 col-md-6">
+        <div class="search-box-row search-box-dynamic">
+            <div class="form-group">
                 <div class="input-group">
-                    <span class="input-group-btn">
-                        <select class="btn btn-lg btn-default" id="filter-select" onchange="filterSelected()">
-                            <option selected="selected" value="state">State</option>
-                            <option value="city">City</option>
-                            <option value="county">County</option>
-                        </select>
-                    </span>
                     <input type="text" id="find-search-box" class="form-control input-lg"
                     placeholder="Try &quot;Massachusetts&quot;">
                     <span class="input-group-btn">
@@ -37,6 +30,9 @@
             var bounds;
             var markers = [];
             var openedInfoWindow;
+            var currentSearchViewport;
+
+
             function initMap() {
                 bounds = new google.maps.LatLngBounds();
                 map = new google.maps.Map(document.getElementById('googleMap'), {
@@ -49,6 +45,18 @@
                     streetViewControl: false
                 });
 
+                var autocompleteOptions = {
+                    types: ['(regions)'],
+                    componentRestrictions: {country: "us"}
+                };
+
+                let autocomplete = new google.maps.places.Autocomplete(
+                    document.getElementById('find-search-box'),autocompleteOptions);
+                autocomplete.addListener('place_changed', () => {
+                    let place = autocomplete.getPlace();
+                    findSearchAction(place.geometry.viewport)
+                });
+
             }
 
             function changeStatusIcon(classString){
@@ -59,10 +67,7 @@
             let searchBoxId = '#find-search-box';
             let notSearchedYet = true;
 
-            let findSearchAction = () => {
-                let filterSelect = document.getElementById("filter-select");
-                let filter = filterSelect.options[filterSelect.selectedIndex].value;
-                let text = $(`${searchBoxId}`).val();
+            let findSearchAction = (viewport) => {
                 changeStatusIcon("fa fa-circle-o-notch fa-spin fa-fw");
                 $.ajax({
                     url: "/getBaseUrl",
@@ -70,7 +75,13 @@
                         $.ajax({
                             type: "GET",
                             url: baseUrl + "/get-places",
-                            data: {text:text,filter:filter},
+                            data: {
+                                    latTo: viewport.f.f,
+                                    // smaller value
+                                    latFrom: viewport.f.b,
+                                    lngTo: viewport.b.b,
+                                    lngFrom: viewport.b.f
+                            },
                             success: (places) => {
                                 changeStatusIcon("fa fa-search");
                                 clearMarkers();
@@ -111,7 +122,6 @@
                                 if(notSearchedYet) {
                                     document.getElementById("googleMap").style.visibility = "visible";
                                     notSearchedYet = false;
-                                    document.getElementById("result-num").style.visibility = "visible";
                                 }
                             },
                             error: (error) => {
@@ -126,7 +136,6 @@
                 for(let i=0; i<markers.length; i++) {
                     markers[i].setMap(null);
                 }
-
                 markers = [];
             }
 
@@ -141,36 +150,10 @@
             });
             $('#find-search-btn-box').click(() => findSearchAction());
 
-            // placeholders
-            function statePlaceholder() {
-                $(searchBoxId).attr("placeholder", 'Try "Massachusetts"');
-            }
-            function countyPlaceholder() {
-                $(searchBoxId).attr("placeholder", 'Try "Barnstable County"');
-            }
-            function cityPlaceholder() {
-                $(searchBoxId).attr("placeholder", 'Try "Boston"');
-            }
-            /*default placeholder*/
-            statePlaceholder();
-
-            function filterSelected() {
-                let filterSelect = document.getElementById("filter-select");
-                let filter = filterSelect.options[filterSelect.selectedIndex].value;
-                if($(`${searchBoxId}`).val()) {
-                    findSearchAction();
-                }
-                switch (filter) {
-                    case "city": cityPlaceholder(); break;
-                    case "state": statePlaceholder(); break;
-                    case "county": countyPlaceholder(); break;
-                }
-            }
-
     </script>
 
     <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBOVsLLDx5MQmY4CUaD9-kt5Dqw5tPjJV4&callback=initMap">
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBOVsLLDx5MQmY4CUaD9-kt5Dqw5tPjJV4&libraries=places&callback=initMap">
     </script>
 
 }

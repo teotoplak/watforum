@@ -40,7 +40,11 @@
               <div class="form-group">
                   <label for="rpassword">Repeat password</label>
                   <input type="password" class="form-control" name="rpassword" id="rpassword"
-                      value="@user.password" data-validetta="required,equalTo[password]">
+                      value="@user.password" data-validetta="required">
+                  <span id="rpasswordHint" class="validetta-inlineaa validetta-inline--rightaa" style="display: none">
+                      Fields do not match. Please be sure to check.
+                      <br/>
+                  </span>
               </div>
           }
           <div class="form-group">
@@ -146,15 +150,33 @@
                 //onlyCountries: ['us', 'gb', 'ch', 'ca', 'do'],
 //                preferredCountries: ['ca', 'gb', 'us']
             });
-    </script>
-    @*activate all tooltips*@
-    <script>
+
+            let rpasswordHint = document.getElementById("c");
+
+            /* password fields equal */
+            $('#rpassword').on('blur', () => {
+                if($("#password").val() === $("#rpassword").val()) {
+                    document.getElementById("rpasswordHint").style.display = "none";
+                } else {
+                    document.getElementById("rpasswordHint").style.display = "block";
+                }
+            });
+            $('#password').on('blur', () => {
+                if($("#rpassword").val()) {
+                    if($("#password").val() === $("#rpassword").val()) {
+                        document.getElementById("rpasswordHint").style.display = "none";
+                    } else {
+                        document.getElementById("rpasswordHint").style.display = "block";
+                    }
+                }
+            });
+
+             @*activate all tooltips*@
             $(document).ready(function(){
                 $('[data-toggle="tooltip"]').tooltip();
             });
-    </script>
-    @*change avatar button*@
-    <script>
+
+            @*change avatar button*@
             var oauthAvatarUrl = $('.avatarImg').attr("src");
             var buttonText = $('#changeAvatarButton').text();
             var changed = false;

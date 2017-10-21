@@ -12,3 +12,14 @@
 .profile-pic-label {
     display: block;
 }
+.validetta-inlineaa {
+    display: block;
+    color: red;
+    font: 12px/14px Arial, Helvetica, sans-serif
+}
+
+.validetta-inline--rightaa:before {
+    top: 7px;
+    left: -10px;
+    border-color: transparent #cd2e26 transparent transparent
+}

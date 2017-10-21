@@ -25,6 +25,10 @@
             var openedInfoWindow;
             var currentSearchViewport;
 
+            // select all text on click
+            $("input[type='text']").on("click", function () {
+                $(this).select();
+            });
 
             function initMap() {
                 bounds = new google.maps.LatLngBounds();

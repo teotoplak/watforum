@@ -115,18 +115,22 @@
             </div>
 
           </div>
-          <button class="btn btn-primary" name="action" type="submit" value="save">Save</button>
-          @if(edit) {
-              <button class="btn btn-danger" name="action" type="submit" value="delete">Delete</button>
-          }
-          <a type="button" class="btn btn-default"  href="@request.getHeader("referer")">Cancel</a>
+          <div>
+            <button class="btn btn-primary" name="action" type="submit" value="save">Save</button>
+            <a type="button" class="btn btn-default"  href="@request.getHeader("referer")">Cancel</a>
+            @if(edit) {
+              <button id="deleteRating" class=""
+              name="action" type="submit" value="delete">Delete</button>
+            }
+          </div>
         </form>
       </div>
     </div>
 
-  @*for star rating*@
+
   <script src="@routes.Assets.versioned("javascripts/starRating.js")" type="text/javascript"></script>
   <script>
+          @*for star rating*@
           var el = document.querySelector('#starsRating');
           var currentRating = 0;
           @if(edit){
@@ -137,46 +141,49 @@
             document.getElementById("rating").value = rating;
           };
           var myRating = rating(el, currentRating, maxRating, callback);
-  </script>
 
-  @*activate all tooltips*@
-  <script>
+          @*activate all tooltips*@
           $(document).ready(function(){
             $('[data-toggle="tooltip"]').tooltip();
           });
-  </script>
 
-  @*validetta vendor*@
-  <script>
+          @*validetta vendor*@
           $("#rate_form").validetta({
             realTime: true,
             display : 'inline',
             errorTemplateClass : 'validetta-inline'
           });
-  </script>
 
-  @*allow only numbers & max 3 of them in workload and payment (because of buggy validetta error)*@
-  <script>
-    function setOnlyNumbersToForm(field) {
-      $(document).ready(function() {
-        $(field).keydown(function (e) {
-            if(this.value.length>2){
-                e.preventDefault();
-                return;
-            }
-          if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
-                  (e.keyCode === 65 && (e.ctrlKey === true || e.metaKey === true)) ||
-                  (e.keyCode >= 35 && e.keyCode <= 40)) {
-            return;
+            @*delete button confirmation*@
+          $('#deleteRating').click((event) => {
+              let choice = confirm("Are you sure?");
+              if(!choice) {
+                  event.preventDefault();
+              }
+          });
+
+       @*allow only numbers & max 3 of them in workload and payment (because of buggy validetta error)*@
+          function setOnlyNumbersToForm(field) {
+            $(document).ready(function() {
+              $(field).keydown(function (e) {
+                if(this.value.length>2){
+                  e.preventDefault();
+                  return;
+                }
+                if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
+                        (e.keyCode === 65 && (e.ctrlKey === true || e.metaKey === true)) ||
+                        (e.keyCode >= 35 && e.keyCode <= 40)) {
+                  return;
+                }
+                if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+                  e.preventDefault();
+                }
+              });
+            });
           }
-          if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
-            e.preventDefault();
-          }
-        });
-      });
-    }
-    setOnlyNumbersToForm("#workload");
-    setOnlyNumbersToForm("#payment");
+          setOnlyNumbersToForm("#workload");
+          setOnlyNumbersToForm("#payment");
+
   </script>
 
   <script src="@routes.Assets.versioned("javascripts/spinner.js")" type="text/javascript"></script>

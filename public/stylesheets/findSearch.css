@@ -54,21 +54,24 @@
     }
 }
 @media all and (max-width: 1200px) {
-    .search-box-row {
+    .search-box-dynamic {
         width: 50%;
         top: 15px;
     }
 }
 @media all and (max-width: 992px) {
-    .search-box-row {
+    .search-box-dynamic {
         width: 100%;
         top: 0;
     }
 }
-@media all and (max-width: 768px) {
-    .search-box-row {
+@media all and (max-width: 460px) {
+    .search-box-dynamic {
         width: 100%;
         top: 0;
+    }
+    .input-lg {
+        font-size: 1em
     }
 }
 

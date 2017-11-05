@@ -17,11 +17,14 @@ import security.CustomHttpActionAdapter;
 import controllers.CustomLogoutController;
 import security.MyCustomAuth;
 
+import javax.inject.Inject;
+
 /**
  * Used for setting up security module.
  * Using pac4j framework
  */
 public class SecurityModule extends AbstractModule {
+
 
     private final Configuration configuration;
 
@@ -31,10 +34,6 @@ public class SecurityModule extends AbstractModule {
         this.configuration = configuration;
     }
 
-    private final String fbId = "561277450662838";
-    private final String fbSecret = "493ad6a381d85c1a845a31f691873cda";
-
-
     @Override
     protected void configure() {
 
@@ -43,7 +42,9 @@ public class SecurityModule extends AbstractModule {
         requestStaticInjection(SWTUserController.class);
 
         // OAuth
-        final FacebookClient facebookClient = new FacebookClient(fbId, fbSecret);
+        final FacebookClient facebookClient = new FacebookClient(
+                configuration.getString("fbAppID"),
+                configuration.getString("fbAppSecret"));
         facebookClient.setFields("id,name,first_name,middle_name,last_name,email,location");
         facebookClient.setScope("email");
 

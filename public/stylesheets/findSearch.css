@@ -93,3 +93,19 @@
 #find-search-box {
     border: 2px solid #717171;
 }
+
+.inner-addon {
+    position: relative;
+}
+
+.inner-addon .fa {
+    position: absolute;
+    padding: 8px;
+    pointer-events: none;
+    color: #717171;
+}
+
+.left-addon .fa  { left:  5px;}
+
+.left-addon input  { padding-left:  30px; }
+

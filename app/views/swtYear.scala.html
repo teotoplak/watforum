@@ -2,15 +2,18 @@
 @import helper._
 
 @main(year.sponsor.toString + " year") {
+
+    <link rel="stylesheet" type="text/css" href="@routes.Assets.versioned("stylesheets/swtYear.css")">
+
     <div class="row">
       <div class="col-md-offset-1 col-md-6">
       <h2 class="wat-title">WAT year</h2>
-        <dl class="dl-horizontal separate">
-          <dt><i class="fa fa-user"></i> User</dt>
+        <dl class="separate">
+          <dt>User</dt>
           <dd><a href="@routes.SWTUserController.profile(year.user.id)">@year.user.getIdentity</a></dd>
-          <dt><i class="fa fa-building"></i> Agency</dt><dd>@year.sponsor.toString</dd>
-          <dt><i class="fa fa-calendar"></i> Year</dt><dd>@year.year</dd>
-          <dt><i class="fa fa-map-marker"></i> Num of places </dt><dd>@year.ratings.size()</dd>
+          <dt>Year</dt><dd>@year.year</dd>
+          <dt>Num of places </dt><dd>@year.ratings.size() <i class="fa fa-map-marker"></i></dd>
+          <dt>Agency</dt><dd>@year.sponsor.toString</dd>
         </dl>
       </div>
     </div>

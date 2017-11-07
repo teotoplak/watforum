@@ -8,13 +8,13 @@
 
     <link rel="stylesheet" type="text/css" href="@routes.Assets.versioned("stylesheets/profile.css")" >
 
-        <div class="row separate">
-            <div class="col-md-offset-3 col-md-3 text-center">
+        <div class="row">
+            <div class="col-md-offset-3 col-md-3 text-center separate">
                 @snippets.profilePictureBig(user.profilePictureUrl)
                 <h2>@user.getIdentity</h2>
             </div>
-            <div class="col-md-3">
-                <dl class="dl-horizontal">
+            <div class="col-md-3 dl-row separate">
+                <dl>
                     @if(user.username != null) { <dt>Username</dt> <dd>@(user.username)</dd> }
                     @if(!user.anonymous) {
                         @if(user.firstName != null) { <dt>First name</dt> <dd>@(user.firstName)</dd> }

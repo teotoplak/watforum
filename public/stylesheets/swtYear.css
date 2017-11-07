@@ -1,27 +1,19 @@
-.empty_year {
-    color: red;
-}
-
 dl {
     width: 100%;
     padding: 0;
-    margin: 0
+    margin: 0;
 }
 dt {
     float: left;
-    width: 40%;
+    width: 30%;
     /* adjust the width; make sure the total of both is 100% */
     padding-bottom: 15px;
-    margin: 0
+    margin: 0;
 }
 dd {
     float: left;
-    width: 60%;
+    width: 70%;
     /* adjust the width; make sure the total of both is 100% */
     padding-bottom: 15px;
-    margin: 0
-}
-
-.dl-row {
-    margin-left: 20px;
+    margin: 0;
 }

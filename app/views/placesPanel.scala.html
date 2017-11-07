@@ -98,7 +98,7 @@
                 sponsors = sponsors.map((sponsor) => {
                     return {
                       id:sponsor.id,
-                      value: sponsor.fullName===sponsor.shortName?
+                      value: sponsor.fullName===sponsor.shortName || sponsor.shortName === null?
                               sponsor.fullName:`${sponsor.fullName} (${sponsor.shortName})`
                     }
                 });

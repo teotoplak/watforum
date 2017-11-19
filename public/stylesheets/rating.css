@@ -48,18 +48,3 @@
     top: 0;
     left: 4px;
 }
-
-#deleteRating {
-    color: #ff6e62;
-    text-decoration: underline;
-    background-color:transparent;
-    border:none;
-    cursor:pointer;
-    font-weight:bold;
-    padding: 0;
-    font-weight: 100;
-}
-#deleteRating:hover {
-    color: #ff0000;
-    text-decoration: underline;
-}

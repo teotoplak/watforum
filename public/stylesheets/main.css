@@ -88,6 +88,19 @@
     margin: 3px 0;
 }
 
+.deleteAction {
+    color: #ff776d;
+    background-color:transparent;
+    border:none;
+    cursor:pointer;
+    font-weight:bold;
+    padding: 0;
+    font-weight: 100;
+}
+.deleteAction:hover {
+    color: #ff0006;
+}
+
 
 /*this is used for responsive text
 important: classes used here should not have font-size defined cause it will

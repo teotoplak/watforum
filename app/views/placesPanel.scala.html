@@ -47,7 +47,7 @@
             <tr>
               <th>Year</th>
               <th>Agency</th>
-              <th>Action</th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
@@ -61,8 +61,8 @@
                 @swtYear.sponsor.toString
                 </td>
                 <td>
-                  <button class="deleteButton btn btn-danger">
-                    <span class=' fa fa-minus'></span>
+                  <button class="deleteButton deleteAction">
+                    Delete <i class="fa fa-trash-o"></i>
                   </button>
                 </td>
               </tr>
@@ -77,9 +77,9 @@
     </div>
     </div>
     <div class="row separate">
-      <div class="col-md-offset-2 col-md-8">
-      <a type="button" class="btn btn-primary" href="@routes.SWTPlaceController.searchBox()">Save</a>
-    </div>
+        <div class="col-md-offset-2 col-md-8">
+            <a type="button" class="btn btn-primary" href="@routes.SWTPlaceController.searchBox()">Done</a>
+        </div>
     </div>
 
 

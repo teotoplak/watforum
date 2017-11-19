@@ -92,8 +92,8 @@ function addYearToRow(i) {
             cell1.innerHTML = addingYear;
             cell2.innerHTML = swtYear.sponsor.fullName;
             var deleteButton = document.createElement("button");
-            deleteButton.className = "btn btn-danger";
-            deleteButton.innerHTML = "<span class=' fa fa-minus'></span>";
+            deleteButton.className = "deleteAction";
+            deleteButton.innerHTML = "Delete <span class=' fa fa-trash-o'></span>";
             cell3.appendChild(deleteButton);
             deleteButton.addEventListener("click", function() { deleteBtnFunction(deleteButton, userId)});
             addAgency.value = "";

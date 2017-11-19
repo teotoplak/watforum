@@ -7,9 +7,9 @@
 
   <link rel="stylesheet" type="text/css" href="@routes.Assets.versioned("stylesheets/placesPanel.css")"/>
 
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <h2 class="wat-title">Places panel</h2>
+    <div class="row separate">
+        <div class="col-md-4 col-md-offset-2">
+            <h4 class="wat-title">Add year</h4>
         </div>
     </div>
   <div class="row separate">
@@ -24,7 +24,8 @@
               <select id="addYear" class="form-control"></select>
           </div>
           <div class="form-group">
-              <button type="button" id="addButton" class="btn btn-success">
+              <button type="button" id="addButton"
+                  class="btn btn-success">
                 Add <span class="fa fa-plus"></span>
               </button>
           </div>
@@ -32,6 +33,7 @@
         </form>
     </div>
   </div>
+
     @if(noYears) {
       <div class="row separate">
         <div class="col-md-offset-4 col-md-4">
@@ -78,7 +80,8 @@
     </div>
     <div class="row separate">
         <div class="col-md-offset-2 col-md-8">
-            <a type="button" class="btn btn-primary" href="@routes.SWTPlaceController.searchBox()">Done</a>
+            <a type="button" class="btn btn-default" href="@routes.SWTPlaceController.searchBox()">
+                <i class="fa fa-check"></i> Done</a>
         </div>
     </div>
 

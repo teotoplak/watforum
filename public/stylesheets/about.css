@@ -1,0 +1,9 @@
+.quote {
+    opacity: 0.9;
+    font-style: italic;
+    color: rgba(0, 66, 117, 0.97);
+    margin: 10px 40px;
+}
+.small-separate {
+    margin-top: 20px
+}

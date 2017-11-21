@@ -101,6 +101,10 @@
     color: #ff0006;
 }
 
+.reading-text {
+    font-size: 1.2em;
+}
+
 
 /*this is used for responsive text
 important: classes used here should not have font-size defined cause it will

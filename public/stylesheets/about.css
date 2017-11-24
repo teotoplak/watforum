@@ -7,3 +7,15 @@
 .small-separate {
     margin-top: 20px
 }
+
+.image-desc {
+    font-size: 0.9em;
+    color: grey;
+    margin-top: 5px;
+}
+.wat-solutions li {
+    margin-bottom: 25px;
+}
+.solution-item {
+    list-style-image: url("../images/marker-small.png")
+}

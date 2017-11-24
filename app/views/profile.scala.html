@@ -31,42 +31,59 @@
                 }
             </div>
         </div>
+    <div class="row">
+        <div class="col-md-3">
+
+        </div>
+    </div>
     <div class="row separate">
         <div class="col-md-8 col-md-offset-2">
-            <h3>SWT years</h3>
-            <table class="table table-hover">
-                <thead>
-                    <tr>
-                        <th>Year</th>
-                        <th>Agency</th>
-                        <th>Rated</th>
-                    </tr>
-                </thead>
-                <tbody>
-                @for(swtYear <- user.swtYears) {
-                    <tr class='clickable-row' data-href='@routes.SWTYearController.swtYear(swtYear.id)'>
-                        <td>@swtYear.year</td>
-                        <td>@swtYear.sponsor.toString</td>
-                        <td>
-                        @if(edit && swtYear.ratings.size()==0 && swtYear.year!=2018) {
-                            <a class="empty_year" href="@routes.SWTPlaceController.searchBox()">
-                                <span data-toggle="tooltip" title="Rate some places for this year!">
-                                    @swtYear.ratings.size() <i class="fa fa-map-marker"></i>
-                                </span>
-                            </a>
-                        } else {
-                            @swtYear.ratings.size() <i class="fa fa-map-marker"></i>
-                        }
-                        </td>
-                    </tr>
+            <h3 class="wat-title">SWT years</h3>
+            @if(user.swtYears.size()>0) {
+                <table class="table table-hover separate">
+                    <thead>
+                        <tr>
+                            <th>Year</th>
+                            <th>Agency</th>
+                            <th>Rated</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    @for(swtYear <- user.swtYears) {
+                        <tr class='clickable-row' data-href='@routes.SWTYearController.swtYear(swtYear.id)'>
+                            <td>@swtYear.year</td>
+                            <td>@swtYear.sponsor.toString</td>
+                            <td>
+                            @if(edit && swtYear.ratings.size()==0 && swtYear.year!=2018) {
+                                <a class="empty_year" href="@routes.SWTPlaceController.searchBox()">
+                                    <span data-toggle="tooltip" title="Rate some places for this year!">
+                                        @swtYear.ratings.size() <i class="fa fa-map-marker"></i>
+                                    </span>
+                                </a>
+                            } else {
+                                @swtYear.ratings.size() <i class="fa fa-map-marker"></i>
+                            }
+                            </td>
+                        </tr>
+                    }
+                    </tbody>
+                </table>
+                @if(edit) {
+                    <a type="button" class="btn btn-primary" href="@routes.SWTUserController.placesPanel()">
+                        Edit years
+                    </a>
                 }
-                </tbody>
-            </table>
-            @if(edit) {
-                <a type="button" class="btn btn-primary" href="@routes.SWTUserController.placesPanel()">
-                    Edit years
-                </a>
+            } else {
+                <div class="text-muted separate">
+                    None SWT years registered.
+                        @if(edit) {
+                            <div>
+                                Register year <a href="@routes.SWTUserController.placesPanel()">here.</a>
+                            </div>
+                        }
+                </div>
             }
+
         </div>
     </div>
 

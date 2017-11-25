@@ -20,8 +20,6 @@ public class SWTGooglePlace extends Controller{
     @Inject
     private static WSClient ws;
 
-    public Long id;
-
     public String googleID;
 
     public String name;
@@ -41,9 +39,13 @@ public class SWTGooglePlace extends Controller{
 
     public Double lng;
 
-    public String state;
-    public String county;
-    public String city;
+    // if google place is region (area)
+    public boolean isRegion;
+
+    public Double NElat;
+    public Double NElng;
+    public Double SWlat;
+    public Double SWlng;
 
 
     /**
@@ -59,37 +61,43 @@ public class SWTGooglePlace extends Controller{
             this.website = node.findPath("website").textValue();
             this.googleMaps = node.findPath("url").textValue();
 
-            Iterator<JsonNode> address_components = node.findPath("address_components").elements();
-        while (address_components.hasNext()) {
-            JsonNode component = address_components.next();
-            String typesString = component.findPath("types").toString();
-            if (typesString.contains("administrative_area_level_1")) {
-                this.state = component.findPath("long_name").asText();
-            }
-            if (typesString.contains("administrative_area_level_2")) {
-                this.county = component.findPath("long_name").asText();
-            }
-            if (typesString.contains("locality")) {
-                this.city = component.findPath("long_name").asText();
-            }
-        }
+            this.isRegion = checkIfRegion(node.findPath("types").toString());
 
-
-        //location
+            // location
             JsonNode aField = node.findPath("location");
             JsonNode bField = aField.findPath("lat");
             JsonNode cField = aField.findPath("lng");
             lat = Double.parseDouble(bField.toString());
             lng = Double.parseDouble(cField.toString());
+
+            // viewport
+            JsonNode northeast = node.findPath("northeast");
+            JsonNode southwest = node.findPath("southwest");
+            NElat = Double.parseDouble(northeast.findPath("lat").toString());
+            NElng = Double.parseDouble(northeast.findPath("lng").toString());
+            SWlat = Double.parseDouble(southwest.findPath("lat").toString());
+            SWlng = Double.parseDouble(southwest.findPath("lng").toString());
+
     }
 
-    private Optional<JsonNode> getJsonWithId(String id) {
-        String url = getGoogleAskForPlaceUrl(id);
-        try {
-            return Optional.of(ws.url(url).get().thenApply(WSResponse::asJson).toCompletableFuture().get());
-        } catch (Exception ex) {
-            return Optional.empty();
+    private boolean checkIfRegion(String typesString) {
+        String[] regionKeywords = {
+                "locality",
+                "sublocality",
+                "postal_code",
+                "country",
+                "administrative_area_level_1",
+                "administrative_area_level_2",
+                "administrative_area_level_3"
+        };
+        boolean isRegion = false;
+        for(int index=0; index<regionKeywords.length; index++) {
+            if(typesString.contains(regionKeywords[index])) {
+                isRegion = true;
+                break;
+            }
         }
+        return isRegion;
     }
 
     /**
@@ -116,8 +124,7 @@ public class SWTGooglePlace extends Controller{
     @Override
     public String toString() {
         return "SWTGooglePlace{" +
-                "id=" + id +
-                ", googleID='" + googleID + '\'' +
+                "googleID='" + googleID + '\'' +
                 ", name='" + name + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", address='" + address + '\'' +
@@ -125,9 +132,11 @@ public class SWTGooglePlace extends Controller{
                 ", googleMaps='" + googleMaps + '\'' +
                 ", lat=" + lat +
                 ", lng=" + lng +
-                ", state='" + state + '\'' +
-                ", county='" + county + '\'' +
-                ", city='" + city + '\'' +
+                ", isRegion=" + isRegion +
+                ", NElat=" + NElat +
+                ", NElng=" + NElng +
+                ", SWlat=" + SWlat +
+                ", SWlng=" + SWlng +
                 '}';
     }
 

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import models.SWTGooglePlace;
 import models.SWTPlace;
 import models.SWTRating;
+import models.SearchResult;
 import play.Logger;
 import play.data.DynamicForm;
 import play.data.FormFactory;
@@ -62,6 +63,7 @@ public class SWTPlaceController extends Controller {
 
     /**
      * Used for ajax calls from search box
+     * Asking for all places in given bounds
      */
     public Result getSWTPlaces() {
         DynamicForm form = formFactory.form().bindFromRequest();
@@ -79,6 +81,45 @@ public class SWTPlaceController extends Controller {
 
     /* ajax requests */
     public Result searchFor(String text) {
+        Optional<JsonNode> jsonResponse = makeGooglePlacesRequest(text);
+        List<SearchResult> results = new LinkedList<>();
+        if (jsonResponse.isPresent()) {
+            JsonNode rootJson = jsonResponse.get();
+            JsonNode resultsNode = rootJson.path("results");;
+            if (resultsNode.size() > 0) {
+                for (JsonNode googlePlaceNode : resultsNode) {
+                    SWTGooglePlace gplace = new SWTGooglePlace(googlePlaceNode);
+                    // must be in USA
+                    if(gplace.isInUSA()) {
+                        // if place is region
+                        if(gplace.isRegion) {
+                            results.add(new SearchResult(gplace));
+                            break;
+                        }
+                        // if place is rated
+                        SWTPlace swtPlace = SWTPlace.findPlaceByGoogleId(gplace.googleID);
+                        if(swtPlace != null) {
+                            swtPlace.calculateRating();
+                            results.add(new SearchResult(swtPlace));
+                        } else {
+                            results.add(new SearchResult(gplace));
+                        }
+                    }
+                }
+                if (results.isEmpty()) {
+                    return noSearchMatch();
+                }
+                return ok(Json.toJson(results));
+            } else {
+                return noSearchMatch();
+            }
+        } else {
+            return ok("error");
+        }
+    }
+
+    /* ajax requests */
+    public Result searchForOld(String text) {
         Optional<JsonNode> jsonResponse = makeGooglePlacesRequest(text);
         if (jsonResponse.isPresent()) {
             JsonNode rootJson = jsonResponse.get();
@@ -121,7 +162,7 @@ public class SWTPlaceController extends Controller {
         String formattedText = searchText.replaceAll("\\s+", "+");
         String url = "https://maps.googleapis.com/maps/api/place/textsearch/json?query="
                 + formattedText
-                + "&key=AIzaSyBOVsLLDx5MQmY4CUaD9-kt5Dqw5tPjJV4&type=establishment";
+                + "&key=AIzaSyBOVsLLDx5MQmY4CUaD9-kt5Dqw5tPjJV4";
         // make sure it is injected (problems in past)
         if (ws == null) {
             ws  = play.api.Play.current().injector().instanceOf(WSClient.class);

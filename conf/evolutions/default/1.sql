@@ -15,9 +15,6 @@ create table swtoauth_user (
 create table swtplace (
   id                            bigserial not null,
   google_id                     varchar(255),
-  state                         varchar(255),
-  county                        varchar(255),
-  city                          varchar(255),
   name                          varchar(255),
   lat                           float,
   lng                           float,

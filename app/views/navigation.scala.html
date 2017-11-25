@@ -65,7 +65,7 @@
             let text = $(`${inputId}`).val();
             $.ajax({url: "/getBaseUrl",
                 success: function(result){
-                    window.location.href = result + "/search-for?text=" + text;
+                    window.location.href = result + "/search-for-old?text=" + text;
                 }
             });
         };

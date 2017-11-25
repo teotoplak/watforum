@@ -17,12 +17,15 @@ public class SWTPlace extends Model {
     public SWTPlace(String googleId) {
         this.googleId = googleId;
         SWTGooglePlace googlePlace = SWTGooglePlace.getSWTGooglePlaceById(googleId);
-        this.state = googlePlace.state;
-        this.county = googlePlace.county;
-        this.city = googlePlace.city;
         this.name = googlePlace.name;
         this.lng = googlePlace.lng;
         this.lat = googlePlace.lat;
+    }
+
+    public SWTPlace(SWTGooglePlace gplace) {
+        this.name = gplace.name;
+        this.lng = gplace.lng;
+        this.lat = gplace.lat;
     }
 
     @Id
@@ -30,12 +33,6 @@ public class SWTPlace extends Model {
 
     @Column(unique = true)
     public String googleId;
-
-    public String state;
-
-    public String county;
-
-    public String city;
 
     public String name;
 
@@ -96,7 +93,7 @@ public class SWTPlace extends Model {
     public static List<SWTPlace> findPlaceByViewPort(
             Double lngFrom, Double lngTo, Double latFrom, Double latTo
     ) {
-        return find.where().between("lng", lngTo, lngFrom).and().between("lat", latFrom, latTo).findList();
+        return find.where().between("lng", lngFrom, lngTo).and().between("lat", latFrom, latTo).findList();
     }
 
 }

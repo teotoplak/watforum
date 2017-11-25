@@ -1,20 +1,13 @@
 package controllers;
 
-import models.SWTPlace;
-import models.SWTRating;
-import models.SWTUser;
-import models.SWTYear;
-import org.pac4j.play.java.Secure;
+import models.*;
 import play.Logger;
 import play.data.DynamicForm;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security;
-import scala.Int;
 import security.Secured;
-import sun.reflect.annotation.ExceptionProxy;
-import views.html.*;
 
 import java.util.ArrayList;
 import java.util.List;

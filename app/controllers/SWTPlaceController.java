@@ -1,19 +1,14 @@
 package controllers;
 
-import akka.io.Inet;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
+import models.SWTGooglePlace;
 import models.SWTPlace;
 import models.SWTRating;
-import models.SWTUser;
-import org.pac4j.play.java.Secure;
 import play.Logger;
 import play.data.DynamicForm;
 import play.data.FormFactory;
 import play.libs.Json;
 import play.libs.ws.WSClient;
-import play.libs.ws.WSRequest;
 import play.libs.ws.WSResponse;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -21,11 +16,7 @@ import play.mvc.Security;
 import security.Secured;
 
 import javax.inject.Inject;
-import java.io.ByteArrayOutputStream;
-import java.io.OutputStream;
-import java.lang.reflect.Array;
 import java.util.*;
-import java.util.concurrent.CompletionStage;
 
 /**
  * Created by TeoLenovo on 4/13/2017.

@@ -2,10 +2,7 @@ package models;
 
 import com.avaje.ebean.Model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import controllers.SWTGooglePlace;
-import play.data.FormFactory;
 
-import javax.inject.Inject;
 import javax.persistence.*;
 import java.text.DecimalFormat;
 import java.util.List;

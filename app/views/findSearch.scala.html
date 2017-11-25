@@ -25,6 +25,15 @@
             var markers = [];
             var openedInfoWindow;
             var currentSearchViewport;
+            var baseUrl;
+
+            // find base url
+            $.ajax({
+                url: "/getBaseUrl",
+                success: function (url) {
+                   baseUrl = url;
+                }
+            });
 
             // select all text on click
             $("input[type='text']").on("click", function () {
@@ -52,7 +61,7 @@
                     document.getElementById('find-search-box'),autocompleteOptions);
                 autocomplete.addListener('place_changed', () => {
                     let place = autocomplete.getPlace();
-                    findSearchAction(place.geometry.viewport)
+                    findSearchAction(place)
                 });
 
             }
@@ -61,68 +70,66 @@
             let searchBoxId = '#find-search-box';
             let notSearchedYet = true;
 
-            let findSearchAction = (viewport) => {
+            let findSearchAction = (place) => {
+                var viewport = place.geometry.viewport;
+
                 $.ajax({
-                    url: "/getBaseUrl",
-                    success: function (baseUrl) {
-                        $.ajax({
-                            type: "GET",
-                            url: baseUrl + "/get-places",
-                            data: {
-                                    latTo: viewport.f.f,
-                                    // smaller value
-                                    latFrom: viewport.f.b,
-                                    lngTo: viewport.b.b,
-                                    lngFrom: viewport.b.f
-                            },
-                            success: (places) => {
-                                clearMarkers();
-                                if(places.length == 0) {
-                                   /* TODO no places found*/
-                                } else {
-                                    /* TODO how many places found */
-                                    places.forEach((place) => {
-                                        var marker = new google.maps.Marker({
-                                            position: {lat:place.lat,lng:place.lng},
-                                            map: map,
-                                            icon: baseUrl + "@routes.Assets.versioned("images/marker.png")",
-                                            title: place.name
-                                        });
-                                        markers.push(marker);
-                                        bounds.extend(marker.getPosition());
-                                        map.fitBounds(bounds);
-                                        let infowindow = new google.maps.InfoWindow({
-                                            content: `<a target="_blank" href="${baseUrl}/place?id=${place.googleId}">
+                    type: "GET",
+                    url: baseUrl + "/get-places",
+                    data: {
+                        latTo: viewport.f.f,
+                        // smaller value
+                        latFrom: viewport.f.b,
+                        lngTo: viewport.b.b,
+                        lngFrom: viewport.b.f
+                    },
+                    success: (places) => {
+                        clearMarkers();
+                        if(places.length == 0) {
+
+                        } else {
+                            /* TODO how many places found */
+
+                            places.forEach((place) => {
+                                var marker = new google.maps.Marker({
+                                    position: {lat:place.lat,lng:place.lng},
+                                    map: map,
+                                    icon: baseUrl + "@routes.Assets.versioned("images/marker.png")",
+                                    title: place.name
+                                });
+                                markers.push(marker);
+                                bounds.extend(marker.getPosition());
+                                map.fitBounds(bounds);
+                                let infowindow = new google.maps.InfoWindow({
+                                    content: `<a target="_blank" href="${baseUrl}/place?id=${place.googleId}">
                                 <div>${place.name}</div>
                                 <span class='glyphicon glyphicon-star' style='color: orange'></span>
                                 ${place.avgRating}
                                 <div>(${place.numRatings} ratings)</div>
                                 </a>`
-                                        });
-                                        marker.addListener('click', function() {
-                                            if(openedInfoWindow) {
-                                                openedInfoWindow.close();
-                                            }
-                                            openedInfoWindow = infowindow;
-                                            infowindow.open(map, marker);
-                                        });
-                                        if(place === places[0]) {
-                                            // open one marker
-                                            openedInfoWindow = infowindow;
-                                            infowindow.open(map, marker)
-                                        }
-                                    })
+                                });
+                                marker.addListener('click', function() {
+                                    if(openedInfoWindow) {
+                                        openedInfoWindow.close();
+                                    }
+                                    openedInfoWindow = infowindow;
+                                    infowindow.open(map, marker);
+                                });
+                                if(place === places[0]) {
+                                    // open one marker
+                                    openedInfoWindow = infowindow;
+                                    infowindow.open(map, marker)
                                 }
-                                if(notSearchedYet) {
-                                    document.getElementById("googleMap").style.visibility = "visible";
-                                    notSearchedYet = false;
-                                }
-                            },
-                            error: (error) => {
-                                /* todo error*/
-                                console.log("internal error happened while searching")
-                            }
-                        });
+                            })
+                        }
+                        if(notSearchedYet) {
+                            document.getElementById("googleMap").style.visibility = "visible";
+                            notSearchedYet = false;
+                        }
+                    },
+                    error: (error) => {
+                        /* todo error*/
+                        console.error("internal error happened while searching")
                     }
                 });
             };

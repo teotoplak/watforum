@@ -38,7 +38,7 @@
     </div>
     <div class="row separate">
         <div class="col-md-8 col-md-offset-2">
-            <h3 class="wat-title">SWT years</h3>
+            <h3 class="wat-title">WAT years</h3>
             @if(user.swtYears.size()>0) {
                 <table class="table table-hover separate">
                     <thead>
@@ -64,6 +64,7 @@
                                 @swtYear.ratings.size() <i class="fa fa-map-marker"></i>
                             }
                             </td>
+                            <td><a href="@routes.SWTYearController.swtYear(swtYear.id)">Details</a></td>
                         </tr>
                     }
                     </tbody>

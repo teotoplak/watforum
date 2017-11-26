@@ -26,6 +26,7 @@ public class SWTPlace extends Model {
         this.name = gplace.name;
         this.lng = gplace.lng;
         this.lat = gplace.lat;
+        this.googleId = gplace.googleID;
     }
 
     @Id

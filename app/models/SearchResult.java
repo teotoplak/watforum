@@ -26,6 +26,7 @@ public class SearchResult {
         this.name = place.name;
         this.lng = place.lng;
         this.lat = place.lat;
+        this.googleId = place.googleId;
         this.avgRating = place.avgRating;
         this.numRatings = place.numRatings;
     }

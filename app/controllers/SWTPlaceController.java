@@ -73,10 +73,12 @@ public class SWTPlaceController extends Controller {
         Double latTo = Double.parseDouble(form.get("latTo"));
         List<SWTPlace> placesList =  new LinkedList<>();
         placesList.addAll(SWTPlace.findPlaceByViewPort(lngFrom, lngTo, latFrom, latTo));
+        List<SearchResult> result = new LinkedList<>();
         for (SWTPlace place : placesList) {
             place.calculateRating();
+            result.add(new SearchResult(place));
         }
-        return ok(Json.toJson(placesList));
+        return ok(Json.toJson(result));
     }
 
     /* ajax requests */
@@ -89,7 +91,6 @@ public class SWTPlaceController extends Controller {
             if (resultsNode.size() > 0) {
                 for (JsonNode googlePlaceNode : resultsNode) {
                     SWTGooglePlace gplace = new SWTGooglePlace(googlePlaceNode);
-                    System.out.println(gplace);
                     // must be in USA
                     if(gplace.isInUSA()) {
                         // if place is region
@@ -108,6 +109,11 @@ public class SWTPlaceController extends Controller {
                     }
                 }
                 if (results.isEmpty()) {
+                    // if places was found but outside USA
+                    // try by adding text USA to search to help out
+                    if(!text.contains("USA")) {
+                        return searchFor(text + " USA");
+                    }
                     return noSearchMatch();
                 }
                 return ok(Json.toJson(results));
@@ -161,8 +167,6 @@ public class SWTPlaceController extends Controller {
 
     private Optional<JsonNode> makeGooglePlacesRequest(String searchText) {
         String formattedText = searchText.replaceAll("\\s+", "+");
-        // helping search for USA places only!
-        formattedText+="+USA";
         String url = "https://maps.googleapis.com/maps/api/place/textsearch/json?query="
                 + formattedText
                 + "&key=AIzaSyBOVsLLDx5MQmY4CUaD9-kt5Dqw5tPjJV4";

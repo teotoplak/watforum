@@ -75,9 +75,7 @@
                         if(result[0].type === "region") {
                             // TODO position map
                             let regionPlace = result[0];
-
                             $.ajax({
-
                                 type: "GET",
                                 url: baseUrl + "/get-places",
                                 data: {
@@ -92,31 +90,13 @@
 
                                     } else {
                                         /* TODO how many places found */
-
-                                        places.forEach((place) => {
-                                            let marker = getRatedMarker(place);
-                                            markers.push(marker);
-                                            bounds.extend(marker.getPosition());
-                                            map.fitBounds(bounds);
-                                            let infowindow = getRatedInfoWindow(place);
-                                        });
-                                        marker.addListener('click', function () {
-                                            if (openedInfoWindow) {
-                                                openedInfoWindow.close();
-                                            }
-                                            openedInfoWindow = infowindow;
-                                            infowindow.open(map, marker);
-                                        });
-                                        if (place === places[0]) {
-                                            // open one marker
-                                            openedInfoWindow = infowindow;
-                                            infowindow.open(map, marker)
-                                        }
+                                        showMarkers(places)
                                     }
-
                                 }
                             })
-
+                        } else {
+                            clearMarkers();
+                            showMarkers(result)
                         }
                     },
                     error: (error) => {
@@ -127,11 +107,50 @@
 
             };
 
+            function showMarkers(places) {
+                places.forEach((place) => {
+                    let marker;
+                    let infowindow;
+                    if (place.type === "rated") {
+                        marker = getRatedMarker(place);
+                        infowindow = getRatedInfoWindow(place);
+                    } else {
+                        marker = getNotRatedMarker(place);
+                        infowindow = getNotRatedInfoWindow(place)
+                    }
+                    markers.push(marker);
+                    bounds.extend(marker.getPosition());
+                    map.fitBounds(bounds);
+
+                    marker.addListener('click', function () {
+                        if (openedInfoWindow) {
+                            openedInfoWindow.close();
+                        }
+                        openedInfoWindow = infowindow;
+                        infowindow.open(map, marker);
+                    });
+                    if (place === places[0]) {
+                        // open one marker
+                        openedInfoWindow = infowindow;
+                        infowindow.open(map, marker)
+                    }
+                });
+            }
+
             function getRatedMarker(place) {
                 return new google.maps.Marker({
                     position: {lat:place.lat,lng:place.lng},
                     map: map,
                     icon: baseUrl + "@routes.Assets.versioned("images/marker.png")",
+                    title: place.name
+                });
+            }
+
+            function getNotRatedMarker(place) {
+                return new google.maps.Marker({
+                    position: {lat:place.lat,lng:place.lng},
+                    map: map,
+                    icon: baseUrl + "@routes.Assets.versioned("images/marker-black.png")",
                     title: place.name
                 });
             }
@@ -145,7 +164,16 @@
                                 <div>(${place.numRatings} ratings)</div>
                                 </a>`
                 })
-            };
+            }
+
+            function getNotRatedInfoWindow(place) {
+                return new google.maps.InfoWindow({
+                    content: `<a target="_blank" href="${baseUrl}/place?id=${place.googleId}">
+                                <div>${place.name}</div>
+                                Not rated yet
+                                </a>`
+                })
+            }
 
 
             function clearMarkers() {

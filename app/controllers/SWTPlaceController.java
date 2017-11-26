@@ -89,6 +89,7 @@ public class SWTPlaceController extends Controller {
             if (resultsNode.size() > 0) {
                 for (JsonNode googlePlaceNode : resultsNode) {
                     SWTGooglePlace gplace = new SWTGooglePlace(googlePlaceNode);
+                    System.out.println(gplace);
                     // must be in USA
                     if(gplace.isInUSA()) {
                         // if place is region
@@ -160,6 +161,8 @@ public class SWTPlaceController extends Controller {
 
     private Optional<JsonNode> makeGooglePlacesRequest(String searchText) {
         String formattedText = searchText.replaceAll("\\s+", "+");
+        // helping search for USA places only!
+        formattedText+="+USA";
         String url = "https://maps.googleapis.com/maps/api/place/textsearch/json?query="
                 + formattedText
                 + "&key=AIzaSyBOVsLLDx5MQmY4CUaD9-kt5Dqw5tPjJV4";

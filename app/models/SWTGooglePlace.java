@@ -9,6 +9,7 @@ import play.mvc.Controller;
 import javax.inject.Inject;
 import java.util.Iterator;
 import java.util.Optional;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Created by TeoLenovo on 4/13/2017.
@@ -112,6 +113,15 @@ public class SWTGooglePlace extends Controller{
         try {
             return new SWTGooglePlace(ws.url(url).get().thenApply(WSResponse::asJson).toCompletableFuture().get());
         } catch (Exception ex) {
+            // could be google API error limit exceeded
+            // try one more time
+            try {
+                Thread.sleep(2500);
+                return new SWTGooglePlace(ws.url(url).get().thenApply(WSResponse::asJson).toCompletableFuture().get());
+            } catch (InterruptedException|ExecutionException e) {
+                e.printStackTrace();
+            }
+            ex.printStackTrace();
             return null;
         }
     }

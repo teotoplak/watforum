@@ -51,6 +51,25 @@
                     fullscreenControl: false,
                     streetViewControl: false
                 });
+
+                let autocompleteOptions = {
+                    componentRestrictions: {country:"us"}
+                };
+                let autocomplete = new google.maps.places.Autocomplete(
+                    document.getElementById('find-search-box'),autocompleteOptions);
+                autocomplete.addListener('place_changed', () => {
+                    let place = autocomplete.getPlace();
+                    console.log(place);
+                    $.ajax({
+                        type: "POST",
+                        contentType: 'application/json',
+                        data: JSON.stringify(place),
+                        url: baseUrl + "/search-for-auto",
+                        success: (result) => {
+                            processResult(result);
+                        }
+                    });
+                })
             }
 
             @* filter search *@
@@ -59,47 +78,19 @@
 
             $(searchBoxId).keypress((e) => {
                 if (e.which == 13) {
-                    findSearchAction($(`${searchBoxId}`).val())
+                    findSearchTextAction($(`${searchBoxId}`).val())
                 }
             });
-            $('#search-btn-box').click(()=>findSearchAction($(`${searchBoxId}`).val()));
+            $('#search-btn-box').click(()=>findSearchTextAction($(`${searchBoxId}`).val()));
 
 
-            let findSearchAction = (text) => {
+            let findSearchTextAction = (text) => {
                 showLoading();
                 $.ajax({
                     type: "GET",
                     url: baseUrl + "/search-for?text=" + text,
                     success: (result) => {
-                        // if result is region
-                        if(result[0].type === "region") {
-                            // TODO position map
-                            let regionPlace = result[0];
-                            $.ajax({
-                                type: "GET",
-                                url: baseUrl + "/get-places",
-                                data: {
-                                    latTo: regionPlace.NElat,
-                                    latFrom: regionPlace.SWlat,
-                                    lngTo: regionPlace.NElng,
-                                    lngFrom: regionPlace.SWlng
-                                },
-                                success: (places) => {
-                                    removeLoading();
-                                    clearMarkers();
-                                    if(places.length == 0) {
-
-                                    } else {
-                                        /* TODO how many places found */
-                                        showMarkers(places)
-                                    }
-                                }
-                            })
-                        } else {
-                            removeLoading();
-                            clearMarkers();
-                            showMarkers(result)
-                        }
+                        processResult(result);
                     },
                     error: (error) => {
                         /* todo error*/
@@ -107,8 +98,42 @@
                         console.error("internal error happened while searching")
                     }
                 });
-
             };
+
+
+            function processResult(result) {
+                // if result is region
+                if(result[0].type === "region") {
+                    // TODO position map
+                    let regionPlace = result[0];
+                    $.ajax({
+                        type: "GET",
+                        url: baseUrl + "/get-places",
+                        data: {
+                            latTo: regionPlace.NElat,
+                            latFrom: regionPlace.SWlat,
+                            lngTo: regionPlace.NElng,
+                            lngFrom: regionPlace.SWlng
+                        },
+                        success: (places) => {
+                            removeLoading();
+                            clearMarkers();
+                            if(places.length == 0) {
+
+                            } else {
+                                /* TODO how many places found */
+                                showMarkers(places)
+                            }
+                        }
+                    })
+                } else {
+                    removeLoading();
+                    clearMarkers();
+                    showMarkers(result)
+                }
+            }
+
+
 
             function showMarkers(places) {
                 places.forEach((place) => {

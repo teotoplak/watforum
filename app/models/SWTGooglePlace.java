@@ -72,12 +72,25 @@ public class SWTGooglePlace extends Controller{
             lng = Double.parseDouble(cField.toString());
 
             // viewport
-            JsonNode northeast = node.findPath("northeast");
-            JsonNode southwest = node.findPath("southwest");
-            NElat = Double.parseDouble(northeast.findPath("lat").toString());
-            NElng = Double.parseDouble(northeast.findPath("lng").toString());
-            SWlat = Double.parseDouble(southwest.findPath("lat").toString());
-            SWlng = Double.parseDouble(southwest.findPath("lng").toString());
+            JsonNode viewport = node.findPath("viewport");
+
+            // two possible formats of json (one from text search other from autocomplete)
+            // text search parse
+            try {
+                JsonNode northeast = viewport.findPath("northeast");
+                JsonNode southwest = viewport.findPath("southwest");
+                NElat = Double.parseDouble(northeast.findPath("lat").toString());
+                NElng = Double.parseDouble(northeast.findPath("lng").toString());
+                SWlat = Double.parseDouble(southwest.findPath("lat").toString());
+                SWlng = Double.parseDouble(southwest.findPath("lng").toString());
+            } catch (NumberFormatException ex) {
+                // autocomplete parse
+                NElat = Double.parseDouble(viewport.findPath("north").toString());
+                NElng = Double.parseDouble(viewport.findPath("east").toString());
+                SWlat = Double.parseDouble(viewport.findPath("south").toString());
+                SWlng = Double.parseDouble(viewport.findPath("west").toString());
+            }
+
 
     }
 

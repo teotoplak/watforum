@@ -51,6 +51,7 @@ GET     /place             controllers.SWTPlaceController.place(id: String)
 GET      /get-places       controllers.SWTPlaceController.getSWTPlaces
 #be careful with url, js depends on it!!
 GET      /search-for       controllers.SWTPlaceController.searchFor(text: String)
+POST      /search-for-auto       controllers.SWTPlaceController.searchForAutocomplete()
 GET      /search-for-old       controllers.SWTPlaceController.searchForOld(text: String)
 
 #### RATING

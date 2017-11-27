@@ -109,3 +109,12 @@
 
 .left-addon input  { padding-left:  30px; }
 
+.pac-container:after {
+    /* Disclaimer: not needed to show 'powered by Google' if also a Google Map is shown */
+    background-image: none !important;
+    height: 0;
+}
+.pac-container {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 1.1em;
+}

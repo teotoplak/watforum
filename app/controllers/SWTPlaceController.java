@@ -1,6 +1,7 @@
 package controllers;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import jdk.nashorn.internal.scripts.JO;
 import models.SWTGooglePlace;
 import models.SWTPlace;
 import models.SWTRating;
@@ -79,6 +80,26 @@ public class SWTPlaceController extends Controller {
             result.add(new SearchResult(place));
         }
         return ok(Json.toJson(result));
+    }
+
+    /* ajax requests from autocomplete */
+    public Result searchForAutocomplete() {
+        List<SearchResult> results = new LinkedList<>();
+        JsonNode json = request().body().asJson();
+        SWTGooglePlace gplace = new SWTGooglePlace(json);
+        if(gplace.isRegion) {
+            results.add(new SearchResult(gplace));
+            return ok(Json.toJson(results));
+        }
+        // if place is rated
+        SWTPlace swtPlace = SWTPlace.findPlaceByGoogleId(gplace.googleID);
+        if(swtPlace != null) {
+            swtPlace.calculateRating();
+            results.add(new SearchResult(swtPlace));
+        } else {
+            results.add(new SearchResult(gplace));
+        }
+        return ok(Json.toJson(results));
     }
 
     /* ajax requests */

@@ -98,16 +98,34 @@
     position: relative;
 }
 
-.inner-addon .fa {
+.inner-addon #search-addon {
     position: absolute;
     padding: 8px;
     pointer-events: none;
     color: #717171;
 }
 
-.left-addon .fa  { left:  5px;}
+.inner-addon #info-addon {
+    position: absolute;
+    padding: 10px;
+    pointer-events: none;
+}
 
-.left-addon input  { padding-left:  30px; }
+.left-addon #search-addon  { left:  2px;}
+.left-addon #info-addon  { right:  7px; top: 7px}
+
+.left-addon input  {
+    padding-left:  41px;
+    padding-right: 46px;
+}
+
+.red-info {
+    background-color: #d31711;
+}
+
+#info-addon {
+    font-size: 13px;
+}
 
 .pac-container:after {
     /* Disclaimer: not needed to show 'powered by Google' if also a Google Map is shown */

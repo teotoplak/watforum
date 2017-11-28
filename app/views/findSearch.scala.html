@@ -10,9 +10,10 @@
     <div class="map-wrapper">
         <div id="googleMap" class="google-map" style="visibility: visible"></div>
         <div class="search-box-row search-box-dynamic">
-            <div class="inner-addon left-addon">
+            <div class="inner-addon left-addon right-addon">
                 <i class="fa fa-search fa-2x" id="search-addon"></i>
-                    <input type="text" id="find-search-box" class="form-control input-lg text-center"
+                <span class="badge" id="info-addon"></span>
+                <input type="text" id="find-search-box" class="form-control input-lg text-center"
                     placeholder="Try &quot;Massachusetts&quot;">
             </div>
         </div>
@@ -59,7 +60,6 @@
                     document.getElementById('find-search-box'),autocompleteOptions);
                 autocomplete.addListener('place_changed', () => {
                     let place = autocomplete.getPlace();
-                    console.log(place);
                     $.ajax({
                         type: "POST",
                         contentType: 'application/json',
@@ -67,6 +67,11 @@
                         url: baseUrl + "/search-for-auto",
                         success: (result) => {
                             processResult(result);
+                        },
+                        statusCode: {
+                            204: () => {
+                                // if no content nothing to do
+                            }
                         }
                     });
                 })
@@ -102,10 +107,23 @@
 
 
             function processResult(result) {
+                // if no result
+                if(!result || result.length===0) {
+                    removeLoading();
+                    clearMarkers();
+                    updateBadge(0);
+                    return;
+                }
                 // if result is region
                 if(result[0].type === "region") {
-                    // TODO position map
                     let regionPlace = result[0];
+                    // put viewport to fit region
+                    map.fitBounds({
+                        north: regionPlace.NElat,
+                        east: regionPlace.NElng,
+                        south: regionPlace.SWlat,
+                        west: regionPlace.SWlng,
+                    });
                     $.ajax({
                         type: "GET",
                         url: baseUrl + "/get-places",
@@ -119,9 +137,8 @@
                             removeLoading();
                             clearMarkers();
                             if(places.length == 0) {
-
+                                updateBadge(0)
                             } else {
-                                /* TODO how many places found */
                                 showMarkers(places)
                             }
                         }
@@ -136,6 +153,7 @@
 
 
             function showMarkers(places) {
+                updateBadge(places.length);
                 places.forEach((place) => {
                     let marker;
                     let infowindow;
@@ -213,15 +231,29 @@
             }
 
             function showLoading() {
-                document.getElementById("search-addon").classList.remove("fa-search");
                 document.getElementById("search-addon").classList.add("fa-spinner");
+                document.getElementById("search-addon").classList.remove("fa-search");
                 document.getElementById("search-addon").classList.add("fa-spin");
+                removeBadge();
             }
 
             function removeLoading() {
                 document.getElementById("search-addon").classList.remove("fa-spinner");
                 document.getElementById("search-addon").classList.remove("fa-spin");
                 document.getElementById("search-addon").classList.add("fa-search");
+            }
+
+            function updateBadge(number) {
+                let badge = document.getElementById("info-addon");
+                badge.classList.remove("red-info");
+                badge.innerHTML = number;
+                if(number==0) {
+                    badge.classList.add("red-info");
+                }
+            }
+
+            function removeBadge() {
+                document.getElementById("info-addon").innerHTML = "";
             }
 
     </script>

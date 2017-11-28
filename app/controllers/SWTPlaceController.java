@@ -86,6 +86,10 @@ public class SWTPlaceController extends Controller {
     public Result searchForAutocomplete() {
         List<SearchResult> results = new LinkedList<>();
         JsonNode json = request().body().asJson();
+        // if autocomplete dropdown wasn't actually selected
+        if(!json.has("place_id")) {
+              return noContent();
+        }
         SWTGooglePlace gplace = new SWTGooglePlace(json);
         if(gplace.isRegion) {
             results.add(new SearchResult(gplace));
@@ -108,41 +112,30 @@ public class SWTPlaceController extends Controller {
         List<SearchResult> results = new LinkedList<>();
         if (jsonResponse.isPresent()) {
             JsonNode rootJson = jsonResponse.get();
-            JsonNode resultsNode = rootJson.path("results");;
-            if (resultsNode.size() > 0) {
-                for (JsonNode googlePlaceNode : resultsNode) {
-                    SWTGooglePlace gplace = new SWTGooglePlace(googlePlaceNode);
-                    // must be in USA
-                    if(gplace.isInUSA()) {
-                        // if place is region
-                        if(gplace.isRegion) {
-                            results.add(new SearchResult(gplace));
-                            break;
-                        }
-                        // if place is rated
-                        SWTPlace swtPlace = SWTPlace.findPlaceByGoogleId(gplace.googleID);
-                        if(swtPlace != null) {
-                            swtPlace.calculateRating();
-                            results.add(new SearchResult(swtPlace));
-                        } else {
-                            results.add(new SearchResult(gplace));
-                        }
+            JsonNode resultsNode = rootJson.path("results");
+            for (JsonNode googlePlaceNode : resultsNode) {
+                SWTGooglePlace gplace = new SWTGooglePlace(googlePlaceNode);
+                // must be in USA
+                if(gplace.isInUSA()) {
+                    // if place is region
+                    if(gplace.isRegion) {
+                        results.add(new SearchResult(gplace));
+                        break;
+                    }
+                    // if place is rated
+                    SWTPlace swtPlace = SWTPlace.findPlaceByGoogleId(gplace.googleID);
+                    if(swtPlace != null) {
+                        swtPlace.calculateRating();
+                        results.add(new SearchResult(swtPlace));
+                    } else {
+                        results.add(new SearchResult(gplace));
                     }
                 }
-                if (results.isEmpty()) {
-                    // if places was found but outside USA
-                    // try by adding text USA to search to help out
-                    if(!text.contains("USA")) {
-                        return searchFor(text + " USA");
-                    }
-                    return noSearchMatch();
-                }
-                return ok(Json.toJson(results));
-            } else {
-                return noSearchMatch();
             }
+            return ok(Json.toJson(results));
         } else {
-            return ok("error");
+            logger.error("Error occurred while doing google API request");
+            return internalServerError("Internal error occurred");
         }
     }
 

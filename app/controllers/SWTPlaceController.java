@@ -45,16 +45,10 @@ public class SWTPlaceController extends Controller {
         } catch (IllegalArgumentException ex) {
             flash("error", "Internal error occurred");
             logger.error("Error while fetching json for google place");
-            return redirect(routes.SWTPlaceController.searchBox());
+            return redirect(routes.Public.landing());
         }
         place.calculateRating();
         return ok(views.html.swtPlace.render(place,gplace));
-    }
-
-    @Security.Authenticated(Secured.class)
-    public Result searchBox() {
-        final int latestRatingsScope = 3;
-        return ok(views.html.rateSearch.render(new LinkedHashSet<>(SWTRating.latestRatings(latestRatingsScope))));
     }
 
     @Security.Authenticated(Secured.class)
@@ -137,46 +131,6 @@ public class SWTPlaceController extends Controller {
             logger.error("Error occurred while doing google API request");
             return internalServerError("Internal error occurred");
         }
-    }
-
-    /* ajax requests */
-    public Result searchForOld(String text) {
-        Optional<JsonNode> jsonResponse = makeGooglePlacesRequest(text);
-        if (jsonResponse.isPresent()) {
-            JsonNode rootJson = jsonResponse.get();
-            JsonNode resultsNode = rootJson.path("results");
-            if (resultsNode.size() > 1) {
-                List<SWTGooglePlace> places = new LinkedList<>();
-                for (JsonNode googlePlaceNode : resultsNode) {
-                    SWTGooglePlace gplace = new SWTGooglePlace(googlePlaceNode);
-                    // must be in USA
-                    if(gplace.isInUSA()) {
-                        places.add(new SWTGooglePlace(googlePlaceNode));
-                    }
-                }
-                if (places.isEmpty()) {
-                    return noSearchMatch();
-                }
-                return ok(views.html.swtPlaces.render(places));
-            } else if(resultsNode.size() == 1) {
-                SWTGooglePlace gplace = new SWTGooglePlace(resultsNode);
-                if (gplace.isInUSA()) {
-                    return redirect(routes.SWTPlaceController.place(
-                            resultsNode.findPath("place_id").textValue()));
-                } else {
-                    return noSearchMatch();
-                }
-            } else {
-                return noSearchMatch();
-            }
-        } else {
-            return ok("error");
-        }
-    }
-
-    private Result noSearchMatch() {
-        flash("info", "No establishment found for that search!");
-        return redirect(request().getHeader("referer"));
     }
 
     private Optional<JsonNode> makeGooglePlacesRequest(String searchText) {

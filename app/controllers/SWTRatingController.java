@@ -91,7 +91,7 @@ public class SWTRatingController extends Controller {
         } catch (IllegalArgumentException ex) {
             flash("error", "Internal error occurred");
             logger.error("Error while fetching json for google place");
-            return redirect(routes.SWTPlaceController.searchBox());
+            return redirect(routes.SWTPlaceController.findSearch());
         }
         SWTRating rating;
         try {

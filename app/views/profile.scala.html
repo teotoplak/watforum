@@ -55,7 +55,7 @@
                             <td>@swtYear.sponsor.toString</td>
                             <td>
                             @if(edit && swtYear.ratings.size()==0 && swtYear.year!=2018) {
-                                <a class="empty_year" href="@routes.SWTPlaceController.searchBox()">
+                                <a class="empty_year" href="@routes.SWTPlaceController.findSearch()">
                                     <span data-toggle="tooltip" title="Rate some places for this year!">
                                         @swtYear.ratings.size() <i class="fa fa-map-marker"></i>
                                     </span>

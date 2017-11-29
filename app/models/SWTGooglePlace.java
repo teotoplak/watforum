@@ -103,7 +103,16 @@ public class SWTGooglePlace extends Controller{
                 "administrative_area_level_1",
                 "administrative_area_level_2",
                 "administrative_area_level_3",
-                "neighborhood"
+                "administrative_area_level_4",
+                "administrative_area_level_5",
+                "neighborhood",
+                "street_address",
+                "street_number",
+                "route",
+                "postal_code",
+                "postal_town",
+                "intersection",
+                "colloquial_area",
         };
         boolean isRegion = false;
         for(int index=0; index<regionKeywords.length; index++) {

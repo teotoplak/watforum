@@ -112,6 +112,15 @@
     font-size: 1.2em;
 }
 
+.footer-link {
+    color: #9d9d9d;
+}
+
+.footer-link:hover {
+    color: white;
+    text-decoration: none;
+}
+
 
 /*this is used for responsive text
 important: classes used here should not have font-size defined cause it will

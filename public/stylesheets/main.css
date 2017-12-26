@@ -10,7 +10,7 @@
 
 .main-wrapper {
     position: relative;
-    padding: 0 0 90px;
+    padding: 0 0 50px;
     min-height: 100vh;
     display: flex;
     flex-direction: column;

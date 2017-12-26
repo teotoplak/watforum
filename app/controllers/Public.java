@@ -37,6 +37,10 @@ public class Public extends Controller {
         return ok(about.render());
     }
 
+    public Result contact() {
+        return ok(contact.render());
+    }
+
 
 //    @Secure(clients = "FacebookClient", authorizers = "custom")
 //    public Result login() {

@@ -24,6 +24,7 @@ GET     /                   controllers.Public.landing()
 GET     /terms              controllers.Public.termsAndConditions()
 GET     /privacy              controllers.Public.privacyPolicy()
 GET     /about              controllers.Public.aboutUs()
+GET     /contact              controllers.Public.contact()
 
 #### USER
 GET     /profile-edit            controllers.SWTUserController.editProfile()

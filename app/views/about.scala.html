@@ -1,42 +1,27 @@
-@main("About") {
+@main("Motivation") {
 
   <link rel="stylesheet" type="text/css" href="@routes.Assets.versioned("stylesheets/about.css")">
 
   <div class="row">
     <div class="col-md-8 col-md-offset-2">
-      <h2 class="wat-title">About</h2>
+      <h2 class="wat-title">Why WATpointer?</h2>
     </div>
   </div>
   <div class="row">
     <div class="col-md-8 col-md-offset-2 reading-text">
-      <h3 class="separate">Why was SWT program made in first place?</h3>
-      <p class="separate">
-        Let's cover some basics first.
-        The SWT program is a part of State’s
-        Exchange Visitor Program, which was established to implement the purposes of
-        the Fulbright-Hays Act which are:
-      </p>
-      <p class="quote">
-          "Strengthening ties and increasing mutual understanding between
-          the people of the United States
-          and the people of other countries."
-      </p>
 
-      <div class="row">
-        <div class="col-md-offset-1 col-md-9">
-          <img src="@routes.Assets.versioned("images/act.jpg")" class="img-responsive separate"
-          alt="Fulbright-Hays Act">
-          <div class="text-center image-desc">
-            Kennedy signing Fulbright–Hays Act, 1961.
-          </div>
-        </div>
-      </div>
+      <h3 class="separate">Main motivation for building this platform?</h3>
+
+      <p class="separate">
+        Different people, different opinions, different stories, different agencies, different places, different rules, scattered information. All those years without unique platform
+        which can be one stop shop for most of the information about the program. Hello WATpointer.
+      </p>
 
       <h3 class="separate">Did you know that this program is under a serious treat?</h3>
-      <h4 class="separate"><i class="fa fa-arrow-right"></i> Trump</h4>
+      <h4 class="separate"><i class="fa fa-arrow-right"></i> Trump Administration</h4>
       <div class="row small-separate">
         <div class="col-md-12">
-          <p class="small-separate">Trump administration is considering cuts to J1 program
+          <p class="small-separate">The Trump administration is considering cuts to J1 program
             followed by moto "Buy American and Hire American" (full article <a href="https://www.wsj.com/articles/trump-administration-considering-cuts-to-summer-work-visas-1503857856">here</a>). Help by supporting projects such as this one, signing <a href="https://www.change.org/p/donald-trump-save-the-j1-visa-cultural-exchange-program">petition</a>, and spreading the word.</p>
         </div>
       </div>
@@ -48,10 +33,8 @@
       </p>
 
       <p>
-        There is cap set from the United States government
-        <a href="https://www.gpo.gov/fdsys/pkg/FR-2011-11-07/html/2011-28810.htm]">
-          (76 Federal Register Nov.7,2011)</a>
-          It would be best to qoute U.S. GAO <a href="http://www.gao.gov/assets/670/668453.pdf">paper</a>:
+        There is cap set from the United States government (details <a href="https://www.gpo.gov/fdsys/pkg/FR-2011-11-07/pdf/2011-28810.pdf">here</a>).
+          The reason for this action is explained in U.S. GAO <a href="http://www.gao.gov/assets/670/668453.pdf">paper</a>:
       </p>
 
       <div class="row">
@@ -65,7 +48,7 @@
             <b>restricting the total number of participants to 109,000.</b>"
           </p>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-3 dao-logo-wrap">
           <img class="img-responsive dao-logo text-center"
           src="@routes.Assets.versioned("images/gao-logo.png")">
         </div>
@@ -74,23 +57,25 @@
       <p class="small-separate">
         According to the IFR, the restriction on
         program size would remain until State was confident that the program
-        regulations were sufficient to remedy identified concerns and as years passed by, State has no  current plans for lifting the
-        program cap
+        regulations were sufficient to remedy identified concerns. As years passed by, State has no current plans for lifting the
+        program cap.
       </p>
 
-      <h3 class="separate">How are we trying to solve this problem?</h3>
+      <h3 class="separate">How are we trying to solve those problems?</h3>
 
       <ul class="separate wat-solutions">
-        <li class="solution-item">creating big community which can make a difference</li>
-        <li class="solution-item">database of verified places for work and housing available to everyone</li>
-        <li class="solution-item">possible oversight which could further protect the health, safety and welfare of exchange visitors</li>
+        <li class="solution-item">Creating big community which can make a difference</li>
+        <li class="solution-item">Database of verified places for work and housing available to everyone</li>
+        <li class="solution-item">Possible oversight which could further protect the health, safety and welfare of exchange visitors</li>
         <li class="solution-item">Establishing platform for connecting employers and employees</li>
         <li class="solution-item">Forum with subcategories for each country</li>
         <li class="solution-item">Connecting participants while on program</li>
       </ul>
 
-      This program is endangered and needs it community more then ever! If you participated i the program you know that it containes underrated experiece, you could help future particpants by submitting your ratings [link]!
-
+      <p>
+        This program is endangered and needs it community more then ever! If you participated in the program please rate your previous employers
+        <a href="@routes.SWTPlaceController.findSearch()">here</a> to help this community grow!
+      </p>
 
     </div>
   </div>

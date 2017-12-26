@@ -19,3 +19,11 @@
 .solution-item {
     list-style-image: url("../images/marker-small.png")
 }
+
+.dao-logo-wrap {
+    margin-top: 20px;
+}
+
+.dao-logo-wrap .img-responsive {
+    margin: 0 auto;
+}

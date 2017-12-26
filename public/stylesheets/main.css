@@ -17,8 +17,15 @@
 }
 
 .logo-img {
-    height: 36px;
-    margin-top: 7px;
+    width: 50px;
+}
+
+ .navbar-brand {
+    display: flex;
+    align-items: center;
+}
+ .navbar-brand>img {
+    padding: 7px 7px;
 }
 
 .main-container {

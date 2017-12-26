@@ -5,9 +5,6 @@
     <div class="container">
         @*defines button which appears when device is small*@
         <div class="navbar-header">
-            <a class="navbar-left hidden-xs" href="#">
-                <img class="logo-img" alt="Brand" src="@routes.Assets.versioned("images/logo.png")">
-            </a>
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
                     <!--defines these button which appears on xs devices, icon bar is line on the button-->
                 <span class="sr-only">Toggle navigation</span>
@@ -15,7 +12,10 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="@routes.Public.landing()"> WATpointer </a>
+            <a class="navbar-brand" href="@routes.Public.landing()">
+                <img class="logo-img" alt="Brand" src="@routes.Assets.versioned("images/logo.png")">
+                WATpointer
+            </a>
         </div>
         <div id="navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav navbar-left">

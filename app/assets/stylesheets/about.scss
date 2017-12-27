@@ -1,17 +1,13 @@
+@import "colors";
+
 .quote {
     opacity: 0.9;
     font-style: italic;
-    color: rgba(0, 66, 117, 0.97);
+    color: $color-info;
     margin: 10px 40px;
 }
 .small-separate {
     margin-top: 20px
-}
-
-.image-desc {
-    font-size: 0.9em;
-    color: grey;
-    margin-top: 5px;
 }
 .wat-solutions li {
     margin-bottom: 25px;

@@ -1,3 +1,5 @@
+@import "colors";
+
 #mynavbar {
   margin-bottom: 0;
   /*padding: 0 50px 0px 50px;*/
@@ -29,12 +31,12 @@
 }
 
 .main-container {
-  background: white;
+  background: $color-main;
 }
 
 .footer-container {
-  color: #9d9d9d;
-  background-color: #222222;
+  color: $color-text-muted;
+  background-color: $color-main-reverse;
   bottom: 0;
   height: 50px;
   left: 0;
@@ -96,7 +98,7 @@
 }
 
 .deleteAction {
-  color: #ff776d;
+  color: $color-danger;
   background-color:transparent;
   border:none;
   cursor:pointer;
@@ -105,7 +107,7 @@
   font-weight: 100;
 }
 .deleteAction:hover {
-  color: #ff0006;
+  color: $color-cta;
 }
 
 .reading-text {
@@ -113,11 +115,11 @@
 }
 
 .footer-link {
-  color: #9d9d9d;
+  color: $color-text-muted;
 }
 
 .footer-link:hover {
-  color: white;
+  color: $color-main;
   text-decoration: none;
 }
 

@@ -1,0 +1,185 @@
+#mynavbar {
+  margin-bottom: 0;
+  /*padding: 0 50px 0px 50px;*/
+}
+
+.wat-title {
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 10px;
+}
+
+.main-wrapper {
+  position: relative;
+  padding: 0 0 50px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.logo-img {
+  width: 50px;
+}
+
+.navbar-brand {
+  display: flex;
+  align-items: center;
+}
+.navbar-brand>img {
+  padding: 7px 7px;
+}
+
+.main-container {
+  background: white;
+}
+
+.footer-container {
+  color: #9d9d9d;
+  background-color: #222222;
+  bottom: 0;
+  height: 50px;
+  left: 0;
+  position: absolute;
+  width: 100%;
+}
+
+.flash-container {
+  padding-top: 50px;
+}
+
+.footer-wrapper {
+  padding: 1em 2em;
+}
+
+.separate {
+  margin-top: 40px;
+}
+
+.profile-image {
+  width: 28px;
+  height: 28px;
+  border-radius: 5px;
+  position: relative;
+  margin-right: 3px;
+  top: -5px;
+  float: left;
+  left: -5px;
+}
+
+.profile-image-big {
+  width: 150px;
+  height: 150px;
+  border-radius: 10px;
+}
+
+.dl-horizontal dt{
+  text-align: left;
+  margin-bottom: 0.1em;
+  width: auto;
+  padding-right: 1em;
+}
+
+.dl-horizontal dd{
+  margin-left: 0;
+  margin-bottom: 1em;
+}
+
+.table {
+  table-layout: fixed;
+  word-wrap: break-word;
+}
+.table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
+  background-color: rgba(255, 70, 67, 0.10);
+}
+
+.footer-text {
+  margin: 3px 0;
+}
+
+.deleteAction {
+  color: #ff776d;
+  background-color:transparent;
+  border:none;
+  cursor:pointer;
+  font-weight:bold;
+  padding: 0;
+  font-weight: 100;
+}
+.deleteAction:hover {
+  color: #ff0006;
+}
+
+.reading-text {
+  font-size: 1.2em;
+}
+
+.footer-link {
+  color: #9d9d9d;
+}
+
+.footer-link:hover {
+  color: white;
+  text-decoration: none;
+}
+
+
+/*this is used for responsive text
+important: classes used here should not have font-size defined cause it will
+be overwritten */
+@media all and (max-width: 5000px) {
+  /* screen size until 1200px */
+  .descHeading {
+    font-size: 3.3em ;
+  }
+}
+@media all and (max-width: 1200px) {
+  /* screen size until 1200px */
+  .descHeading {
+    font-size: 3em ;
+    /* 1.5x default size */
+  }
+}
+@media all and (max-width: 992px) {
+  /* screen size until 1000px */
+  .descHeading {
+    font-size: 2.8em ;
+    /* 1.2x default size */
+  }
+  .footer-text{
+    font-size: 0.9em;
+  }
+}
+@media all and (max-width: 768px) {
+  /* screen size until 500px */
+  .descHeading {
+    font-size: 2.3em;
+    /* 0.8x default size */
+  }
+  .footer-text{
+    font-size: 0.7em;
+  }
+}
+
+/*
+ This is for navbar to be responsive the way we want :)
+ */
+@media(max-width:767px) {
+  .navbar .navbar-form {
+    width: 300px;
+    padding-left:0;
+    padding-right:0;
+  }
+}
+@media(min-width:768px) {
+  .navbar .navbar-form {
+    width: 250px;
+  }
+}
+.navbar .navbar-form {
+  padding-top: 0;
+  padding-bottom: 0;
+  margin-right: 0;
+  margin-left: 0;
+  border: 0;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}

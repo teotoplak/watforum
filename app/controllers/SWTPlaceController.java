@@ -6,6 +6,7 @@ import models.SWTGooglePlace;
 import models.SWTPlace;
 import models.SWTRating;
 import models.SearchResult;
+import play.Configuration;
 import play.Logger;
 import play.data.DynamicForm;
 import play.data.FormFactory;
@@ -32,6 +33,9 @@ public class SWTPlaceController extends Controller {
     @Inject
     private FormFactory formFactory;
 
+    @Inject
+    private Configuration configuration;
+
     @Security.Authenticated(Secured.class)
     public Result place(String id) {
 
@@ -53,7 +57,9 @@ public class SWTPlaceController extends Controller {
 
     @Security.Authenticated(Secured.class)
     public Result findSearch() {
-        return ok(views.html.findSearch.render());
+        String googleAPIkey = configuration.getString("googleAPIkey");
+        String call = "https://maps.googleapis.com/maps/api/js?key="+googleAPIkey+"&libraries=places&callback=initMap";
+        return ok(views.html.findSearch.render(call));
     }
 
     /**
@@ -135,9 +141,11 @@ public class SWTPlaceController extends Controller {
 
     private Optional<JsonNode> makeGooglePlacesRequest(String searchText) {
         String formattedText = searchText.replaceAll("\\s+", "+");
+        String key = configuration.getString("googleAPIkey");
         String url = "https://maps.googleapis.com/maps/api/place/textsearch/json?query="
                 + formattedText
-                + "&key=AIzaSyBOVsLLDx5MQmY4CUaD9-kt5Dqw5tPjJV4";
+                + "&key="
+                + key;
         // make sure it is injected (problems in past)
         if (ws == null) {
             ws  = play.api.Play.current().injector().instanceOf(WSClient.class);

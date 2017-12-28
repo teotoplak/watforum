@@ -148,4 +148,8 @@ public class SWTUser extends Model {
         return firstName + " " + lastName;
 
     }
+
+    public boolean isOAuthAccount() {
+        return this.password==null;
+    }
 }

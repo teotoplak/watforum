@@ -25,6 +25,8 @@ GET     /terms              controllers.Public.termsAndConditions()
 GET     /privacy              controllers.Public.privacyPolicy()
 GET     /about              controllers.Public.aboutUs()
 GET     /contact              controllers.Public.contact()
+GET    /recovery              controllers.Public.recovery()
+POST    /send-recovery          controllers.Public.sendRecovery()
 POST    /email              controllers.Public.sendEmail()
 
 #### USER

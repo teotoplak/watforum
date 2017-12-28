@@ -1,6 +1,11 @@
 package controllers;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.sun.mail.smtp.SMTPSendFailedException;
+import models.SWTUser;
+import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.commons.mail.EmailException;
+import org.h2.engine.User;
 import org.pac4j.play.java.Secure;
 import org.slf4j.Logger;
 import play.Configuration;
@@ -54,6 +59,51 @@ public class Public extends Controller {
 
     public Result contact() {
         return ok(contact.render());
+    }
+
+    public Result recovery() {
+        return ok(recovery.render());
+    }
+
+    public Result sendRecovery() {
+        DynamicForm form = Form.form().bindFromRequest();
+        String email = form.get("email");
+        SWTUser user = SWTUser.findUserByEmail(email);
+        // if user is oauth
+        Email simpleEmail;
+        String newPassword = "";
+        boolean oauthUser = user.isOAuthAccount();
+        if (oauthUser) {
+            simpleEmail = new Email()
+                    .setSubject("WATpointer new password")
+                    .setFrom("<watpointer@yandex.com>")
+                    .addTo("<"+email+">")
+                    .setBodyText("We noticed that your account was created and linked under Facebook." +
+                            " Please go to our login page and try to login over Facebook button." +
+                            " If problem still persist please contact us.");
+        } else {
+            // random password
+            newPassword = RandomStringUtils.randomAlphanumeric(8);
+            simpleEmail = new Email()
+                    .setSubject("WATpointer new password")
+                    .setFrom("<watpointer@yandex.com>")
+                    .addTo("<"+email+">")
+                    .setBodyText("We generated new password for you," +
+                            " please log in with provided password and change it." +
+                            " Generated: " + newPassword);
+        }
+        try {
+            mailerClient.send(simpleEmail);
+        } catch (Exception ex) {
+            flash("error", "Not valid email!");
+            return redirect(routes.Public.recovery());
+        }
+        if(!oauthUser) {
+            user.password = newPassword;
+            user.update();
+        }
+        flash("success", "Email sent! Make sure to check spam inbox also.");
+        return redirect(routes.SWTUserController.login());
     }
 
     public Result sendEmail() {

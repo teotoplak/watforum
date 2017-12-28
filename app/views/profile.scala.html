@@ -25,8 +25,8 @@
                     @if(user.birth != null) { <dt>Birth date</dt> <dd>@(user.birth.format("dd/MM/yyyy"))</dd> }
                 </dl>
                 @if(edit) {
-                    <a type="button" class="btn btn-primary" href="@routes.SWTUserController.editProfile()">
-                        Edit profile
+                    <a type="button" class="btn btn-default" href="@routes.SWTUserController.editProfile()">
+                        <i class="fa fa-edit"></i> Edit profile
                     </a>
                 }
             </div>
@@ -64,14 +64,14 @@
                                 @swtYear.ratings.size() <i class="fa fa-map-marker"></i>
                             }
                             </td>
-                            <td><a href="@routes.SWTYearController.swtYear(swtYear.id)">Details</a></td>
+                            <td><a class="details-link" href="@routes.SWTYearController.swtYear(swtYear.id)">Details</a></td>
                         </tr>
                     }
                     </tbody>
                 </table>
                 @if(edit) {
-                    <a type="button" class="btn btn-primary" href="@routes.SWTUserController.placesPanel()">
-                        Edit years
+                    <a type="button" class="btn btn-default" href="@routes.SWTUserController.placesPanel()">
+                        <i class="fa fa-edit"></i> Edit years
                     </a>
                 }
             } else {

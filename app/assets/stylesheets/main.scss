@@ -1,5 +1,9 @@
 @import "colors";
 
+a {
+  color: $color-info;
+}
+
 #mynavbar {
   margin-bottom: 0;
   /*padding: 0 50px 0px 50px;*/
@@ -122,6 +126,34 @@
   color: $color-main;
   text-decoration: none;
 }
+
+.btn-primary, .btn-primary:active, .btn-primary:visited {
+  background-color: $color-cta !important;
+  border-color: $color-cta;
+}
+.btn-primary:hover{
+  background-color: $color-cta-hover !important;
+  border-color: $color-cta-hover;
+}
+
+.btn-default, .btn-default:active, .btn-default:visited {
+  background-color: $color-main !important;
+  border-color: $color-text-muted;
+}
+.btn-default:hover{
+  background-color: $color-line !important;
+  border-color: $color-text-muted;
+}
+
+.btn-info, .btn-info:active, .btn-info:visited {
+  background-color: $color-info !important;
+  border-color: $color-info;
+}
+.btn-info:hover{
+  background-color: $color-info-hover !important;
+  border-color: $color-info-hover;
+}
+
 
 
 /*this is used for responsive text

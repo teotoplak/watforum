@@ -67,12 +67,8 @@
                         <dt>Website</dt>
                         <dd><a href="@gplace.website">@gplace.website</a> </dd>
                     }
-                    @if(gplace.googleMaps != null) {
-                        <dt>Google maps</dt>
-                        <dd><a href="@gplace.googleMaps">link</a></dd>
-                    }
                     <dt>
-                        <a type="button" class="btn btn-primary separate"
+                        <a type="button" class="btn btn-info separate"
                         href="@routes.SWTRatingController.ratingForm(place.googleId,"none")">I worked here!</a>
                     </dt>
                 </dl>

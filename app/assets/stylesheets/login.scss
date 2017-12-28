@@ -1,11 +1,13 @@
+@import "colors";
+
 .login-frame {
-    border: solid darkgray 1px;
+    border: solid $color-main-reverse 1px;
     padding: 20px;
 
 }
 .oauth-form {
     margin-top: 15px;
-    border-top: solid darkgray 1px;
+    border-top: solid $color-main-reverse 1px;
 }
 .desc-label {
     margin: 10px 0;
@@ -18,5 +20,5 @@
 }
 .recommended-text {
     font-style: italic;
-    color: #ba302e;
+    color: $color-danger;
 }

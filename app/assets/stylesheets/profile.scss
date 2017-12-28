@@ -1,5 +1,7 @@
+@import "colors";
+
 .empty_year {
-    color: red;
+    color: $color-cta;
 }
 
 dl {

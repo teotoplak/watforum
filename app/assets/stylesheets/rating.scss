@@ -1,3 +1,5 @@
+@import "colors";
+
 .c-rating {
 
 }
@@ -9,7 +11,7 @@
 
 .c-rating__item:hover,
 .c-rating__item.is-active {
-    color: orange;
+    color: $color-rating;
 }
 
 /*this is for spinner*/

@@ -1,3 +1,5 @@
+@import "colors";
+
 #googleMap {
     height: 300px;
 }
@@ -6,7 +8,7 @@
 }
 .avg-rating-star {
     display: block;
-    color: orange;
+    color: $color-rating;
     display: inline;
     font-size: 1.8em;
 }

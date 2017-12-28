@@ -1,3 +1,5 @@
+@import "colors";
+
 .marginOnRight  {
     margin-right: 10px;
 }
@@ -8,7 +10,22 @@
     padding: 15px;
     border-radius: 5px;
 }
-.autocomplete-suggestions { border: 1px solid #999; background: #fff; cursor: default; overflow: auto; }
-.autocomplete-suggestion { padding: 5px 5px; font-size: 0.8em; white-space: nowrap; overflow: hidden; }
-.autocomplete-selected { background: #f0f0f0; }
-.autocomplete-suggestions strong { font-weight: normal; color: #3399ff; }
+.autocomplete-suggestions {
+    border: 1px solid $color-text-muted;
+    background: $color-main;
+    cursor: default;
+    overflow: auto;
+}
+.autocomplete-suggestion {
+    padding: 5px 5px;
+    font-size: 0.8em;
+    white-space: nowrap;
+    overflow: hidden;
+}
+.autocomplete-selected {
+    background: $color-line;
+}
+.autocomplete-suggestions strong {
+    font-weight: normal;
+    color: $color-info;
+}

@@ -19,7 +19,9 @@ libraryDependencies ++= Seq(
   "org.pac4j" % "pac4j-http" % "2.0.0-RC2",
   "org.pac4j" % "pac4j-oauth" % "2.0.0-RC2",
   "org.postgresql" % "postgresql" % "9.4-1206-jdbc42",
-  "org.webjars.bower" % "compass-mixins" % "0.12.7"
+  "org.webjars.bower" % "compass-mixins" % "0.12.7",
+  "com.typesafe.play" %% "play-mailer" % "6.0.1",
+  "com.typesafe.play" %% "play-mailer-guice" % "6.0.1"
 )
 
 /*changed to false because of hanging application reloading*/

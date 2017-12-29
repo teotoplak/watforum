@@ -49,7 +49,7 @@ addButton.addEventListener("click", function () {
         }
     }
     addYearToRow(table.rows.length);
-
+    addSponsor.value = "";
 });
 
 function addYearToRow(i) {

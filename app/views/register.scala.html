@@ -115,33 +115,7 @@
     <div class="separate"></div>
 
 
-  <script>
-          $("#register_form").validetta({
-            realTime: true,
-            display : 'inline',
-            errorTemplateClass : 'validetta-inline',
-            validators: {
-              remote : {
-                check_username : {
-                  type : 'POST',
-                  url : '@routes.SWTUserController.checkUsername()',
-                  datatype : 'json'
-                },
-                check_email : {
-                  type : 'POST',
-                  url : '@routes.SWTUserController.checkEmail()',
-                  datatype : 'json'
-                }
-              },
-              regExp : {
-                check_username : {
-                  pattern : /^[a-zA-Z0-9]+$/,
-                  errorMessage : 'Only letters, numbers, underscore and dash available (3-15 characters)'
-                }
-              }
-            }
-          });
-  </script>
+    validetta-inline
 
     @*country-select lib*@
     <link rel="stylesheet" type="text/css" href="@routes.Assets.versioned("stylesheets/countrySelect.css")">

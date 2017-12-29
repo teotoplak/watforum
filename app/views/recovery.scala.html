@@ -2,6 +2,10 @@
 
   <link rel="stylesheet" type="text/css" href="@routes.Assets.versioned("stylesheets/recovery.css")">
 
+  @*validetta*@
+  <script src="@routes.Assets.versioned("validetta/validetta.min.js")" type="text/javascript"></script>
+  <link rel="stylesheet" type="text/css" href="@routes.Assets.versioned("validetta/validetta.min.css")">
+
   <div class="row">
     <div class="col-md-8 col-md-offset-2 reading-text">
       <h2 class="wat-title">Password recovery</h2>
@@ -14,13 +18,22 @@
     <div class="col-md-offset-4 col-md-4 text-center">
       <form action="@routes.Public.sendRecovery()" method="post">
         <div class="form-group">
-          <input class="form-control text-center small-separate" name="email">
-          <button class="btn btn-info small-separate">Submit</button>
+          <input class="form-control text-center small-separate" name="email"
+            data-validetta="required,email">
+          <button class="btn btn-primary small-separate">Submit</button>
         </div>
       </form>
     </div>
   </div>
 
   <div class="separate"></div>
+
+  <script>
+          $("#contact-form").validetta({
+            realTime: true,
+            display : 'inline',
+            errorTemplateClass : 'validetta-inline'
+          });
+  </script>
 
 }

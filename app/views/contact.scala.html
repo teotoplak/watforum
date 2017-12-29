@@ -2,6 +2,10 @@
 
   <link rel="stylesheet" type="text/css" href="@routes.Assets.versioned("stylesheets/contact.css")">
 
+  @*validetta*@
+  <script src="@routes.Assets.versioned("validetta/validetta.min.js")" type="text/javascript"></script>
+  <link rel="stylesheet" type="text/css" href="@routes.Assets.versioned("validetta/validetta.min.css")">
+
   <div class="row">
     <div class="col-md-8 col-md-offset-2 reading-text">
       <h2 class="wat-title">Contact us</h2>
@@ -16,19 +20,21 @@
   </div>
   <div class="row separate">
     <div class="col-md-offset-4 col-md-4">
-      <form action="@routes.Public.sendEmail()" method="post">
+      <form action="@routes.Public.sendEmail()" method="post" id="contact-form">
         <div class="from-group">
           <label for="name">Name</label>
-          <input type="text" class="form-control" name="name" id="name">
+          <input type="text" class="form-control" name="name" id="name"
+            data-validetta="required">
         </div>
         <div class="from-group">
           <label for="email">Your email</label>
-          <input type="text" class="form-control" name="email" id="email">
+          <input type="text" class="form-control" name="email" id="email"
+            data-validetta="required,email">
         </div>
         <div class="from-group">
           <label for="message">Message</label>
           <textarea type="text" class="form-control" name="message" rows="4"
-          id="message"></textarea>
+          id="message" data-validetta="required"></textarea>
         </div>
         <div class="form-group recaptcha">
           <div class="g-recaptcha" data-sitekey="6Lc0Fy4UAAAAAGxZrj1Dp59j_eYH2FujzExWVTU-"></div>
@@ -39,5 +45,13 @@
   </div>
 
   <div class="separate"></div>
+
+  <script>
+          $("#contact-form").validetta({
+            realTime: true,
+            display : 'inline',
+            errorTemplateClass : 'validetta-inline'
+          });
+  </script>
 
 }

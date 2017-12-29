@@ -70,9 +70,13 @@ public class Public extends Controller {
         String email = form.get("email");
         SWTUser user = SWTUser.findUserByEmail(email);
         // if user is oauth
-        Email simpleEmail;
-        String newPassword = "";
+        if(user==null) {
+            flash("error", "User with this email is not registered!");
+            return redirect(routes.Public.recovery());
+        }
         boolean oauthUser = user.isOAuthAccount();
+        String newPassword = "";
+        Email simpleEmail;
         if (oauthUser) {
             simpleEmail = new Email()
                     .setSubject("WATpointer new password")

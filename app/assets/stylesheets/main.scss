@@ -146,12 +146,12 @@ a {
 }
 
 .btn-info, .btn-info:active, .btn-info:visited {
-  background-color: $color-info !important;
-  border-color: $color-info;
+  background-color: $color-main-reverse !important;
+  border-color: $color-main-reverse;
 }
 .btn-info:hover{
-  background-color: $color-info-hover !important;
-  border-color: $color-info-hover;
+  background-color: $color-main-reverse-hover !important;
+  border-color: $color-main-reverse-hover;
 }
 
 

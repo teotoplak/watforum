@@ -9,6 +9,7 @@ import org.h2.engine.User;
 import org.pac4j.play.java.Secure;
 import org.slf4j.Logger;
 import play.Configuration;
+import play.Environment;
 import play.data.DynamicForm;
 import play.data.Form;
 import play.data.FormFactory;
@@ -21,6 +22,7 @@ import play.mvc.Result;
 import views.html.*;
 
 import javax.inject.Inject;
+import java.io.File;
 
 /**
  * Pages visible to all users
@@ -37,6 +39,9 @@ public class Public extends Controller {
 
     @Inject
     private FormFactory formFactory;
+
+    @Inject
+    private Environment environment;
 
     @Inject
     MailerClient mailerClient;
@@ -77,14 +82,18 @@ public class Public extends Controller {
         boolean oauthUser = user.isOAuthAccount();
         String newPassword = "";
         Email simpleEmail;
+        String cid = "1234";
         if (oauthUser) {
             simpleEmail = new Email()
                     .setSubject("WATpointer new password")
                     .setFrom("<watpointer@yandex.com>")
                     .addTo("<"+email+">")
-                    .setBodyText("We noticed that your account was created and linked under Facebook." +
+                    .addAttachment("image.jpg", environment.getFile("public/images/logo.png"), cid)
+                    .setBodyHtml("<div style=\"font-size:14px\">We noticed that your account was created and linked under Facebook." +
                             " Please go to our login page and try to login over Facebook button." +
-                            " If problem still persist please contact us.");
+                            " If problem still persist please contact us.</div>" +
+                            "<hr><img style=\"width:30px\" src=\"cid:" + cid + "\"><span style=\"font-size:30px\">" +
+                            " WATpointer</span>");
         } else {
             // random password
             newPassword = RandomStringUtils.randomAlphanumeric(8);
@@ -92,14 +101,22 @@ public class Public extends Controller {
                     .setSubject("WATpointer new password")
                     .setFrom("<watpointer@yandex.com>")
                     .addTo("<"+email+">")
-                    .setBodyText("We generated new password for you," +
-                            " please log in with provided password and change it." +
-                            " Generated: " + newPassword);
+                    .addAttachment("image.jpg", environment.getFile("public/images/logo.png"), cid)
+                    .setBodyHtml("<div style=\"font-size:14px\">We generated new password for you," +
+                            " please log in with provided password and change it.</div><br>" +
+                            "<div> Generated: " + newPassword + "</div>" +
+                            "<hr><img style=\"width:30px\" src=\"cid:" + cid + "\"><span style=\"font-size:30px\">" +
+                            " WATpointer</span>");
         }
         try {
             mailerClient.send(simpleEmail);
         } catch (Exception ex) {
-            flash("error", "Not valid email!");
+            if(ex instanceof EmailException) {
+                flash("error", "Not valid email!");
+            } else {
+                flash("error", "Internal error");
+            }
+            ex.printStackTrace();
             return redirect(routes.Public.recovery());
         }
         if(!oauthUser) {

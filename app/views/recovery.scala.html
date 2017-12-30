@@ -16,12 +16,12 @@
       <div class="reading-text">Enter email to reset your password</div>
     </div>
     <div class="col-md-offset-4 col-md-4 text-center">
-      <form action="@routes.Public.sendRecovery()" method="post">
+      <form action="@routes.Public.sendRecovery()" method="post" id="recovery-form">
         <div class="form-group">
           <input class="form-control text-center small-separate" name="email"
             data-validetta="required,email">
-          <button class="btn btn-primary small-separate">Submit</button>
         </div>
+          <button class="btn btn-primary">Submit</button>
       </form>
     </div>
   </div>
@@ -29,7 +29,7 @@
   <div class="separate"></div>
 
   <script>
-          $("#contact-form").validetta({
+          $("#recovery-form").validetta({
             realTime: true,
             display : 'inline',
             errorTemplateClass : 'validetta-inline'

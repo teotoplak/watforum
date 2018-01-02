@@ -12,16 +12,19 @@
     </div>
   </div>
   <div class="row separate">
-    <div class="col-md-offset-4 col-md-4 text-center">
+    <div class="col-md-offset-4 col-md-4">
       <div class="reading-text">Enter email to reset your password</div>
     </div>
-    <div class="col-md-offset-4 col-md-4 text-center">
+    <div class="col-md-offset-4 col-md-4">
       <form action="@routes.Public.sendRecovery()" method="post" id="recovery-form">
         <div class="form-group">
-          <input class="form-control text-center small-separate" name="email"
+          <input class="form-control small-separate" name="email"
             data-validetta="required,email">
         </div>
-          <button class="btn btn-primary">Submit</button>
+        <div class="form-group recaptcha text-center">
+          <div class="g-recaptcha" data-sitekey="6Lc0Fy4UAAAAAGxZrj1Dp59j_eYH2FujzExWVTU-"></div>
+        </div>
+        <button class="btn btn-primary" id="send-button">Submit</button>
       </form>
     </div>
   </div>
@@ -34,6 +37,12 @@
             display : 'inline',
             errorTemplateClass : 'validetta-inline'
           });
+
+          // loading status
+          let button = document.getElementById("send-button");
+          button.onclick = function () {
+            button.innerHTML = "<i class='fa fa-spinner fa-spin'></i> Submit";
+          }
   </script>
 
 }

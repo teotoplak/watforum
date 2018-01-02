@@ -39,7 +39,7 @@
         <div class="form-group recaptcha">
           <div class="g-recaptcha" data-sitekey="6Lc0Fy4UAAAAAGxZrj1Dp59j_eYH2FujzExWVTU-"></div>
         </div>
-        <button type="submit" class="btn btn-primary">Send</button>
+        <button type="submit" class="btn btn-primary" id="send-button">Send</button>
       </form>
     </div>
   </div>
@@ -52,6 +52,13 @@
             display : 'inline',
             errorTemplateClass : 'validetta-inline'
           });
+
+          // loading status
+          let button = document.getElementById("send-button");
+          button.onclick = function () {
+              button.innerHTML = "<i class='fa fa-spinner fa-spin'></i> Send";
+          }
+
   </script>
 
 }

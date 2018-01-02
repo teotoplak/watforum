@@ -72,6 +72,11 @@ public class Public extends Controller {
 
     public Result sendRecovery() {
         DynamicForm form = Form.form().bindFromRequest();
+        String recaptchaResponse = form.get("g-recaptcha-response");
+        if (!recaptchaSaysOk(recaptchaResponse, "")) {
+            flash("error", "Recaptcha rejected you!");
+            return redirect(routes.Public.recovery());
+        }
         String email = form.get("email");
         SWTUser user = SWTUser.findUserByEmail(email);
         // if user is oauth

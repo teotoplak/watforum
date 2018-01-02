@@ -9,6 +9,12 @@ a {
   /*padding: 0 50px 0px 50px;*/
 }
 
+.navbar-brand img {
+  padding: 0 0 !important;
+  height: 170%;
+  margin-right: 3px;
+}
+
 .wat-title {
   border-bottom: 1px solid $color-line;
   padding-bottom: 10px;
@@ -20,10 +26,6 @@ a {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-}
-
-.logo-img {
-  width: 50px;
 }
 
 .navbar-brand {

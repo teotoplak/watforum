@@ -69,6 +69,9 @@ function addYearToRow(i) {
         obj.newSponsorName = addingSponsor;
     }
 
+    // show done button
+    document.getElementById("done-button").style.visibility = "visible";
+
     $.ajax({
         type: 'POST',
         url: '/saveYear',

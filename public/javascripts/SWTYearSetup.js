@@ -72,6 +72,9 @@ function addYearToRow(i) {
     // show done button
     document.getElementById("done-button").style.visibility = "visible";
 
+    // remove text from input text field
+    addSponsor.value = "";
+
     $.ajax({
         type: 'POST',
         url: '/saveYear',

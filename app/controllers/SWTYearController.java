@@ -111,7 +111,12 @@ public class SWTYearController extends Model {
             // first delete all ratings of year
             List<SWTRating> ratings = SWTRating.findRatingsBySWTyear(swtYear.id);
             for(SWTRating rating : ratings) {
+                SWTPlace place = rating.swtPlace;
                 rating.delete();
+                // also delete place if no more ratings
+                if(place.ratings.size() == 0) {
+                    place.delete();
+                }
             }
             swtYear.delete();
             return ok();

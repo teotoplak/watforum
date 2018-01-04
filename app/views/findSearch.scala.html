@@ -203,11 +203,16 @@
 
             function getRatedInfoWindow(place) {
                 return new google.maps.InfoWindow({
-                    content: `<a target="_blank" href="${baseUrl}/place?id=${place.googleId}">
-                                <div>${place.name}</div>
-                                <span class='glyphicon glyphicon-star' style='color: orange'></span>
-                                ${place.avgRating}
-                                </a>
+                    content: `
+
+<div class="iw-wrapper">
+<a target="_blank" class=iw-header href="${baseUrl}/place?id=${place.googleId}">${place.name} <i class="fa fa-external-link iw-icon"></i></a>
+<div class="text-center">
+<div class="fa fa-star avg-rating-star"></div>
+<div class="avg-rating-value">${place.avgRating}</div>
+<div class="avg-rating-total">/ 5</div>
+</div>
+</div>
                                 `
                 })
             }

@@ -135,3 +135,43 @@
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 1.1em;
 }
+
+/*info window here*/
+.iw-header {
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 1.1em;
+    margin-bottom: 3px;
+    text-decoration: none;
+    color: $color-main-reverse;
+}
+.iw-wrapper a:hover{
+    color: $color-cta;
+    text-decoration: none;
+ }
+.iw-button {
+    width: 58px;
+    font-size: 0.9em;
+    padding: 2px !important;
+    float: right;
+}
+.avg-rating-value {
+    font-size: 1.3em;
+    display: inline;
+    padding-bottom: 2px;
+}
+.avg-rating-total {
+    display: inline;
+    color: darkgrey;
+}
+.avg-rating-star {
+    color: $color-rating;
+    font-size: 1.2em;
+}
+.iw-wrapper {
+    line-height: 1.35;
+    overflow: hidden;
+    white-space: nowrap;
+}
+.iw-icon {
+    font-size: 0.8em;
+}

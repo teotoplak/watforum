@@ -21,7 +21,7 @@
                         @if(user.lastName != null) { <dt>Last name</dt> <dd>@(user.lastName)</dd> }
                         @if(user.email != null) { <dt>Email</dt> <dd>@(user.email)</dd> }
                     }
-                    @if(user.country != null) { <dt>Nationality</dt> <dd>@snippets.nationality(user.country)</dd> }
+                    @if(user.country != null) { <dt>Country</dt> <dd>@user.country</dd> }
                     @if(user.birth != null) { <dt>Birth date</dt> <dd>@(user.birth.format("dd/MM/yyyy"))</dd> }
                 </dl>
                 @if(edit) {

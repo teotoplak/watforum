@@ -117,9 +117,7 @@ public class SWTUserController extends Controller{
         user.firstName = form.get("firstName");
         user.lastName = form.get("lastName");
         user.anonymous = form.get("anonymous")==null ? false : true;
-        user.country = new Locale(form.get("country_selector_code"));
-        System.out.println(form.get("country_selector_code"));
-        System.out.println(user.country.toString());
+        user.country = form.get("country");
         if(form.get("avatar")!=null) {
             user.profilePictureUrl = form.get("avatar");
         }

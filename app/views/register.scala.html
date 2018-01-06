@@ -70,14 +70,8 @@
               </div>
           </div>
           <div class="form-group">
-              <label for="country">Nationality</label>
-              <div class="form-item">
-                  <input id="country_selector" class="form-control" type="text">
-              </div>
-              <div class="form-item" style="display:none;">
-                  <input type="text" id="country_selector_code" name="country_selector_code" data-countrycodeinput="1" readonly="readonly" placeholder="Selected country code will appear here" />
-                  <label for="country_selector_code">...and the selected country code will be updated here</label>
-              </div>
+              <label for="country">Country</label>
+              @snippets.nationalitySelect(user.country)
           </div>
 
           @if(formType.equals(ProfileFormType.REG_OAUTH)) {

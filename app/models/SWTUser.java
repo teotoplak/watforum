@@ -35,7 +35,7 @@ public class SWTUser extends Model {
     public String lastName;
     public String profilePictureUrl;
     //iso2 format
-    public Locale country;
+    public String country;
     public Date createdAt;
 
 

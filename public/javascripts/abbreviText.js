@@ -21,7 +21,7 @@ async function abbreviText(abbrvTextId,textElementIds) {
         textElementsCurrentWidths.push(initialWidth);
         textElementsInitialWidths.push(initialWidth);
     }
-    await sleep(1100);
+    await sleep(1800);
     foldIn();
     let abbrvText = document.getElementById(abbrvTextId);
     abbrvText.onmouseover = function() {

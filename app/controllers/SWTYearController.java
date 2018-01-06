@@ -78,6 +78,7 @@ public class SWTYearController extends Model {
                 if (node.get("newSponsorName") != null) {
                     newSponsorName = node.get("newSponsorName").asText();
                 }
+                // if predefined sponsor was chosen
                 if (node.get("sponsorId") != null && !node.get("sponsorId").asText().isEmpty()) {
                     sponsorId = Long.parseLong(node.get("sponsorId").asText());
                 }

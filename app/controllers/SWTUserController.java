@@ -92,7 +92,7 @@ public class SWTUserController extends Controller{
         //CHANGE THIS - DELEGATE PROFILE PIC TO OAUTH LOGIN, NO NEED TO DO THIS IF USER EXISTS ALSO!!
         CommonProfile profile = profileOptional.get();
         profile.addAttribute(PROFILE_PIC_KEY,
-                "http://graph.facebook.com/"+ profile.getId() +"/picture?type=large");
+                "https://graph.facebook.com/"+ profile.getId() +"/picture?type=large");
         return oAuthLogin(profile, OAuthClient.FACEBOOK);
     }
 

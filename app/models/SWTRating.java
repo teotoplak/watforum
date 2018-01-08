@@ -39,6 +39,7 @@ public class SWTRating extends Model {
     public SWTPlace swtPlace;
 
     public Integer rating;
+    @Column(length = 1000)
     public String comment;
     public boolean providingHousing;
     public boolean providingMeal;

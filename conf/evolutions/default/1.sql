@@ -26,7 +26,7 @@ create table swtrating (
   id                            bigserial not null,
   swtplace                      bigint,
   rating                        integer,
-  comment                       varchar(255),
+  comment                       varchar(1000),
   providing_housing             boolean,
   providing_meal                boolean,
   work_load                     integer,

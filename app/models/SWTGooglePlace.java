@@ -62,7 +62,7 @@ public class SWTGooglePlace extends Controller{
             this.website = node.findPath("website").textValue();
             this.googleMaps = node.findPath("url").textValue();
 
-            this.isRegion = checkIfRegion(node.findPath("types").toString());
+            this.isRegion = checkIfRegion(node.path("types").toString());
 
             // location
             JsonNode aField = node.findPath("location");

@@ -91,6 +91,9 @@ public class SWTPlace extends Model {
     public static List<SWTPlace> findPlaceByCounty(String county) {
         return find.where().ieq("county", county).findList();
     }
+    public static List<SWTPlace> findAll() {
+        return find.all();
+    }
     public static List<SWTPlace> findPlaceByViewPort(
             Double lngFrom, Double lngTo, Double latFrom, Double latTo
     ) {

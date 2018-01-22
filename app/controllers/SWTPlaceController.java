@@ -82,6 +82,18 @@ public class SWTPlaceController extends Controller {
         return ok(Json.toJson(result));
     }
 
+    // used by ajax from search
+    public Result returnAllPlaces() {
+        List<SWTPlace> allPlaces = SWTPlace.findAll();
+        List<SearchResult> result = new LinkedList<>();
+        for(SWTPlace place : allPlaces) {
+            place.calculateRating();
+            result.add(new SearchResult(place));
+        }
+        return ok(Json.toJson(result));
+    }
+
+
     /* ajax requests from autocomplete */
     public Result searchForAutocomplete() {
         List<SearchResult> results = new LinkedList<>();

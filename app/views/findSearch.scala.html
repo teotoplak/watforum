@@ -33,6 +33,22 @@
                 url: "/getBaseUrl",
                 success: function (url) {
                    baseUrl = url;
+                    showLoading();
+                   // show all places
+                    $.ajax({
+                        type: "GET",
+                        url: baseUrl + "/get-places-all",
+                        success: (result) => {
+                            removeLoading();
+                            showMarkers(result, false);
+                        },
+                        error: (error) => {
+                            /* todo error*/
+                            removeLoading();
+                            console.error("internal error happened while searching")
+                        }
+                    });
+
                 }
             });
 
@@ -139,20 +155,20 @@
                             if(places.length == 0) {
                                 updateBadge(0)
                             } else {
-                                showMarkers(places)
+                                showMarkers(places, true)
                             }
                         }
                     })
                 } else {
                     removeLoading();
                     clearMarkers();
-                    showMarkers(result)
+                    showMarkers(result, true)
                 }
             }
 
 
 
-            function showMarkers(places) {
+            function showMarkers(places,showingAll) {
                 updateBadge(places.length);
                 places.forEach((place) => {
                     let marker;
@@ -165,8 +181,10 @@
                         infowindow = getNotRatedInfoWindow(place)
                     }
                     markers.push(marker);
-                    bounds.extend(marker.getPosition());
-                    map.fitBounds(bounds);
+                    if(showingAll) {
+                        bounds.extend(marker.getPosition());
+                        map.fitBounds(bounds);
+                    }
 
                     marker.addListener('click', function () {
                         if (openedInfoWindow) {
@@ -175,7 +193,7 @@
                         openedInfoWindow = infowindow;
                         infowindow.open(map, marker);
                     });
-                    if (place === places[0]) {
+                    if (place === places[0] && showingAll) {
                         // open one marker
                         openedInfoWindow = infowindow;
                         infowindow.open(map, marker)

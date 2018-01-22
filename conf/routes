@@ -52,6 +52,7 @@ POST    /deleteYear          controllers.SWTYearController.deleteSWTYear()
 GET     /search             controllers.SWTPlaceController.findSearch()
 GET     /place             controllers.SWTPlaceController.place(id: String)
 GET      /get-places       controllers.SWTPlaceController.getSWTPlaces
+GET      /get-places-all       controllers.SWTPlaceController.returnAllPlaces
 #be careful with url, js depends on it!!
 GET      /search-for       controllers.SWTPlaceController.searchFor(text: String)
 POST      /search-for-auto       controllers.SWTPlaceController.searchForAutocomplete()

@@ -10,11 +10,24 @@
     <div class="map-wrapper">
         <div id="googleMap" class="google-map" style="visibility: visible"></div>
         <div class="search-box-row search-box-dynamic">
-            <div class="inner-addon left-addon right-addon">
-                <i class="fa fa-search fa-2x" id="search-addon"></i>
-                <span class="badge" id="info-addon"></span>
+            <div class="inner-addon">
+                <i class="fa fa-search fa-2x left-addon" id="search-addon"></i>
+                <span class="badge right-addon" id="info-addon"></span>
                 <input type="text" id="find-search-box" class="form-control input-lg text-center"
                     placeholder="Try &quot;Massachusetts&quot;">
+            </div>
+        </div>
+        <div class="search-box-row info-window-dynamic">
+            <div class="inner-addon info-window">
+                <i class="fa fa-lightbulb-o fa-2x left-addon"></i>
+                <div class="info-window-text">
+                    <ul>
+                        <li>Currently showing all rated places</li>
+                        <li>Typing area (e.g. city, state) gives you rated places there</li>
+                        <li>For rating and viewing specific establishment type exact name</li>
+                    </ul>
+                </div>
+                <i class="fa fa-times fa-2x right-addon" id="close-info"></i>
             </div>
         </div>
     </div>

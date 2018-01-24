@@ -51,11 +51,19 @@
         width: 40%;
         top: 25px;
     }
+    .info-window-dynamic {
+        width: 40%;
+        top: 85px
+    }
 }
 @media all and (max-width: 1200px) {
     .search-box-dynamic {
         width: 50%;
         top: 15px;
+    }
+    .info-window-dynamic {
+        width: 50%;
+        top: 85px
     }
 }
 @media all and (max-width: 992px) {
@@ -63,11 +71,19 @@
         width: 100%;
         top: 0;
     }
+    .info-window-dynamic {
+        width: 100%;
+        top: 75px
+    }
 }
 @media all and (max-width: 460px) {
     .search-box-dynamic {
         width: 100%;
-        top: 0;
+        top: 5px;
+    }
+    .info-window-dynamic {
+        width: 40%;
+        top: 85px
     }
     .input-lg {
         font-size: 1em
@@ -90,39 +106,64 @@
 }
 
 #find-search-box {
-    border: 2px solid #717171;
+    border: 2px solid $color-main-reverse;
 }
 
 .inner-addon {
     position: relative;
 }
 
-.inner-addon #search-addon {
+.inner-addon .left-addon {
     position: absolute;
     padding: 8px;
     pointer-events: none;
-    color: #717171;
+    color: $color-main-reverse;
+    left:  2px;
 }
 
-.inner-addon #info-addon {
+.inner-addon .right-addon {
     position: absolute;
     padding: 10px;
     pointer-events: none;
+    right:  7px; top: 7px
 }
 
-.left-addon #search-addon  { left:  2px;}
-.left-addon #info-addon  { right:  7px; top: 7px}
 
-.left-addon input  {
+.inner-addon input  {
     padding-left:  41px;
     padding-right: 46px;
+}
+
+.info-window {
+    background-color: $color-main-reverse;
+    border: 2px solid $color-main-reverse;
+    border-radius: 6px;
+    color: $color-main;
+}
+
+.info-window .fa{
+    color: $color-main;
+}
+
+.info-window-text {
+    margin: 15px;
+}
+.info-window-text li{
+    margin: 4px;
 }
 
 .red-info {
     background-color: $color-danger;
 }
 
+.badge {
+    background-color: $color-main-reverse;
+}
+
 #info-addon {
+    font-size: 13px;
+}
+#close-info {
     font-size: 13px;
 }
 

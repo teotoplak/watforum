@@ -4,6 +4,7 @@ var addYear = document.getElementById("addYear");
 var addSponsorId = document.getElementById("sponsorId");
 var addButton = document.getElementById("addButton");
 var addSponsor = document.getElementById("addSponsor");
+var validettaError = document.getElementById("validetta-hax");
 var deleteButtons = document.getElementsByClassName("deleteButton");
 var currentYear;
 
@@ -15,17 +16,25 @@ for(var i = 0; i < deleteButtons.length; i++)
 }
 
 //year selector
-currentYear = 2017;
+currentYear = (new Date()).getFullYear();
 for (var i = -1; i <= 11; i++) {
     var option = document.createElement('option');
     option.value = currentYear - i;
     option.innerHTML = currentYear - i;
     addYear.appendChild(option);
 }
-addYear.value = currentYear;
+addYear.value = currentYear - 1;
 
 //add button listener
 addButton.addEventListener("click", function () {
+    // if there is no sponsor written
+    if(addSponsor.value === "") {
+        validettaError.style.display = "block";
+        return;
+    } else {
+        validettaError.style.display = "none";
+    }
+
     let addingYear = addYear.options[addYear.selectedIndex].value;
     //if there is no years
     if (table.rows.length == 1) {
@@ -102,7 +111,7 @@ function addYearToRow(i) {
             deleteButton.innerHTML = "Delete <span class=' fa fa-trash-o'></span>";
             cell3.appendChild(deleteButton);
             deleteButton.addEventListener("click", function() { deleteBtnFunction(deleteButton, userId)});
-            addAgency.value = "";
+            addSponsor.value = "";
             addSponsorId.value = "";
             sponsorId = null;
             if(currentYear == addingYear) {

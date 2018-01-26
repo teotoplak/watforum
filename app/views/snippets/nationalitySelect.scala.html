@@ -1,8 +1,10 @@
 @(default: String)
 
-<select class="form-control" id="country" name="country">
+<select class="form-control" id="country" name="country" data-validetta="required">
     @if(default!=null) {
         <option value="@default" title="@default">@default</option>
+    } else {
+        <option value="" title="">Select country</option>
     }
     <option value="Afghanistan" title="Afghanistan">Afghanistan</option>
     <option value="Åland Islands" title="Åland Islands">Åland Islands</option>

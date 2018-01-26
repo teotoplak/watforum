@@ -235,7 +235,6 @@
             function getRatedInfoWindow(place) {
                 return new google.maps.InfoWindow({
                     content: `
-
 <div class="iw-wrapper">
 <a target="_blank" class=iw-header href="${baseUrl}/place?id=${place.googleId}">${place.name} <i class="fa fa-external-link iw-icon"></i></a>
 <div class="text-center">
@@ -250,10 +249,14 @@
 
             function getNotRatedInfoWindow(place) {
                 return new google.maps.InfoWindow({
-                    content: `<a target="_blank" href="${baseUrl}/place?id=${place.googleId}">
-                                <div>${place.name}</div>
-                                Not rated yet
-                                </a>`
+                    content: `
+<div class="iw-wrapper">
+<a target="_blank" class=iw-header href="${baseUrl}/place?id=${place.googleId}">
+<div>${place.name}</div>
+<div class="text-center"><button class="btn btn-primary btn-xs rate-btn">Rate <i class="fa fa-star iw-icon"></i></button></div>
+</a>
+</div>
+`
                 })
             }
 

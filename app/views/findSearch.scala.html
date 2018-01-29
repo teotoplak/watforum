@@ -17,22 +17,39 @@
                     placeholder="Try &quot;Massachusetts&quot;">
             </div>
         </div>
-        @*<div class="search-box-row info-window-dynamic">*@
-            @*<div class="inner-addon info-window">*@
-                @*<i class="fa fa-lightbulb-o fa-2x left-addon"></i>*@
-                @*<div class="info-window-text">*@
-                    @*<ul>*@
-                        @*<li>Currently showing all rated places</li>*@
-                        @*<li>Typing area (e.g. city, state) gives you rated places there</li>*@
-                        @*<li>For rating and viewing specific establishment type exact name</li>*@
-                    @*</ul>*@
-                @*</div>*@
-                @*<i class="fa fa-times fa-2x right-addon" id="close-info"></i>*@
-            @*</div>*@
-        @*</div>*@
+        <div class="search-box-row info-window-dynamic" id="popup">
+            <div class="info-window">
+                <i class="fa fa-lightbulb-o fa-2x lightbulb-icon"></i>
+                <div class="info-window-text">
+                    <ul>
+                        <li>Currently showing all rated places</li>
+                        <li>Typing area (e.g. city, state) gives you rated places there</li>
+                        <li>For rating and viewing specific establishment type exact name</li>
+                    </ul>
+                </div>
+                <i class="fa fa-times fa-2x close-icon" id="popup-close"></i>
+            </div>
+        </div>
     </div>
 
     <script>
+            // for info popup about search
+            $(document).ready(function() {
+                if(localStorage.getItem('popState') != 'shown'){
+                    $("#popup").delay(1700).fadeIn();
+                    localStorage.setItem('popState','shown')
+                }
+
+                $('#popup-close').click(function(e) // You are clicking the close button
+                {
+                    $('#popup').fadeOut(); // Now the pop up is hiden.
+                });
+                $('#popup').click(function(e)
+                {
+                    $('#popup').fadeOut();
+                });
+            });
+
             /* google maps */
             var map;
             var bounds;
@@ -106,7 +123,7 @@
                 })
             }
 
-            @* filter search *@
+             @* filter search *@
             let searchBoxId = '#find-search-box';
 
 

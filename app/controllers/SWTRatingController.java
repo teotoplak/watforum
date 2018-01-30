@@ -36,7 +36,9 @@ public class SWTRatingController extends Controller {
         String position = form.get("position");
         String comment = form.get("comment");
         Integer workload = Integer.parseInt(form.get("workload"));
-        Integer payment = Integer.parseInt(form.get("payment"));
+        // todo remove quick fix
+        Double paymentDouble = Double.parseDouble(form.get("payment"));
+        Integer payment = paymentDouble.intValue();
         boolean providingHousing = form.get("providingHousing")==null ? false : true;
         boolean providingMeal = form.get("providingMeal")==null ? false : true;
         SWTYear swtYear = user.findYearByYearNumber(Integer.parseInt(form.get("swtYear")));

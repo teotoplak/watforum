@@ -54,7 +54,11 @@
                     }
                 <span class="pull-right">
                  <span data-toggle="tooltip" title="@rating.swtYear.sponsor.fullName">
-                 @rating.swtYear.sponsor.shortName
+                 @if(rating.swtYear.sponsor.shortName != null) {
+                     @rating.swtYear.sponsor.shortName
+                 } else {
+                     @rating.swtYear.sponsor.fullName
+                 }
                  </span> [@rating.swtYear.year]
             </span>
                 </div>

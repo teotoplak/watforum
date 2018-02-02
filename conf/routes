@@ -70,6 +70,9 @@ GET      /fblogin           controllers.SWTUserController.fblogin()
 #### CONNECTING WITH PEOPLE
 GET      /connect           controllers.SWTConnectController.connect()
 
+### ADMIN
+GET      /admin             controllers.SWTAdminContoller.connect
+
 #### SHARED
 #be careful with url, js depends on it!!
 GET     /getBaseUrl         controllers.SWTSharedController.getBaseUrl()

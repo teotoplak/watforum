@@ -1,0 +1,24 @@
+@(
+        numOfUsers: Integer,
+        participantsNum: Integer,
+        oldParticipantsNum: Integer,
+        todayRegistered: Integer
+)
+@main("admin console") {
+    <h2>Admin dashboard</h2>
+    <h3>Users</h3>
+    <div class="row">
+        <div class="col-md-3">
+            users: @numOfUsers
+        </div>
+        <div class="col-md-3">
+            participants: @participantsNum
+        </div>
+        <div class="col-md-3">
+            alumni: @oldParticipantsNum
+        </div>
+        <div class="col-md-3">
+            today registered: @todayRegistered
+        </div>
+    </div>
+}

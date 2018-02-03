@@ -38,11 +38,18 @@ public class SWTAdminContoller extends Controller {
         Integer participantsNum = 0;
         Integer oldParticipantsNum;
         Integer todayRegistered = 0;
+        Integer pastYearsNum = 0;
+        Integer pastYearsRatedNum = 0;
         for(SWTUser user : users) {
             // number of participants
             for(SWTYear year : user.swtYears) {
                 if (year.year.equals(Calendar.getInstance().get(Calendar.YEAR))) {
                     participantsNum ++;
+                } else {
+                    pastYearsNum ++;
+                    if (year.ratings.size() != 0) {
+                       pastYearsRatedNum ++;
+                    }
                 }
             }
             // registered today?
@@ -55,6 +62,8 @@ public class SWTAdminContoller extends Controller {
                 usersNum,
                 participantsNum,
                 oldParticipantsNum,
-                todayRegistered));
+                todayRegistered,
+                pastYearsNum,
+                pastYearsRatedNum));
     }
 }

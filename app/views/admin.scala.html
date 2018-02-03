@@ -2,7 +2,9 @@
         numOfUsers: Integer,
         participantsNum: Integer,
         oldParticipantsNum: Integer,
-        todayRegistered: Integer
+        todayRegistered: Integer,
+        pastYearsNum: Integer,
+        pastYearsRatedNum: Integer
 )
 @main("admin console") {
     <h2>Admin dashboard</h2>
@@ -19,6 +21,14 @@
         </div>
         <div class="col-md-3">
             today registered: @todayRegistered
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            Past years number: @pastYearsNum
+        </div>
+        <div class="col-md-3">
+            Past years rated: @pastYearsRatedNum
         </div>
     </div>
 }

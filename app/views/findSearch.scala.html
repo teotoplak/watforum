@@ -12,7 +12,7 @@
         <div class="search-box-row search-box-dynamic">
             <div class="inner-addon">
                 <i class="fa fa-search fa-2x left-addon" id="search-addon"></i>
-                <span class="badge right-addon" id="info-addon"></span>
+                <span class="badge badge-default right-addon" id="info-addon"></span>
                 <input type="text" id="find-search-box" class="form-control input-lg text-center"
                     placeholder="Try &quot;Massachusetts&quot;">
             </div>
@@ -301,10 +301,13 @@
 
             function updateBadge(number) {
                 let badge = document.getElementById("info-addon");
-                badge.classList.remove("red-info");
+                badge.classList.remove("badge-zero");
+                badge.classList.remove("badge-default");
                 badge.innerHTML = number;
                 if(number==0) {
-                    badge.classList.add("red-info");
+                    badge.classList.add("badge-zero");
+                } else {
+                    badge.classList.add("badge-default");
                 }
             }
 

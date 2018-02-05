@@ -88,10 +88,17 @@
             });
 
             function initMap() {
+                let mapZoom;
+                if(window.screen.availHeight < 580 || window.screen.availWidth < 768) {
+                    mapZoom = 3;
+                } else {
+                    mapZoom = 4;
+                }
+
                 bounds = new google.maps.LatLngBounds();
                 map = new google.maps.Map(document.getElementById('googleMap'), {
-                    center: {lat: 40, lng: -100},
-                    zoom: 4,
+                    center: {lat: 40, lng: -97},
+                    zoom: mapZoom,
                     clickableIcons: false,
                     mapTypeControl: false,
                     zoomControl: false,

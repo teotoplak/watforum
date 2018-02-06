@@ -1,5 +1,6 @@
 package controllers;
 
+import models.SWTRating;
 import models.SWTUser;
 import models.SWTYear;
 import org.apache.commons.lang3.time.DateUtils;
@@ -9,10 +10,7 @@ import play.mvc.Controller;
 import play.mvc.Result;
 
 import javax.inject.Inject;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -58,12 +56,14 @@ public class SWTAdminContoller extends Controller {
             }
         }
         oldParticipantsNum = usersNum - participantsNum;
+        Set<SWTRating> latestRatings = new HashSet<>(SWTRating.latestRatings(10));
         return ok(views.html.admin.render(
                 usersNum,
                 participantsNum,
                 oldParticipantsNum,
                 todayRegistered,
                 pastYearsNum,
-                pastYearsRatedNum));
+                pastYearsRatedNum,
+                latestRatings));
     }
 }

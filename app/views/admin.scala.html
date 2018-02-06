@@ -4,7 +4,8 @@
         oldParticipantsNum: Integer,
         todayRegistered: Integer,
         pastYearsNum: Integer,
-        pastYearsRatedNum: Integer
+        pastYearsRatedNum: Integer,
+        lastRatings: Set[SWTRating]
 )
 @main("admin console") {
     <h2>Admin dashboard</h2>
@@ -29,6 +30,12 @@
         </div>
         <div class="col-md-3">
             Past years rated: @pastYearsRatedNum
+        </div>
+    </div>
+    <h3>Latest ratings</h3>
+    <div class="row separate">
+        <div class="col-md-5">
+            @ratingsList(lastRatings,true)
         </div>
     </div>
 }

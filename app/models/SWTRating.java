@@ -78,7 +78,7 @@ public class SWTRating extends Model {
         return find.where().eq("swtyear_id", yearId).findList();
     }
     public static List<SWTRating> latestRatings(Integer scope) {
-        return find.orderBy("created_at").setMaxRows(scope).findList();
+        return find.orderBy("created_at desc").setMaxRows(scope).findList();
     }
 
 }

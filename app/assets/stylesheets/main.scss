@@ -28,6 +28,13 @@ a {
   flex-direction: column;
 }
 
+.main-wrapper-no-footer {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
 .navbar-brand {
   display: flex;
   align-items: center;
@@ -44,7 +51,6 @@ a {
   color: $color-text-muted;
   background-color: $color-main-reverse;
   bottom: 0;
-  height: 50px;
   left: 0;
   position: absolute;
   width: 100%;
@@ -99,10 +105,6 @@ a {
   background-color: rgba(255, 70, 67, 0.10);
 }
 
-.footer-text {
-  margin: 3px 0;
-}
-
 .deleteAction {
   color: $color-danger;
   background-color:transparent;
@@ -127,6 +129,11 @@ a {
 .footer-link:hover {
   color: $color-main;
   text-decoration: none;
+}
+
+.footer-icon {
+  font-size: 135%;
+  margin: 0 8px;
 }
 
 .btn-primary, .btn-primary:active, .btn-primary:visited {

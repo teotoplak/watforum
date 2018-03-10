@@ -1,14 +1,22 @@
 @()
 <div class="footer-wrapper">
     <div class="row">
-        <div class="">
-            <span class="footer-text pull-left">© 2018, WATpointer
+        <div class="col-md-4">
+            <span class="pull-left">© 2018, WATpointer
                 <span class="hidden-xs">, All rights reserved</span>
             </span>
         </div>
-        <div class="pull-right hidden-xs">
-            <a class="footer-text footer-link" href="@routes.Public.privacyPolicy()">Privacy policy</a> |
-            <a class="footer-text footer-link" href="@routes.Public.termsAndConditions()">Terms and conditions</a>
+        <div class="col-md-4 text-center">
+            <a class="footer-icon footer-link fa fa-facebook" href="https://www.facebook.com/watpointer/"></a>
+            <a class="footer-icon footer-link fa fa-twitter" href="https://twitter.com/WATpointer"></a>
+            <a class="footer-icon footer-link fa fa-instagram" href="https://www.instagram.com/watpointer/"></a>
+            <a class="footer-icon footer-link fa fa-linkedin" href="https://www.linkedin.com/company/watpointer/"></a>
+        </div>
+        <div class="hidden-xs col-md-4">
+            <div style="float: right">
+                <a class="footer-link" href="@routes.Public.privacyPolicy()">Privacy policy</a> |
+                <a class="footer-link" href="@routes.Public.termsAndConditions()">Terms and conditions</a>
+            </div>
         </div>
     </div>
 </div>

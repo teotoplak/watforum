@@ -1,4 +1,4 @@
-@(title: String)(content: Html, otherContent: Html = null)
+@(title: String, showFooter: Boolean = true)(content: Html, otherContent: Html = null)
 
 <!DOCTYPE html>
 <html lang="en">
@@ -36,38 +36,39 @@
     </head>
     <body>
 
-        <div class="main-wrapper">
+        <div class="@if(showFooter){main-wrapper}else{main-wrapper-no-footer}">
 
-        @navigation()
+            @navigation()
 
-        <div class="container flash-container">
-            @if(flash.containsKey("success")) {
-                <div class="alert alert-success text-center">@flash.get("success")</div>
-            }
-            @if(flash.containsKey("info")) {
-                <div class="alert alert-info text-center">@flash.get("info")</div>
-            }
-            @if(flash.containsKey("warning")) {
-                <div class="alert alert-warning text-center">@flash.get("warning")</div>
-            }
-            @if(flash.containsKey("error")) {
-                <div class="alert alert-danger text-center">@flash.get("error")</div>
-            }
-        </div>
+            <div class="container flash-container">
+                @if(flash.containsKey("success")) {
+                    <div class="alert alert-success text-center">@flash.get("success")</div>
+                }
+                @if(flash.containsKey("info")) {
+                    <div class="alert alert-info text-center">@flash.get("info")</div>
+                }
+                @if(flash.containsKey("warning")) {
+                    <div class="alert alert-warning text-center">@flash.get("warning")</div>
+                }
+                @if(flash.containsKey("error")) {
+                    <div class="alert alert-danger text-center">@flash.get("error")</div>
+                }
+            </div>
 
-        <div class="container main-container">
-            @content
+            <div class="container main-container">
+                @content
 
-        </div>
+            </div>
 
             @otherContent
 
-            <div class="footer-container">
-                <div class="container">
-                @footer()
+            @if(showFooter) {
+                <div class="footer-container">
+                    <div class="container">
+                    @footer()
+                    </div>
                 </div>
-            </div>
-
+            }
 
         </div>
 
